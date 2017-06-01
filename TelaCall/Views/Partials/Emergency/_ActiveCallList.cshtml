@@ -1,0 +1,71 @@
+﻿@model T.Model.EmergencyModel
+@{
+    int counter = 0;
+    string ClassAlert = string.Empty;
+    long SelectedId = ViewBag.Id ?? 0;
+    string ClassSelected = string.Empty;
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="blog-two-info">
+            <h4>Active Call list</h4>
+        </div>
+    </div>
+</div>
+@if (Model.lstActiveCalls.Count > 0)
+{
+    <div class="bs-table-example mar-b-30">
+        <div class="table-responsive content-scroll">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Speciality</th>
+                        <th>Elapsed Time</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="table-selectable">
+
+
+                    @foreach (var Oncall in Model.lstActiveCalls)
+                    {
+                        ClassSelected = Oncall.Id == SelectedId ? "row-selected" : "";
+                        <tr class="@ClassSelected">
+                            <td>@(counter + 1)</td>
+
+                            <td>@Oncall.oclsOnCallPeople.Speciality</td>
+
+                            <td>
+                                @{
+                                    var elapsedTime = (Oncall.CallReqTime.AddMinutes(Convert.ToInt32(Oncall.TAT)) - DateTime.Now).TotalMinutes;
+                                    ClassAlert = elapsedTime > 0 ? "color-green" : "text-danger";
+
+                                 }
+
+                                <span class="@ClassAlert font-bold">@String.Format("{0:0.##}", elapsedTime)</span> Min.
+
+                            </td>
+                            <td>
+                                <input class="hf-ActivePersonId" type="hidden" value="@Oncall.Id" />
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.table-responsive -->
+    </div>
+
+}
+else
+{
+
+    <div id="target-persondetail" class="bs-table-example mar-b-30">
+        <div class="placeholder-loading" style="margin:auto;">
+            No on call people found for selected date.
+        </div>
+    </div>
+
+}

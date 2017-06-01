@@ -1,0 +1,399 @@
+﻿@model T.Model.clsPractices
+@{
+    ViewBag.Title = "AddPractices";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var RequiresBackup = Model.RequiresBackup == true ? "checked" : "";
+    var NotRequiresBackup = Model.RequiresBackup == false ? "checked" : "";
+    string attachment = string.IsNullOrEmpty(Model.BackupPolicy) == true ? "" : Model.BackupPolicy;
+    string Displayclass = Model.id == 0 ? "display-hide" : "display";
+}
+
+<div class="container">
+    <div class="row topmargin-medium">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="blog-left wow fadeInLeft add-user-form" >
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="blog-two-info">
+                            @if (@Model.id != 0)
+                            {
+                                <h4>Edit Practices</h4>
+                            }
+                            else
+                            {
+                                <h4>Add Practices</h4>
+                            }
+                            @*<h4>Add Practices</h4>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="Error alert-Message alert-danger display-hide margin-bottom-0 margin-top-20">
+                        <button class="close topx" data-close="alert">x</button>
+                        <span id="spnErrorMessage" class="spnErrorMessage"></span>
+                    </div>
+                    <div class="Success alert-Message alert-success display-hide margin-top-20 margin-bottom-10">
+                        <button class="close" data-close="alert">x</button>
+                        <span id="spnSuccessMessage" class="spnSuccessMessage"></span>
+                    </div>
+                </div>
+
+
+                <div class="blog-content">
+                    <!-- HTML -->
+                    <div class="bs-example">
+                        <div id="form">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Name</label>
+                                <input type="text" class="form-control input-md focusedInput" id="txtname" value="@Model.Name" placeholder="Enter  name*">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Address</label>
+                                <input type="text" class="form-control input-md focusedInput" id="txtaddress" value="@Model.Address" placeholder="Enter  address*">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">URL</label>
+                                <input type="text" class="form-control input-md focusedInput" id="txturl" value="@Model.URL" placeholder="Enter Url*">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Fax Number</label>
+                                <input type="text" class="form-control input-md focusedInput" id="txtfaxnumber" value="@Model.FaxNumber" placeholder="XXX-XXX-XXXX*">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Phone Number</label>
+                                <input type="text" class="form-control input-md focusedInput" id="txtphonenumber" value="@Model.PhoneNumber" placeholder="XXX-XXX-XXXX*">
+                            </div>
+                            <div class="form-group ">
+                                <label for="name">Allow simultaneous call and elective procedures:</label>
+                                <div class="row">
+                                   
+                                    <div class="col-md-3">
+                                        <input type="radio" @RequiresBackup value="1" id="rbrequiresbackupYes" name="requiresbackup" class="rbrequiresbackupYes"> Yes
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        @if (RequiresBackup=="")
+                                        {
+                                         <input type="radio" @NotRequiresBackup value="0" id="rbrequiresbackupNo" name="requiresbackup" checked="checked"> <span>No</span>
+                                        
+                                        
+                                        }
+                                        else
+                                        {
+                                         <input type="radio" @NotRequiresBackup value="0" id="rbrequiresbackupNo" name="requiresbackup"> <span>No</span>
+                                        
+                                        }
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group display-hide" id="dvBrowse">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="exampleInputFile">Backup Policy</label>
+                                        <input type="file" id="FileUpload">
+                                    </div>
+                                    <input type="hidden" id="upld-filepath" value="@attachment" />
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 display-hide msg-fileupload">
+                                        <p id="msgUpload" class="help-block">
+                                            <span class="text-danger spnfailure"></span>
+                                            <span class="text-success spnsuccess"></span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row mar-bot-10 dvloader display-hide">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-10">
+                                        <img src="~/Assets/img/loader.gif" />
+                                    </div>
+                                </div>
+                                <div class="row padding-top-15">
+                                    <div class="col-md-6">
+                                        <button id="btn-upload" class="btn btn-primary display-hide">Upload</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group  @Displayclass" id="dvExistingBackup">
+                                <label for="exampleInputFile">Existing Backup Policy</label>
+                                @if (!string.IsNullOrEmpty(attachment))
+                                {
+                                    <a target="_blank" href="@attachment">
+                                        <p class="text-info">view</p>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <p class="text-info">No Backup Policy</p>
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </div><!-- /example -->
+                </div>
+                <div class="row">
+                    <div class="col-md-2 pull-right loader display-hide">
+                        <span style="line-height: 20px;"><img src="~/Assets/img/loader.gif" style="margin-bottom:6px" /></span>
+                    </div>
+                </div>
+                <div class="col-md-3 pull-right">
+                    <button type="submit" id="submit" class="btn btn-lg btn-submit btn-block">Submit</button>
+                </div>
+                <div class="col-md-3 pull-right">
+                    <a type="submit" id="cancel " class="btn btn-lg btn-submit btn-block" href="@Url.Action("Manage", "Admin")">Cancel</a>
+                </div>
+            </div>
+        </div>
+
+        <!--blog end-->
+    </div>
+
+    <input type="hidden" id="hfPracticeId" value="@Model.id" />
+
+</div>
+
+
+
+<script src="~/assets/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        function alertFunc() {
+            $('.Error').removeClass('display').addClass('display-hide')
+            $('.Success').removeClass('display').addClass('display-hide')
+        }
+        $("#submit").click(function () {
+          
+            var hasError = false;
+            var id = parseInt($('#hfPracticeId').val());
+            var name = $("#txtname").val();
+            var address = $("#txtaddress").val();
+            var urltext = $("#txturl").val();
+            var faxno = $("#txtfaxnumber").val();
+            var phone = $("#txtphonenumber").val();
+            var requiresbackup = $(".rbrequiresbackupYes").is(':checked');
+            var backupPolicy = $('#upld-filepath').val()
+            var Button = $(this)
+            $(Button).addClass('disabled')
+            $('.loader').removeClass('display-hide').addClass('display')
+            $('.Error').removeClass('display').addClass('display-hide')
+            $('.Success').removeClass('display').addClass('display-hide')
+            if (name == "") {
+                $('.Error').removeClass('display-hide').addClass('display')
+                $('.spnErrorMessage').html('<strong>Error : </strong> Please enter name.')
+                hasError = true;
+                $('.loader').removeClass('display').addClass('display-hide')
+                $(Button).removeClass('disabled')
+            }
+           else if (address == "") {
+               $('.Error').removeClass('display-hide').addClass('display')
+               $('.spnErrorMessage').html('<strong>Error : </strong> Please enter address.')
+                hasError = true;
+                $('.loader').removeClass('display').addClass('display-hide')
+                $(Button).removeClass('disabled')
+            }
+           else if (urltext == "") {
+                $('.Error').removeClass('display-hide').addClass('display')
+                $('.spnErrorMessage').html('<strong>Error : </strong>Please enter  url.')
+                hasError = true;
+                $('.loader').removeClass('display').addClass('display-hide')
+                $(Button).removeClass('disabled')
+               
+            }
+           else if (faxno == "") {
+               $('.Error').removeClass('display-hide').addClass('display')
+               $('.spnErrorMessage').html('<strong>Error : </strong> Please enter  fax number.')
+               hasError = true;
+               $('.loader').removeClass('display').addClass('display-hide')
+               $(Button).removeClass('disabled')
+             
+           }
+           else if (!ValidateFax(faxno)) {
+               $('.Error').removeClass('display-hide').addClass('display')
+               $('.spnErrorMessage').html('<strong>Error : </strong> Please enter valid fax number.')
+               hasError = true;
+               $('.loader').removeClass('display').addClass('display-hide')
+               $(Button).removeClass('disabled')
+           }
+           else if (phone == "") {
+                $('.Error').removeClass('display-hide').addClass('display')
+                $('.spnErrorMessage').html('<strong>Error : </strong> Please enter  phone number.')
+                hasError = true;
+                $('.loader').removeClass('display').addClass('display-hide')
+                $(Button).removeClass('disabled')
+            }
+         
+            else if (!ValidatePhone(phone)) {
+                $('.Error').removeClass('display-hide').addClass('display')
+                $('.spnErrorMessage').html('<strong>Error : </strong> Please enter valid phone number.')
+                hasError = true;
+                $('.loader').removeClass('display').addClass('display-hide')
+                $(Button).removeClass('disabled')
+            }
+            else if (backupPolicy == "") {
+                $('.Error').removeClass('display-hide').addClass('display')
+                $('.spnErrorMessage').html('<strong>Error : </strong> Please upload a file.')
+                hasError = true;
+                $('.loader').removeClass('display').addClass('display-hide')
+                $(Button).removeClass('disabled')
+            }
+
+            if (hasError == false) {
+                
+                if ($("#rbrequiresbackupNo").is(':checked'))
+                {
+                    backupPolicy=null
+                }
+                
+                var url = "/Admin/AddPractices";
+                $.post(url, { id:id,Name: name, Address: address, URL: urltext, FaxNumber: faxno, PhoneNumber: phone, IsActive: true ,RequiresBackup : requiresbackup,BackupPolicy:backupPolicy}, function (data) {
+
+                    if ((data.Status) == "Success") {
+                        $('.Error').removeClass('display').addClass('display-hide')
+                        $('.Success').removeClass('display-hide').addClass('display')
+                        $('.spnSuccessMessage').html('<strong>Successful : </strong> ' + data.Message)
+                        setTimeout(alertFunc, 3000);
+                        if (id == 0) {
+                            $(':input', '#form').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
+                        }
+                        $('.loader').removeClass('display').addClass('display-hide')
+                        $(Button).removeClass('disabled')
+                    }
+                    else if ((data.Status) == "Failure") {
+                        $('.Success').removeClass('display').addClass('display-hide')
+                        $('.Error').removeClass('display-hide').addClass('display')
+                        $('.spnErrorMessage').html('<strong>Error : </strong> ' + data.Message)
+                        $('.loader').removeClass('display').addClass('display-hide')
+                        $(Button).removeClass('disabled')
+                        setTimeout(alertFunc, 3000);
+                    }
+                    else {
+
+                        $('.Error').removeClass('display-hide').addClass('display')
+                        $('.spnErrorMessage').html('<strong>Error : </strong>Oops! Something went wrong while processing your request. Please try again')
+                        $('.loader').removeClass('display').addClass('display-hide')
+                        $(Button).removeClass('disabled')
+                        setTimeout(alertFunc, 3000);
+                    }
+                });
+            }
+            function ValidatePhone(phone) {
+                var expr = /^\d+$/;
+                return expr.test(phone);
+            };
+            function ValidateFax(faxno) {
+                var expr = /^\d+$/;
+                return expr.test(faxno);
+            };
+        });
+        
+    });
+    $(document).ready(function () {
+        if ($("#rbrequiresbackupYes").is(':checked'))
+        {
+            $('#dvBrowse').removeClass('display-hide').addClass('display')
+            $('#dvExistingBackup').removeClass('display').addClass('display')
+        }
+        //else if ($("#rbrequiresbackupYes").is(':checked')) {
+        //    $('#dvBrowse').removeClass('display-hide').addClass('display')
+        //}
+        $("#Slider").css("display", "none");
+        $('#FileUpload').change(function () {
+            var file = this.files[0];
+            name = file.name;
+            size = file.size;
+            type = file.type;
+            var ext = file.name.split('.').pop();
+            $('.msg-fileupload').removeClass('display').addClass('display-hide')
+            $('.msg-fileupload').find('.spnfailure').html('');
+            $('.msg-fileupload').find('.spnsuccess').html('');
+            $('#btn-upload').removeClass('display').addClass('display-hide')
+            if (file.name.length < 1) {
+
+            }
+            else if (file.size > 2500000) {
+                $('.msg-fileupload').removeClass('display-hide').addClass('display')
+                $('.msg-fileupload').find('.spnfailure').html('The file is too big');
+                $('#status-validfile').val('0');
+                return;
+            }
+           
+            else if(ext!="pdf"){
+                $('.msg-fileupload').removeClass('display-hide').addClass('display')
+                $('.msg-fileupload').find('.spnfailure').html('The file does not match pdf');
+                $('#status-validfile').val('0');
+                return;
+            }
+            
+            //else if (file.type != 'image/png' && file.type != 'image/jpg' && file.type != 'image/gif' && file.type != 'image/jpeg') {
+            //    $('.msg-fileupload').removeClass('display-hide').addClass('display')
+            //    $('.msg-fileupload').find('.spnfailure').html('The file does not match png, jpg or gif');
+            //    $('#status-validfile').val('0');
+            //    return;
+            //}
+            $('#btn-upload').removeClass('display-hide').addClass('display')
+            $('#status-validfile').val('1');
+        })
+        $('#rbrequiresbackupYes').change(function () {
+           
+            $('#dvBrowse').removeClass('display-hide').addClass('display')
+            $('#dvExistingBackup').removeClass('display-hide').addClass('display')
+        });
+        $('#rbrequiresbackupNo').change(function () {
+
+            $('#dvBrowse').removeClass('display').addClass('display-hide')
+            $('#dvExistingBackup').removeClass('display').addClass('display-hide')
+        });
+        $("#btn-upload").click(function () {
+            $("#btn-upload").addClass('disabled')
+            $('.msg-fileupload').removeClass('display').addClass('display-hide')
+            $('.msg-fileupload').find('.spnsuccess').html('');
+            $('.msg-fileupload').find('.spnfailure').html('');
+            var validstatus = $('#status-validfile').val()
+            if (validstatus == "0") {
+                $('.msg-fileupload').removeClass('display-hide').addClass('display')
+                $('.msg-fileupload').find('.spnfailure').html('Please select images with pdf extension only.');
+                $("#btn-upload").removeClass('disabled')
+                return;
+            }
+            $('.dvloader').removeClass('display-hide').addClass('display')
+            var formData = new FormData();
+            var totalFiles = document.getElementById("FileUpload").files.length;
+            for (var i = 0; i < totalFiles; i++) {
+                var file = document.getElementById("FileUpload").files[i];
+                formData.append("FileUpload", file);
+            }
+            $.ajax({
+                type: "POST",
+                url: '/Admin/UploadFile',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.Status == "Success") {
+                        $('.msg-fileupload').removeClass('display-hide').addClass('display')
+                        $('.msg-fileupload').find('.spnsuccess').html(response.Message);
+                        $('#upld-filepath').val(response.path);
+                        $('.dvloader').removeClass('display').addClass('display-hide')
+
+                    } else if (response.Status == "Failure") {
+                        $('.msg-fileupload').removeClass('display-hide').addClass('display')
+                        $('.msg-fileupload').find('.spnfailure').html(response.Message);
+                        $('.dvloader').removeClass('display').addClass('display-hide')
+                    }
+                    $("#btn-upload").removeClass('disabled')
+                },
+                error: function (error) {
+                    $('.dvloader').removeClass('display').addClass('display-hide')
+                    $("#btn-upload").removeClass('disabled')
+                    alert("Oops! Something went wrong while uploading please try again later.");
+                }
+            });
+        });
+    });
+</script>

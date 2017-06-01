@@ -1,0 +1,58 @@
+D:\BizBrolly Workspaces\TalaCall\T.Business\bin\Debug\T.Business.dll
+D:\BizBrolly Workspaces\TalaCall\T.Business\bin\Debug\T.Business.pdb
+D:\BizBrolly Workspaces\TalaCall\T.Business\bin\Debug\BizBrolly.Util.dll
+D:\BizBrolly Workspaces\TalaCall\T.Business\bin\Debug\T.Data.dll
+D:\BizBrolly Workspaces\TalaCall\T.Business\bin\Debug\T.Model.dll
+D:\BizBrolly Workspaces\TalaCall\T.Business\bin\Debug\EntityFramework.dll
+D:\BizBrolly Workspaces\TalaCall\T.Business\bin\Debug\T.Data.pdb
+D:\BizBrolly Workspaces\TalaCall\T.Business\bin\Debug\T.Model.pdb
+D:\BizBrolly Workspaces\TalaCall\T.Business\obj\Debug\T.Business.csprojResolveAssemblyReference.cache
+D:\BizBrolly Workspaces\TalaCall\T.Business\obj\Debug\T.Business.dll
+D:\BizBrolly Workspaces\TalaCall\T.Business\obj\Debug\T.Business.pdb
+C:\Users\Administrator\Downloads\TalaCall\T.Business\bin\Debug\T.Business.dll
+C:\Users\Administrator\Downloads\TalaCall\T.Business\bin\Debug\T.Business.pdb
+C:\Users\Administrator\Downloads\TalaCall\T.Business\bin\Debug\BizBrolly.Util.dll
+C:\Users\Administrator\Downloads\TalaCall\T.Business\bin\Debug\T.Data.dll
+C:\Users\Administrator\Downloads\TalaCall\T.Business\bin\Debug\T.Model.dll
+C:\Users\Administrator\Downloads\TalaCall\T.Business\bin\Debug\EntityFramework.dll
+C:\Users\Administrator\Downloads\TalaCall\T.Business\bin\Debug\System.Web.Mvc.dll
+C:\Users\Administrator\Downloads\TalaCall\T.Business\bin\Debug\System.Web.Razor.dll
+C:\Users\Administrator\Downloads\TalaCall\T.Business\bin\Debug\System.Web.WebPages.Razor.dll
+C:\Users\Administrator\Downloads\TalaCall\T.Business\bin\Debug\System.Web.WebPages.dll
+C:\Users\Administrator\Downloads\TalaCall\T.Business\bin\Debug\Microsoft.Web.Infrastructure.dll
+C:\Users\Administrator\Downloads\TalaCall\T.Business\bin\Debug\System.Web.WebPages.Deployment.dll
+C:\Users\Administrator\Downloads\TalaCall\T.Business\bin\Debug\T.Data.pdb
+C:\Users\Administrator\Downloads\TalaCall\T.Business\bin\Debug\T.Model.pdb
+C:\Users\Administrator\Downloads\TalaCall\T.Business\bin\Debug\System.Web.Mvc.xml
+C:\Users\Administrator\Downloads\TalaCall\T.Business\bin\Debug\System.Web.Razor.xml
+C:\Users\Administrator\Downloads\TalaCall\T.Business\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\Administrator\Downloads\TalaCall\T.Business\bin\Debug\System.Web.WebPages.xml
+C:\Users\Administrator\Downloads\TalaCall\T.Business\bin\Debug\Microsoft.Web.Infrastructure.xml
+C:\Users\Administrator\Downloads\TalaCall\T.Business\bin\Debug\System.Web.WebPages.Deployment.xml
+C:\Users\Administrator\Downloads\TalaCall\T.Business\obj\Debug\T.Business.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Downloads\TalaCall\T.Business\obj\Debug\T.Business.dll
+C:\Users\Administrator\Downloads\TalaCall\T.Business\obj\Debug\T.Business.pdb
+E:\TalaCall\TalaCall\T.Business\bin\Debug\T.Business.dll
+E:\TalaCall\TalaCall\T.Business\bin\Debug\T.Business.pdb
+E:\TalaCall\TalaCall\T.Business\bin\Debug\BizBrolly.Util.dll
+E:\TalaCall\TalaCall\T.Business\bin\Debug\T.Data.dll
+E:\TalaCall\TalaCall\T.Business\bin\Debug\T.Model.dll
+E:\TalaCall\TalaCall\T.Business\bin\Debug\EntityFramework.dll
+E:\TalaCall\TalaCall\T.Business\bin\Debug\System.Web.Mvc.dll
+E:\TalaCall\TalaCall\T.Business\bin\Debug\T.Data.pdb
+E:\TalaCall\TalaCall\T.Business\bin\Debug\T.Model.pdb
+E:\TalaCall\TalaCall\T.Business\obj\Debug\T.Business.csprojResolveAssemblyReference.cache
+E:\TalaCall\TalaCall\T.Business\obj\Debug\T.Business.dll
+E:\TalaCall\TalaCall\T.Business\obj\Debug\T.Business.pdb
+F:\MVC\TalaCall\TalaCall\T.Business\bin\Debug\T.Business.dll
+F:\MVC\TalaCall\TalaCall\T.Business\bin\Debug\T.Business.pdb
+F:\MVC\TalaCall\TalaCall\T.Business\bin\Debug\BizBrolly.Util.dll
+F:\MVC\TalaCall\TalaCall\T.Business\bin\Debug\T.Data.dll
+F:\MVC\TalaCall\TalaCall\T.Business\bin\Debug\T.Model.dll
+F:\MVC\TalaCall\TalaCall\T.Business\bin\Debug\EntityFramework.dll
+F:\MVC\TalaCall\TalaCall\T.Business\bin\Debug\System.Web.Mvc.dll
+F:\MVC\TalaCall\TalaCall\T.Business\bin\Debug\T.Data.pdb
+F:\MVC\TalaCall\TalaCall\T.Business\bin\Debug\T.Model.pdb
+F:\MVC\TalaCall\TalaCall\T.Business\obj\Debug\T.Business.csprojResolveAssemblyReference.cache
+F:\MVC\TalaCall\TalaCall\T.Business\obj\Debug\T.Business.dll
+F:\MVC\TalaCall\TalaCall\T.Business\obj\Debug\T.Business.pdb

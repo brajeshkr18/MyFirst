@@ -1,0 +1,100 @@
+﻿@model T.Model.clsOnCall
+
+<style>
+    .form-date {
+        padding: 10px;
+    }
+    .ip-append {
+        margin-bottom: 5px;
+        font-size: 0;
+        white-space: nowrap;
+    }
+        .ip-append .add-on1 {
+            display: inline-block;
+            width: auto;
+            min-width: 16px;
+            padding: 4px 5px;
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 20px;
+            text-align: center;
+            text-shadow: 0 1px 0 #ffffff;
+            background-color: #eeeeee;
+            border: 1px solid #ccc;
+            height: 31px !important;
+        }
+    .DT{
+
+    }
+</style>
+<div class="col-md-12">
+    <div class="row margin-bottom-20 padding-top-15">
+        <div class="col-md-12"><h4>On Call Details</h4></div>
+    </div>
+    <div class="row margin-bottom-20">
+        <div class="col-md-4 profile-img">
+            @if (string.IsNullOrEmpty(Model.objOnCallDetails.Picture))
+            {
+                <img class="img-rounded img-responsive" src="~/Assets/img/user.png" alt="" />
+            }
+            else
+            {
+                <img class="img-rounded img-responsive" src="@Url.Content(Model.objOnCallDetails.Picture)" alt="" />
+            }
+
+            @if (Model.objOnCallDetails.IsCredentialed == true)
+            {
+               <p class="user-credentialed">@(Model.objOnCallDetails.IsCredentialed == true ? "Credentialed" : " Not-Credentialed")</p>
+            }
+            else
+            {
+                <p class="user-notcredentialed">@(Model.objOnCallDetails.IsCredentialed == true ? "Credentialed" : " Not-Credentialed")</p>
+            }
+
+            
+        </div>
+        <div class="col-md-8 profile-details">
+            <div class="text-content">
+                <h4>@Model.objOnCallDetails.FirstName @Model.objOnCallDetails.LastName</h4>
+            </div>
+            <div class="text-content">
+                <label><strong>Address: </strong></label> @Model.objOnCallDetails.oclsPractices.Address
+            </div>
+            <div class="text-content">
+                <label><strong>Email: </strong></label> @Model.objOnCallDetails.Email
+            </div>
+            <div class="text-content">
+                <label><strong>Phone: </strong></label> @Model.objOnCallDetails.PhoneNumber
+            </div>
+            <div class="text-content">
+                <label><strong>Fax Number: </strong></label> @Model.objOnCallDetails.oclsPractices.FaxNumber
+            </div>
+            <div class="text-content">
+                <a href="@(Model.objOnCallDetails.oclsPractices.URL)" target="_blank"><label><strong>URL: </strong></label>@Model.objOnCallDetails.oclsPractices.URL</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="dt-callDates" class="row margin-bottom-20 text-center">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <br />
+                <label><strong>Starts Call </strong></label>
+            </div>
+            <div class="controls ip-append date form-date col-md-8">
+
+                <span class="add-on1">@Model.StartsCall</span>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <br />
+                <label><strong>Ends Call </strong></label>
+            </div>
+            <div class="controls ip-append date form-date col-md-8">
+                <span class="add-on1">@Model.EndsCall</span>
+            </div>
+        </div>
+        <div class="loader display-hide"><img src="~/Assets/img/loader.gif" /></div>
+    </div>
+</div>

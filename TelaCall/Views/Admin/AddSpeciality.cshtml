@@ -1,0 +1,141 @@
+﻿@model T.Model.clsSpeciality
+@{
+    ViewBag.Title = "AddSpeciality";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+      var IsActive = Model.IsActive == true ? "checked" : "";
+    var IsNotActive = Model.IsActive == false ? "checked" : "";
+}
+
+
+<div class="container">
+    <div class="row topmargin-medium">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="blog-left wow fadeInLeft add-user-form">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="blog-two-info">
+                            @if(@Model.id !=0)
+                            {
+                               <h4>Edit Speciality</h4>
+                            }
+                            else
+                            {
+                               <h4>Add Speciality</h4>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="Error alert-Message alert-danger display-hide margin-bottom-0 margin-top-20">
+                        <button class="close topx" data-close="alert">x</button>
+                        <span id="spnErrorMessage" class="spnErrorMessage"></span>
+                    </div>
+                    <div class="Success alert-Message alert-success display-hide margin-top-20 margin-bottom-10">
+                        <button class="close" data-close="alert">x</button>
+                        <span id="spnSuccessMessage" class="spnSuccessMessage"></span>
+                    </div>
+                </div>
+                <div class="blog-content">
+                    <!-- HTML -->
+                    <div class="bs-example">
+                        <div role="form" id="form">
+                            <div class="form-group">
+                                <label for="name">Speciality*</label>
+                                <input type="text" placeholder="Enter speciality" id="specialitytxt" value="@Model.Speciality" class="form-control input-md focusedInput">
+                            </div>
+                            <div class="form-group" hidden="hidden">
+                                <label for="name">Description*</label>
+                                <input type="text" placeholder="Enter description" id="descriptiontxt" value="@Model.Description" class="form-control input-md focusedInput">
+                            </div><div class="form-group ">
+                            <label for="name">IsActive</label>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <input type="radio" @IsActive value="1" id="rbIsActiveYes" name="canrequest" class="rbIsActiveYes"> Yes
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="radio" @IsNotActive value="0" id="rbIsActiveNo" name="canrequest" class="rbIsActiveNo" > No
+                                </div>
+                            </div>
+                        </div>
+
+
+                        </div>
+                    </div><!-- /example -->
+                </div>
+                <div class="row">
+                    <div class="col-md-2 pull-right loader display-hide">
+                        <span style="line-height: 20px;"><img src="~/Assets/img/loader.gif" style="margin-bottom:6px" /></span>
+                    </div>
+                </div>
+                <div class="col-md-3 pull-right">
+                    <button type="submit" id="submit" class="btn btn-lg btn-submit btn-block">Submit</button>
+                </div>
+                <div class="col-md-3 pull-right">
+                    <a type="submit" id="cancel " class="btn btn-lg btn-submit btn-block" href="@Url.Action("Manage", "Admin")">Cancel</a>
+                </div>
+            </div>
+        </div>
+
+        <!--blog end-->
+    </div>
+
+    <input type="hidden" id="hfSpecialityId" value="@Model.id" />
+</div>
+<script src="~/assets/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        function alertFunc() {
+            $('.Error').removeClass('display').addClass('display-hide')
+            $('.Success').removeClass('display').addClass('display-hide')
+        }
+        $("#submit").click(function () {
+            $('input[type="submit"]').prop('disabled', true);
+
+            var hasError = false;
+            var id = parseInt($('#hfSpecialityId').val());
+            var speciality = $("#specialitytxt").val();
+            var description = $("#descriptiontxt").val();
+            var IsActive = $(".rbIsActiveYes").is(':checked')
+            var Button = $(this)
+            $(Button).addClass('disabled')
+            $('.loader').removeClass('display-hide').addClass('display')
+            $('.Error').removeClass('display').addClass('display-hide')
+            $('.Success').removeClass('display').addClass('display-hide')
+            if (speciality == "") {
+                $('.Error').removeClass('display-hide').addClass('display')
+                $('.spnErrorMessage').html('<strong>Error : </strong>Please enter  speciality.')
+                hasError = true;
+                $('.loader').removeClass('display').addClass('display-hide')
+                $(Button).removeClass('disabled')
+            }
+            if (hasError == false) {
+                var url = "/Admin/AddSpeciality";
+                $.post(url, { id: id, Speciality: speciality, Description: description, IsActive: IsActive }, function (data) {
+                    if ((data.Status) == "Success") {
+                        $('.Error').removeClass('display').addClass('display-hide')
+                        $('.Success').removeClass('display-hide').addClass('display')
+                        $('.spnSuccessMessage').html('<strong>Successful : </strong> ' + data.Message)
+                        setTimeout(alertFunc, 3000);
+                        if (id == 0) {
+                            $(':input', '#form').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
+                        }
+                        $(Button).removeClass('disabled')
+                        setTimeout(alertFunc, 3000);
+                    }
+                    else if ((data.Status) == "Failure") {
+                        $('.Success').removeClass('display').addClass('display-hide')
+                        $('.Error').removeClass('display-hide').addClass('display')
+                        $('.spnErrorMessage').html('<strong>Error : </strong> ' + data.Message)
+                        $(Button).removeClass('disabled')
+                        
+                    }
+                    $('.loader').removeClass('display').addClass('display-hide')
+                });
+            }
+        });
+    });
+    $(document).ready(function () {
+        $("#Slider").css("display", "none");
+    });
+</script>

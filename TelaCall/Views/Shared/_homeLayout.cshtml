@@ -1,0 +1,273 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="cosmic">
+    <meta name="keywords" content="">
+    <link rel="shortcut icon" href="img/favicon.png">
+    <title>
+        TalaCall
+    </title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets/css/theme.css" rel="stylesheet">
+    <link href="~/Assets/css/bootstrap-reset.css" rel="stylesheet">
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet">-->
+    <!--external css-->
+    <link href="~/Assets/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Assets/css/flexslider.css" />
+    <link href="~/Assets/assets/bxslider/jquery.bxslider.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Assets/css/animate.css">
+    <link rel="stylesheet" href="~/Assets/assets/owlcarousel/owl.carousel.css">
+    <link rel="stylesheet" href="~/Assets/assets/owlcarousel/owl.theme.css">
+
+    <link href="~/Assets/css/superfish.css" rel="stylesheet" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'> -->
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/component.css">
+    <link href="~/Assets/css/style.css" rel="stylesheet">
+    <link href="~/Assets/css/style-responsive.css" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/parallax-slider/parallax-slider.css" />
+    <script type="text/javascript" src="~/Assets/js/parallax-slider/modernizr.custom.28468.js"></script>
+    <script src="~/Assets/js/jquery-1.8.3.min.js"></script>
+
+
+    @{
+        var UserRole = string.Empty;
+        var BgClass = string.Empty;
+        if (Request.IsAuthenticated && Session["UserInfo"] != null)
+        {
+            UserRole = ((T.Model.clsSignin)Session["UserInfo"]).Role;
+            BgClass = "login-bg";
+        }
+
+    }
+</head>
+
+<body class="">
+    <!--header start-->
+    <header class="head-section">
+        <div class="navbar navbar-default navbar-static-top container">
+            <div class="navbar-header">
+                <br><a href="@Url.Action("Index","Home")"><img id="logo_img" style="width:140px" src="~/assets/img/telaCall-logo.png" alt="logo"> </a>
+
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="@Url.Action("Index","Home")"> Home</a>
+                    </li>
+                    @if (UserRole == "Emergency" || UserRole == "Admin")
+                    {
+                        <li class="dropdown">
+                            <a href="@Url.Action("Emergency", "Home")"> Emergency</a>
+                        </li>
+                    }
+
+                    @if (UserRole == "Schedular" || UserRole == "Admin")
+                    {
+                        <li class="dropdown">
+                            <a href="@Url.Action("Scheduler", "Home")"> Scheduler</a>
+                        </li>
+                    }
+
+                    @if (UserRole == "Admin")
+                    {
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-close-others="false" data-delay="0" data-hover="dropdown" data-toggle="dropdown" href="#">
+                                Administration <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="">
+                                    <a href="@Url.Action("AddUser", "Admin")">Add User</a>
+                                </li>
+                                <li class="">
+                                    <a href="@Url.Action("AddOnCallPeople", "Admin")">Add OnCall People</a>
+                                </li>
+                                <li class="">
+                                    <a href="@Url.Action("AddSpeciality", "Admin")">Add Speciality</a>
+                                </li>
+                                <li class="">
+                                    <a href="@Url.Action("AddPractices", "Admin")">Add Practices</a>
+                                </li>
+                                <li class="">
+                                    <a href="@Url.Action("Manage", "Admin")">Manage</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+
+                    <li class="dropdown">
+                        <a href="/#aboutUs">About</a>
+                    </li>
+                    <li>
+                        <a href="/#contactus">Contact</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Emtala", "Home")">Emtala</a>
+                    </li>
+                    @if (Request.IsAuthenticated && Session["UserInfo"] != null)
+                    {
+                        <li><a href="@Url.Action("Logout", "Home")"><i class="fa fa-user pr-10">&nbsp;&nbsp;Log Out</i></a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@Url.Action("SignIn", "Home")"><i class="fa fa-user pr-10">&nbsp;&nbsp;Login</i></a></li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </header>
+    <!--header end-->
+    @RenderBody()
+
+
+
+    <!--footer start-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-sm-4 address wow fadeInUp" data-wow-duration="2s" data-wow-delay=".1s">
+                    <h1>
+                        contact info
+                    </h1>
+                    <address>
+                        <p><i class="fa fa-home pr-10"></i>Address: Mechanicsburg</p>
+                        <p><i class="fa fa-globe pr-10"></i>PA, United States </p>
+                        <p><i class="fa fa-mobile pr-10"></i>Phone : (000) 000-0000 </p>
+                        <p><i class="fa fa-envelope pr-10"></i>Email :   <a href="javascript:;">support@talacall.com</a></p>
+                    </address>
+                </div>
+                <div class="col-lg-4 col-sm-4">
+                    <div class="page-footer wow fadeInUp" data-wow-duration="2s" data-wow-delay=".5s">
+                        <h1>
+                            TalaCall
+                        </h1>
+                        <ul class="page-footer-list">
+                            <li>
+                                <i class="fa fa-angle-right"></i>
+                                <a href="#">Home</a>
+                            </li>
+                            <li>
+                                <i class="fa fa-angle-right"></i>
+                                <a href="@Url.Action("Emergency", "Home")"> Emergency</a>
+                            </li>
+                            <li>
+                                <i class="fa fa-angle-right"></i>
+                                <a href="@Url.Action("Scheduler", "Home")"> Scheduler</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-4">
+                    <div class="text-footer wow fadeInUp" data-wow-duration="2s" data-wow-delay=".7s">
+                        <h1>
+                            About TalaCall
+                        </h1>
+                        <p>
+                            TalaCall is hospital administration tool
+                            for health care professionals.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer end -->
+    <!--small footer start -->
+    <footer class="footer-small">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 pull-right">
+                    <ul class="social-link-footer list-unstyled">
+                        <li class="wow flipInX" data-wow-duration="2s" data-wow-delay=".1s"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li class="wow flipInX" data-wow-duration="2s" data-wow-delay=".2s"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                        <li class="wow flipInX" data-wow-duration="2s" data-wow-delay=".5s"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <div class="copyright">
+                        <p>&copy; Copyright - TalaCall</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--small footer end-->
+
+    <script src="~/Assets/js/BizBrolly-common.js"></script>
+    <script src="~/Assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Assets/js/hover-dropdown.js"></script>
+    <script defer src="~/Assets/js/jquery.flexslider.js"></script>
+    <script type="text/javascript" src="~/Assets/assets/bxslider/jquery.bxslider.js"></script>
+    <script type="text/javascript" src="~/Assets/js/jquery.parallax-1.1.3.js"></script>
+    <script src="~/Assets/js/wow.min.js"></script>
+    <script src="~/Assets/assets/owlcarousel/owl.carousel.js"></script>
+    <script src="~/Assets/js/jquery.easing.min.js"></script>
+    <script src="~/Assets/js/link-hover.js"></script>
+    <script src="~/Assets/js/superfish.js"></script>
+    <script type="text/javascript" src="~/Assets/js/parallax-slider/jquery.cslider.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#da-slider').cslider({
+                autoplay: true,
+                bgincrement: 100
+            });
+        });
+    </script>
+    <!--common script for all pages-->
+    <script src="~/js/common-scripts.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            $('.bxslider1').bxSlider({
+                minSlides: 5,
+                maxSlides: 6,
+                slideWidth: 360,
+                slideMargin: 2,
+                moveSlides: 1,
+                responsive: true,
+                nextSelector: '#slider-next',
+                prevSelector: '#slider-prev',
+                nextText: 'Onward →',
+                prevText: '← Go back'
+            });
+
+        });
+    </script>
+    <script>
+        $('a.info').tooltip();
+        $(window).load(function () {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                start: function (slider) {
+                    $('body').removeClass('loading');
+                }
+            });
+        });
+        $(document).ready(function () {
+
+            $("#owl-demo").owlCarousel({
+
+                items: 4
+
+            });
+
+        });
+
+        jQuery(document).ready(function () {
+            jQuery('ul.superfish').superfish();
+        });
+
+        new WOW().init();
+
+
+    </script>
+</body>
+</html>

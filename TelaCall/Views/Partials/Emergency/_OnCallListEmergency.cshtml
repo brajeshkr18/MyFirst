@@ -1,0 +1,70 @@
+﻿@model T.Model.EmergencyModel
+@{
+    int counter = 0;
+    DateTime SelectedDate = DateTime.Now;
+    if (ViewBag.SelectedDate != null)
+    {
+        SelectedDate = (DateTime)(ViewBag.SelectedDate);
+    }
+         
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="blog-two-info">
+            <h4>On call list</h4>
+        </div>
+    </div>
+</div>
+@if (Model.lstOnCall.Count > 0)
+{
+    <div class="bs-table-example mar-b-30">
+        <div class="table-responsive content-scroll">
+            <h5 class="align-center">@(SelectedDate.DayOfWeek + "     " + "    " + SelectedDate.ToString("MM/dd/yyyy hh:mm")) @(SelectedDate.Hour >= 12 ? "PM" : "AM")</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        @*<th></th>*@
+                        <th>Speciality</th>
+                        <th>On Call</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="table-selectable">
+
+
+                    @foreach (var Oncall in Model.lstOnCall)
+                    {
+                        <tr>
+                            @*<td>@(counter + 1)</td>*@
+
+                            <td>@Oncall.objOnCallDetails.Speciality</td>
+
+                            <td>
+                                @Oncall.objOnCallDetails.FirstName @Oncall.objOnCallDetails.LastName
+
+                            </td>
+                            <td>
+                                <input class="hf-OnCallPersonId" type="hidden" value="@Oncall.Id" />
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.table-responsive -->
+    </div>
+
+}
+else
+{
+
+    <div id="target-persondetail" class="bs-table-example mar-b-30">
+        <h5 class="align-center">@(SelectedDate.DayOfWeek + "     " + "    " + SelectedDate.ToString("MM/dd/yyyy hh:mm")) @(SelectedDate.Hour >= 12 ? "PM" : "AM")</h5>
+        <div class="placeholder-loading" style="margin:auto;">
+            No on call people found for selected date.
+        </div>
+    </div>
+
+}

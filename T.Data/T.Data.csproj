@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FAB77687-EAB9-4E61-872E-FC8E785CFF47}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>T.Data</RootNamespace>
+    <AssemblyName>T.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\TelaCall\BuildLibraries\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminDAL.cs" />
+    <Compile Include="Entity\mtblRole.cs">
+      <DependentUpon>TelaCall.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblActivecall.cs">
+      <DependentUpon>TelaCall.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblNote.cs">
+      <DependentUpon>TelaCall.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblOnCall.cs">
+      <DependentUpon>TelaCall.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblOnCallPeople.cs">
+      <DependentUpon>TelaCall.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblPractice.cs">
+      <DependentUpon>TelaCall.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblSpeciality.cs">
+      <DependentUpon>TelaCall.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblUser.cs">
+      <DependentUpon>TelaCall.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TelaCall.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TelaCall.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TelaCall.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TelaCall.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TelaCall.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TelaCall.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Usp_GetRoles_Result.cs">
+      <DependentUpon>TelaCall.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Web_GetUsers_Result.cs">
+      <DependentUpon>TelaCall.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Web_Practices_Result.cs">
+      <DependentUpon>TelaCall.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Web_Roles_Result.cs">
+      <DependentUpon>TelaCall.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Web_Speciality_Result.cs">
+      <DependentUpon>TelaCall.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Web_Users_Result.cs">
+      <DependentUpon>TelaCall.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HomeDAL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\T.Model\T.Model.csproj">
+      <Project>{1e364abe-66a3-4814-b1a6-2c7fc31ddbef}</Project>
+      <Name>T.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="Entity\TelaCall.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TelaCall.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\TelaCall.edmx.diagram">
+      <DependentUpon>TelaCall.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Entity\TelaCall.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TelaCall.edmx</DependentUpon>
+      <LastGenOutput>TelaCall.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Entity\TelaCall.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TelaCall.edmx</DependentUpon>
+      <LastGenOutput>TelaCall.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

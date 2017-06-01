@@ -1,0 +1,313 @@
+﻿@model T.Model.clsScheduler
+@{
+    ViewBag.Title = "Scheduler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int counter = 0;
+}
+
+<link href="~/Assets/DTPicker/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="~/Assets/DTPicker/css/bootstrap-datetimepicker.css" rel="stylesheet" media="screen">
+
+
+<!--container start-->
+<div class="container">
+    <div class="row topmargin-medium page-scheduler">
+        <div class="col-md-4">
+            <div class="blog-left wow fadeInLeft">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="blog-two-info">
+                            <h4>Select Date</h4>
+                        </div>
+                    </div>
+                </div>
+                <div id="dt-container" class="blog-content">
+                    <!-- HTML -->
+                    <div id="datetimepicker">
+
+                    </div>
+                    <input id="ip-txtdate" class="dt" type="hidden" value="@( DateTime.Now.Month.ToString("d2") + "/" + DateTime.Now.Day + "/" + DateTime.Now.Year)" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="blog-right wow fadeInRight">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="blog-two-info">
+                            <h4>Schedule on call</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="blog-content">
+                        <div class="table-responsive content-scroll">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        @*<th></th>*@
+                                        <th>Speciality</th>
+                                        <th>On Call</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+
+                                    @foreach (var specility in Model.lstSpecility)
+                                    {
+                                        <tr>
+                                            @*<td>@(counter + 1)</td>*@
+
+                                            <td>@specility.Speciality</td>
+
+                                            <td>
+                                                <select class="form-control input-md border-radius ddl-people">
+                                                    <option selected="selected" value=0>Doctors</option>
+                                                    @foreach (var people in Model.lstOnCallPeople.Where(peo => peo.SpecialityId == specility.id))
+                                                    {
+                                                        <option value="@people.id"> @people.LastName,@people.FirstName </option>
+                                                    }
+                                                </select>
+
+                                            </td>
+                                        </tr>
+                                        counter++;
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div id="target-persondetail" class="blog-right wow fadeInRight profile-box container-profile">
+
+                <div class="placeholder-loading loader-personDetails display-hide" style="margin:auto;">
+                    <img src="~/Assets/img/loader.gif" /><br />
+                     Loading...
+                </div>
+
+            </div>
+        </div>
+        <!--blog end-->
+    </div>
+    <div class="row page-scheduler">
+        <div class="col-md-4">
+                <div id="dv-oncalllst" class="blog-left wow fadeInLeft">
+
+                    @Html.Partial("~/Views/Partials/_OnCallList.cshtml", Model)
+
+                </div>
+            </div>
+        <div class="col-md-4">
+            <div id="dv-oncallpersonDetail" class="blog-right wow profile-box fadeInRight">
+
+
+            </div>
+            <div id="loader-oncallpersonDetails" class="placeholder-loading loader-personDetails display-hide" style="margin:auto;">
+                <img src="~/Assets/img/loader.gif" /><br />
+                Loading...
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div id="dv-oncallpersonDetails" class="blog-right profile-box wow fadeInRight">
+
+            </div>
+        </div>
+        <!--blog end-->
+    </div>
+</div>
+<!--container end-->
+<script type="text/javascript" src="~/Assets/DTPicker/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="~/Assets/DTPicker/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="~/Assets/DTPicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="~/Assets/DTPicker/js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#datetimepicker').datetimepicker({
+            language: 'en',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0,
+            onChangeDateTime: function (dp, $input) {
+                $('#datePickValue').text($input.val());
+            }
+        });
+        $('.ddl-people').change(function () {
+            var SelectedUser = $(this).val();
+            var Url = '/Home/GetPersonDetails'
+            var PostData = { personId: SelectedUser };
+            SetPeoplelistToDefault(SelectedUser);
+            $('.loader-personDetails').removeClass('display-hide').addClass('display')
+            $.post(Url, PostData, function (Result) {
+
+                $('#target-persondetail').html(Result);
+                $('.loader-personDetails').removeClass('display').addClass('display-hide');
+                setTimeout(function () {
+                    ChangeSelectedDatetime($('#ip-txtdate').val());
+                },400)
+            });
+
+        });
+        $('#target-persondetail').on('click', '#btn-createcall', function () {
+            $('.error-datetime').html('')
+            var Url = '/Home/CreateSchedule';
+            var StartDate = $('#txt-startscalldate').val();
+            var EndDate = $('#txt-endscalldate').val();
+            var arrStartDate = StartDate.split('-')
+            var arrEnddate = EndDate.split('-')
+            StartDate = Date.parse(arrStartDate[0] + ' ' + arrStartDate[1]);
+            EndDate = Date.parse(arrEnddate[0] + ' ' + arrEnddate[1]);
+            if (StartDate == "" && EndDate == "") {
+                $('.error-datetime').html('<span class="text-danger">Please select start or end date.</span>');
+                
+            }else if ((StartDate > EndDate)) {
+                $('.error-datetime').html('<span class="text-danger">you can not select a date prior to start date</span>');
+                $('#txt-endscalldate').val('')
+                
+            } else {
+                
+                StartDate = FormatDatetime(arrStartDate);
+                EndDate = FormatDatetime(arrEnddate);
+                if (!isNaN(StartDate) || !isNaN(EndDate)) {
+                    return false;
+                } else if (StartDate == '' || EndDate == '') {
+                    $('.error-datetime').html('<span class="text-danger">Please select start or end date.</span>');
+                    return false;
+                }
+                $('.loader').removeClass('display-hide').addClass('display')
+                var PersonId = $('#hf-personId').val();
+                Data = { PersonId: PersonId, StartsCall: StartDate, EndsCall: EndDate }
+                $.post(Url, Data, function (Result) {
+                    if (Result.Status == "Success") {
+                        //Contact();
+                        SetPeoplelistToDefault(-1);
+                        $('.error-datetime').html('<span class="text-success">' + Result.Message + '</span>');
+                        FillOnCallList($('#ip-txtdate').val());
+                        $('#btn-cancel').trigger('click')
+                    } else if (Result.Status == "Failure") {
+                        $('.error-datetime').html('<span class="text-danger">' + Result.Message + '</span>');
+                    } else {
+                        $('.error-datetime').html('<span class="text-danger">Oops! Something went wrong while processing your request.</span>');
+                    }
+
+                    $('.loader').removeClass('display').addClass('display-hide')
+                });
+
+            }
+        });
+        $('#target-persondetail').on('click', '#btn-cancel', function () {
+            $('#target-persondetail').html('');
+            SetPeoplelistToDefault(-1)
+        });
+        $('#dt-container').on('change', '#ip-txtdate', function () {
+            var StartDate = $('#ip-txtdate').val();
+            FillOnCallList(StartDate);
+            ChangeSelectedDatetime(StartDate);
+        });
+        $(document).on('click', '#dv-oncalllst tr:not(:first)', function () {
+            $('#dv-oncalllst').find('tr.row-selected').removeClass('row-selected');
+            $(this).addClass('row-selected')
+            var PersonId = $(this).find('.hf-OnCallPersonId').val();
+            GetonCallPersonDetails(PersonId);
+        })
+
+
+        function FormatDatetime(date) {
+                var item = new Date(date);
+                var year = item.getFullYear();
+                var month = (1 + item.getMonth()).toString();
+                month = month.length > 1 ? month : '0' + month;
+                var Day = parseInt(item.getDate());
+                Day = Day >= 10 ? Day : ('0' + Day);
+                var Hour = parseInt(item.getHours());
+                Hour = Hour >= 10 ? Hour : ('0' + Hour);
+                var Minuits = parseInt(item.getMinutes())
+                Minuits = Minuits >= 10 ? Minuits : ('0' + Minuits);
+                var FinalItem = Day + '-' + month + '-' + year + ' ' + Hour + ':' + Minuits;
+                FinalItem = year + '-' + month + '-' + Day + ' ' + Hour + ':' + Minuits;
+                var haserror = (isNaN(year) || isNaN(month) || isNaN(Day) || isNaN(Hour) || isNaN(Minuits) || isNaN(year))
+                haserror = (month == '0NaN') || (Day == '0NaN') || (Hour == '0NaN') || (Minuits == '0NaN')
+                
+                if (haserror) {
+                    return '';
+                } else {
+                    return FinalItem;
+                }
+                
+        }
+        function SetPeoplelistToDefault(ExceptValue) {
+            $('.ddl-people').each(function () {
+                if ($(this).val() != ExceptValue) {
+                    $(this).val(0)
+                }
+            });
+            return true;
+        }
+        function FillOnCallList(SelectedDate) {
+            var Url = '/Home/GetOnCallList';
+            Data = { StartDate: SelectedDate }
+            $.post(Url, Data, function (Result) {
+                $('#dv-oncalllst').html(Result);
+            });
+        }
+        function GetonCallPersonDetails(PersonId) {
+            var Url = '/Home/GetOnCallDetails';
+            Data = { PeopleId: PersonId }
+            $('#dv-oncallpersonDetail').html('')
+            $('#loader-oncallpersonDetails').removeClass('display-hide').addClass('display')
+            $.post(Url, Data, function (Result) {
+                $('#dv-oncallpersonDetail').html(Result);
+                $('#loader-oncallpersonDetails').removeClass('display').addClass('display-hide')
+            });
+        }
+        function ChangeSelectedDatetime(SelectedDate) {
+            var monthNames = ["January", "February", "March", "April", "May", "June",
+                                    "July", "August", "September", "October", "November", "December"
+            ];
+            var Datetime = new Date(SelectedDate);
+            var NextDate = new Date(Datetime.getFullYear(), Datetime.getMonth(), Datetime.getDate() + 1);
+            $('#txt-startscalldate').val(Datetime.getDate() + " " + monthNames[Datetime.getMonth()] + " " + Datetime.getFullYear() + " - " + formatAMPM(Datetime));
+            $('#txt-endscalldate').val(NextDate.getDate() + " " + monthNames[NextDate.getMonth()] + " " + NextDate.getFullYear() + " - " + formatAMPM(NextDate));
+        }
+
+        function formatAMPM(date) {
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var ampm = hours >= 12 ? 'pm' : 'am';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            var strTime = hours + ':' + minutes + ' ' + ampm;
+            return strTime;
+        }
+
+        function Contact() {
+            alert('test')
+            var url = "/Admin/Contact";
+            $.post(url, { Name: 'test', Email: 'test', phone: 'test', Message: 'test', }, function (data) {
+
+                if ((data.Status) == "Success") {
+                    $('.Error').removeClass('display').addClass('display-hide')
+                    $('.Success').removeClass('display-hide').addClass('display')
+                    $('.spnSuccessMessage').html('<strong>Successful:</strong> ' + data.Message)
+                    $(':input', '#form').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
+                    $('#submit').show();
+                }
+                else if ((data.Status) == "Failure") {
+                    $('.Success').removeClass('display').addClass('display-hide')
+                    $('.Error').removeClass('display-hide').addClass('display')
+                    $('.spnErrorMessage').html('<strong>Error:</strong> ' + data.Message)
+                    $('#submit').show();
+                }
+            });
+        }
+
+
+
+    })
+</script>

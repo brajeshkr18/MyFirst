@@ -1,0 +1,217 @@
+﻿@model T.Model.EmergencyModel
+@{
+    ViewBag.Title = "Emergency";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="assets/css/jquery.datetimepicker.css" rel="stylesheet" />
+<!--=================================
+ inner-intro-->
+
+<section class="inner-intro bg-2 bg-opacity-black-70"></section>
+
+<!--=================================
+ inner-intro-->
+
+<!--=================================
+ Blog-->
+
+<section class="blog blog-grid-3-column white-bg page-section-ptb">
+    <div class="container">
+        <div class="row page-emergency">
+            <div class="col-lg-4 col-md-4 col-sm-4 item-emergency">
+                <div class="blog-entry post-1">
+                    <div class="entry-title mt-30 mb-20">
+                        <i class="fa fa-calendar"></i>
+                        <h4>Select Call-In Date</h4>
+                    </div>
+                    <input type="text" id="datetimepicker3" />
+                </div>
+            </div>
+            <!-- ================================================ -->
+            <div class="col-lg-4 col-md-4 col-sm-4 item-emergency">
+                    <div class="entry-title mt-30 mb-20">
+                        <h4>Tuesday,April 10, 2016 7:16 PM</h4>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Speciality</th>
+                                    <th>On Call</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var person in Model.lstOnCallPeople)
+                                {
+                                    <tr>
+                                        <td>@person.Speciality</td>
+                                        <td>@person.FirstName @person.LastName</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+            <!-- ================================================ -->
+            <div class="col-lg-4 col-md-4 col-sm-4 item-emergency">
+                
+                <div class="blog-entry post-2 audio-video clearfix">
+                    <div class="col-md-4">
+                        <div class="blog-entry-image hover-direction clearfix">
+                            <div class="portfolio-item">
+                                <img class="img-responsive" src="~/Assets/images/blog/big/06.jpg" alt="">
+                                <div class="portfolio-caption">
+                                    <div class="portfolio-overlay">
+                                        <a href="#"><i class="fa fa-plus"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="entry-title mt-30 mb-20">
+                        <i class="fa fa-file-video-o"></i>
+                        <h4>Blogpost with Self Hosted Video (HTML5 Video)</h4>
+                    </div>
+                    <div class="entry-meta">
+                        <a href="#"><i class="fa fa-user"></i> By The Corps</a>
+                        <a href="#"><i class="fa fa-comments-o"></i> 5 Comments</a>
+                        <a href="#"><i class="fa fa-folder-open"></i> Design/Graphics</a>
+                    </div>
+                    <div class="entry-content mt-20 mb-30">
+                        <p>Lorem ipsum dolor sit amet of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris.</p>
+                    </div>
+                    <div class="entry-share clearfix">
+                        <a class="button-small pull-left" href="#">
+                            <span>Read More</span>
+                            <i class="fa fa-hand-o-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ================================================ -->
+
+        <div class="row page-emergency">
+            <div class="col-lg-4 col-md-4 col-sm-4 item-emergency">
+                <div class="blog-entry post-1">
+                    <div class="entry-title mt-30 mb-20">
+                        <i class="fa fa-calendar"></i>
+                        <h4>Select Call-In Date</h4>
+                    </div>
+                    <div class="entry-meta">
+                        <a href="#"><i class="fa fa-user"></i> By The Corps</a>
+                        <a href="#"><i class="fa fa-comments-o"></i> 5 Comments</a>
+                        <a href="#"><i class="fa fa-folder-open"></i> Design/Graphics</a>
+                    </div>
+                    <div class="entry-content mt-20 mb-30">
+                        <p>Lorem ipsum dolor sit amet of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt pharetra. </p>
+                    </div>
+                    <div class="entry-share clearfix">
+                        <a class="button-small pull-left" href="#">
+                            <span>Read More</span>
+                            <i class="fa fa-hand-o-right"></i>
+                        </a>
+                        <div class="share small pull-right">
+                            <a class="share-button" href="#">
+                                <i class="fa fa-share-alt"></i>
+                            </a>
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li> <a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a href="#"><i class="fa fa-vimeo"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ================================================ -->
+            <div class="col-lg-4 col-md-4 col-sm-4 item-emergency">
+                <div class="blog-entry post-2">
+                    <div class="entry-title mt-30 mb-20">
+
+                        <h4>Tuesday,April 10, 2016 7:16 PM</h4>
+                    </div>
+                    <div class="entry-meta">
+                        <a href="#"><i class="fa fa-user"></i> By The Corps</a>
+                        <a href="#"><i class="fa fa-comments-o"></i> 5 Comments</a>
+                        <a href="#"><i class="fa fa-folder-open"></i> Design/Graphics</a>
+                    </div>
+                    <div class="entry-content mt-20 mb-30">
+                        <p>Lorem ipsum dolor sit amet of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt pharetra.</p>
+                    </div>
+                    <div class="entry-share clearfix">
+                        <a class="button-small pull-left" href="#">
+                            <span>Read More</span>
+                            <i class="fa fa-hand-o-right"></i>
+                        </a>
+                        <div class="share small pull-right">
+                            <a class="share-button" href="#">
+                                <i class="fa fa-share-alt"></i>
+                            </a>
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li> <a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a href="#"><i class="fa fa-vimeo"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ================================================ -->
+            <div class="col-lg-4 col-md-4 col-sm-4 item-emergency">
+
+                <div class="blog-entry post-2 audio-video clearfix">
+
+                    <div class="entry-title mt-30 mb-20">
+                        <h4>Create Call-In</h4>
+                    </div>
+
+                    <div class="entry-meta">
+                        <a href="#"><i class="fa fa-user"></i> By The Corps</a>
+                        <a href="#"><i class="fa fa-comments-o"></i> 5 Comments</a>
+                        <a href="#"><i class="fa fa-folder-open"></i> Design/Graphics</a>
+                    </div>
+
+                    <div class="entry-share clearfix">
+                        <a class="button-small pull-left" href="#">
+                            <span>Read More</span>
+                            <i class="fa fa-hand-o-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- ================================================ -->
+    </div>
+</section>
+
+<!--=================================
+ Blog-->
+<script src="assets/js/DatetimePicker/jquery.js"></script>
+<script src="assets/js/DatetimePicker/jquery.datetimepicker.full.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#datetimepicker3').datetimepicker({ value: '' })
+        //$("#datetimepicker3").trigger('focus');
+    });
+
+    function PageloadEvents() {
+
+    }
+
+    function LoadOnCallPeople() {
+        $('.').click(function () {
+
+        })
+    }
+
+
+
+</script>

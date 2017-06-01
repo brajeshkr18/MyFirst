@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TelaCallEntitiesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="mtblRoles">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Role" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="RoleDescription" Type="varchar" MaxLength="500" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblActivecalls">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OnCAllPersonID" Type="bigint" Nullable="false" />
+    <Property Name="RequestPersonId" Type="bigint" Nullable="false" />
+    <Property Name="CallReqTime" Type="datetime" Nullable="false" />
+    <Property Name="EMATALA" Type="bit" Nullable="false" />
+    <Property Name="TAT" Type="varchar" MaxLength="100" />
+    <Property Name="PatientNumber" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="RoomNumber" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CallEndedTime" Type="datetime" />
+    <Property Name="CallEndedBy" Type="bigint" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ReasonToEndCall" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="tblNotes">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Notes" Type="varchar" MaxLength="500" />
+    <Property Name="ActiveCallId" Type="bigint" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblOnCall">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OnCAllPersonID" Type="bigint" Nullable="false" />
+    <Property Name="Speciality" Type="bigint" Nullable="false" />
+    <Property Name="StartsCall" Type="datetime" Nullable="false" />
+    <Property Name="EndsCall" Type="datetime" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblOnCallPeople">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="100" />
+    <Property Name="LastName" Type="varchar(max)" />
+    <Property Name="PhoneNumber" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="CellNO" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="EmailAddress" Type="varchar" MaxLength="100" />
+    <Property Name="PracticeId" Type="bigint" Nullable="false" />
+    <Property Name="SpecialityId" Type="bigint" Nullable="false" />
+    <Property Name="IsCredentialed" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CanRequest" Type="bit" Nullable="false" />
+    <Property Name="Picture" Type="varchar(max)" />
+    <Property Name="CallCarrier" Type="varchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="FullName" Type="varchar" MaxLength="250" />
+    <Property Name="IsEmtala" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblPractices">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="Address" Type="varchar" MaxLength="100" />
+    <Property Name="URL" Type="varchar(max)" />
+    <Property Name="PhoneNumber" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="FaxNumber" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="RequiresBackup" Type="bit" />
+    <Property Name="BackupPolicy" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="tblSpeciality">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Speciality" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblUsers">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="250" />
+    <Property Name="MiddleName" Type="varchar" MaxLength="250" />
+    <Property Name="LastName" Type="varchar" MaxLength="250" />
+    <Property Name="RoleId" Type="bigint" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="EmailId" Type="varchar" MaxLength="50" />
+    <Property Name="Phone" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__tblActive__OnCAl__34C8D9D1">
+    <End Role="tblOnCall" Type="Self.tblOnCall" Multiplicity="1" />
+    <End Role="tblActivecalls" Type="Self.tblActivecalls" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblOnCall">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tblActivecalls">
+        <PropertyRef Name="OnCAllPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblOnCall__OnCAl__3B75D760">
+    <End Role="tblOnCallPeople" Type="Self.tblOnCallPeople" Multiplicity="1" />
+    <End Role="tblOnCall" Type="Self.tblOnCall" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblOnCallPeople">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tblOnCall">
+        <PropertyRef Name="OnCAllPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblOnCall__Speci__2F10007B">
+    <End Role="tblSpeciality" Type="Self.tblSpeciality" Multiplicity="1" />
+    <End Role="tblOnCallPeople" Type="Self.tblOnCallPeople" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblSpeciality">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tblOnCallPeople">
+        <PropertyRef Name="SpecialityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblOnCall__Speci__5DCAEF64">
+    <End Role="tblSpeciality" Type="Self.tblSpeciality" Multiplicity="1" />
+    <End Role="tblOnCallPeople" Type="Self.tblOnCallPeople" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblSpeciality">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tblOnCallPeople">
+        <PropertyRef Name="SpecialityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblOnCall__Speci__6477ECF3">
+    <End Role="tblSpeciality" Type="Self.tblSpeciality" Multiplicity="1" />
+    <End Role="tblOnCall" Type="Self.tblOnCall" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblSpeciality">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tblOnCall">
+        <PropertyRef Name="Speciality" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblUsers__RoleId__182C9B23">
+    <End Role="mtblRoles" Type="Self.mtblRoles" Multiplicity="1" />
+    <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="mtblRoles">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tblUsers">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="Web_Practices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Id" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="Web_Roles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="Web_SaveOnCallPeople" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="bigint" Mode="In" />
+    <Parameter Name="OnCAllPersonID" Type="varchar" Mode="In" />
+    <Parameter Name="FirstName" Type="varchar" Mode="In" />
+    <Parameter Name="LastName" Type="varchar" Mode="In" />
+    <Parameter Name="PhoneNumber" Type="decimal" Mode="In" />
+    <Parameter Name="CellNO" Type="decimal" Mode="In" />
+    <Parameter Name="EmailAddress" Type="varchar" Mode="In" />
+    <Parameter Name="PracticeId" Type="bigint" Mode="In" />
+    <Parameter Name="SpecialityId" Type="bigint" Mode="In" />
+    <Parameter Name="IsEmtala" Type="bit" Mode="In" />
+    <Parameter Name="IsCredentialed" Type="bit" Mode="In" />
+    <Parameter Name="CanRequest" Type="bit" Mode="In" />
+    <Parameter Name="CallCarrier" Type="varchar" Mode="In" />
+    <Parameter Name="UserId" Type="varchar" Mode="In" />
+    <Parameter Name="Picture" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="Web_SaveSpeciality" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Id" Type="bigint" Mode="In" />
+    <Parameter Name="Speciality" Type="varchar" Mode="In" />
+    <Parameter Name="Description" Type="varchar" Mode="In" />
+    <Parameter Name="IsActive" Type="bit" Mode="In" />
+    <Parameter Name="CreatedBy" Type="bigint" Mode="In" />
+    <Parameter Name="ModifiedBy" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="Web_SaveUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="bigint" Mode="In" />
+    <Parameter Name="FirstName" Type="varchar" Mode="In" />
+    <Parameter Name="LastName" Type="varchar" Mode="In" />
+    <Parameter Name="Password" Type="varchar" Mode="In" />
+    <Parameter Name="RoleId" Type="bigint" Mode="In" />
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+    <Parameter Name="EmailId" Type="varchar" Mode="In" />
+    <Parameter Name="Phone" Type="varchar" Mode="In" />
+    <Parameter Name="UserId" Type="bigint" Mode="In" />
+    <Parameter Name="IsActive" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="Web_Speciality" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Id" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="Web_Users" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Id" Type="bigint" Mode="In" />
+  </Function>
+  <EntityContainer Name="TelaCallEntitiesModelStoreContainer">
+    <EntitySet Name="mtblRoles" EntityType="Self.mtblRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblActivecalls" EntityType="Self.tblActivecalls" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblNotes" EntityType="Self.tblNotes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblOnCall" EntityType="Self.tblOnCall" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblOnCallPeople" EntityType="Self.tblOnCallPeople" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblPractices" EntityType="Self.tblPractices" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblSpeciality" EntityType="Self.tblSpeciality" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__tblActive__OnCAl__34C8D9D1" Association="Self.FK__tblActive__OnCAl__34C8D9D1">
+      <End Role="tblOnCall" EntitySet="tblOnCall" />
+      <End Role="tblActivecalls" EntitySet="tblActivecalls" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblOnCall__OnCAl__3B75D760" Association="Self.FK__tblOnCall__OnCAl__3B75D760">
+      <End Role="tblOnCallPeople" EntitySet="tblOnCallPeople" />
+      <End Role="tblOnCall" EntitySet="tblOnCall" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblOnCall__Speci__2F10007B" Association="Self.FK__tblOnCall__Speci__2F10007B">
+      <End Role="tblSpeciality" EntitySet="tblSpeciality" />
+      <End Role="tblOnCallPeople" EntitySet="tblOnCallPeople" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblOnCall__Speci__5DCAEF64" Association="Self.FK__tblOnCall__Speci__5DCAEF64">
+      <End Role="tblSpeciality" EntitySet="tblSpeciality" />
+      <End Role="tblOnCallPeople" EntitySet="tblOnCallPeople" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblOnCall__Speci__6477ECF3" Association="Self.FK__tblOnCall__Speci__6477ECF3">
+      <End Role="tblSpeciality" EntitySet="tblSpeciality" />
+      <End Role="tblOnCall" EntitySet="tblOnCall" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblUsers__RoleId__182C9B23" Association="Self.FK__tblUsers__RoleId__182C9B23">
+      <End Role="mtblRoles" EntitySet="mtblRoles" />
+      <End Role="tblUsers" EntitySet="tblUsers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

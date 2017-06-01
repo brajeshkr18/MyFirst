@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "T.Data", "T.Data", "{66F0D9C8-6B4E-4581-AC3F-6ACB2BC9EA58}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "T.Business", "T.Business", "{1660D838-A69A-43FB-BA04-A4134A1738AF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "T.Model", "T.Model", "{652C7EA3-D396-4094-AF3D-A52211A3D49F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelaCall", "TelaCall\TelaCall.csproj", "{FEAFA575-E2DF-45D9-9BC0-2458873B9255}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T.Business", "T.Business\T.Business.csproj", "{A54DD67B-9B58-4168-A90B-7652F0E8FC5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T.Data", "T.Data\T.Data.csproj", "{FAB77687-EAB9-4E61-872E-FC8E785CFF47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T.Model", "T.Model\T.Model.csproj", "{1E364ABE-66A3-4814-B1A6-2C7FC31DDBEF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FEAFA575-E2DF-45D9-9BC0-2458873B9255}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEAFA575-E2DF-45D9-9BC0-2458873B9255}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEAFA575-E2DF-45D9-9BC0-2458873B9255}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEAFA575-E2DF-45D9-9BC0-2458873B9255}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A54DD67B-9B58-4168-A90B-7652F0E8FC5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A54DD67B-9B58-4168-A90B-7652F0E8FC5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A54DD67B-9B58-4168-A90B-7652F0E8FC5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A54DD67B-9B58-4168-A90B-7652F0E8FC5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAB77687-EAB9-4E61-872E-FC8E785CFF47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAB77687-EAB9-4E61-872E-FC8E785CFF47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAB77687-EAB9-4E61-872E-FC8E785CFF47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAB77687-EAB9-4E61-872E-FC8E785CFF47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E364ABE-66A3-4814-B1A6-2C7FC31DDBEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E364ABE-66A3-4814-B1A6-2C7FC31DDBEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E364ABE-66A3-4814-B1A6-2C7FC31DDBEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E364ABE-66A3-4814-B1A6-2C7FC31DDBEF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A54DD67B-9B58-4168-A90B-7652F0E8FC5B} = {1660D838-A69A-43FB-BA04-A4134A1738AF}
+		{FAB77687-EAB9-4E61-872E-FC8E785CFF47} = {66F0D9C8-6B4E-4581-AC3F-6ACB2BC9EA58}
+		{1E364ABE-66A3-4814-B1A6-2C7FC31DDBEF} = {652C7EA3-D396-4094-AF3D-A52211A3D49F}
+	EndGlobalSection
+EndGlobal

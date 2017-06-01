@@ -1,0 +1,110 @@
+﻿@model T.Model.clsNotes
+@{
+    int counter = 0;
+    string ClassAlert = string.Empty;
+    long SelectedId = ViewBag.Id ?? 0;
+    string ClassSelected = string.Empty;
+}
+<div class="col-md-12">
+    <div class="row padding-top-15">
+        <div class="col-md-12"><h4>Notes</h4></div>
+    </div>
+    <div class="row margin-bottom-10">
+        <div class="bs-example">
+            <div role="form">
+                <div class="col-md-12">
+
+                    <div>
+
+                        <label><strong>Notes</strong></label>
+                    </div>
+                    <div>
+                        <textarea id="txtnotes" class="form-control display" rows="3"></textarea>
+                    </div>
+                </div>
+            
+                <div id="" class="row padding-top-10 text-center">
+                    <div class="error-notes"></div>
+                    <div class="loader-callin display-hide"><img src="~/Assets/img/loader.gif" /></div>
+                </div>
+
+                <div class="container-endcallbtns padding-10">
+                    <div class="col-md-6"><button id="btn-addnotessubmit" type="button" class="btn btn-primary margin-0">Add Notes</button></div>
+                    <div class="col-md-6"><button id="btn-endCancel" type="button" class="btn btn-primary margin-0">Cancel</button></div>
+                </div>
+                <div class="row margin-top-20">
+                @if (Model.lstNotes.Count > 0)
+{
+    <div class="bs-table-example margin-top-10">
+
+        <div style="height: 120px;overflow: auto;" class="table-responsive ">
+            <table class=" table">
+                <thead>
+                    <tr>
+                        <th> </th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var Oncall in Model.lstNotes)
+                    {
+                        <tr>
+                            <td>@(counter + 1)</td>
+
+                            <td>@Oncall.Notes</td>
+                        </tr>
+                        counter++;
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.table-responsive -->
+    </div>
+
+}
+else
+{
+
+                    <div id="target-persondetail" class="bs-table-example">
+                        <div class="row" style="margin: 15px; ">
+                            No  Notes Found.
+                        </div>
+                    </div>
+
+                }
+               </div>
+
+            </div>
+        </div>
+    </div>
+    
+    
+</div>
+@*
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.rbl-endcallreason').change(function () {
+            if ($(this).hasClass('rbl-other')) {
+                $('#txtendcall-other').removeClass('display-hide').addClass('display')
+            } else {
+                $('#txtendcall-other').removeClass('display').addClass('display-hide')
+            }
+        })
+        $('.rbl-endcallinsubmit').change(function () {
+            if ($(this).hasClass('rbl-other')) {
+                $('#txtendcall-other').removeClass('display-hide').addClass('display')
+            } else {
+                $('#txtendcall-other').removeClass('display').addClass('display-hide')
+            }
+        })
+    })
+</script>*@
+
+
+@*<div class="row">
+    <div class="col-md-12">
+        <div class="blog-two-info">
+            <h4>Notes</h4>
+        </div>
+    </div>
+</div>*@

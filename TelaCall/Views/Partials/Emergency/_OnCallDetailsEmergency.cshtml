@@ -1,0 +1,95 @@
+﻿@model T.Model.clsOnCall
+
+<div class="col-md-12">
+    <div class="row margin-bottom-20 padding-top-15">
+        <div class="col-md-12"><h4>On Call Details</h4></div>
+    </div>
+    <div class="row margin-bottom-20">
+        <div class="col-md-4 profile-img">
+            @if (string.IsNullOrEmpty(Model.objOnCallDetails.Picture))
+            {
+                <img class="img-rounded img-responsive" src="~/Assets/img/user.png" alt="" />
+            }
+            else
+            {
+                <img class="img-rounded img-responsive" src="@Url.Content(Model.objOnCallDetails.Picture)" alt="" />
+            }
+
+            @if (Model.objOnCallDetails.IsCredentialed == true)
+            {
+                <p class="user-credentialed">Credentialed</p>
+            }
+            else
+            {
+                <p class="user-notcredentialed">Not-Credentialed</p>
+            }
+        </div>
+        <div class="col-md-8 profile-details">
+            <div class="text-content">
+                <h4>@Model.objOnCallDetails.FirstName @Model.objOnCallDetails.LastName</h4>
+            </div>
+            <div class="text-content">
+                <label><strong>Address: </strong></label> @Model.objOnCallDetails.oclsPractices.Address
+            </div>
+            <div class="text-content">
+                <label><strong>Email: </strong></label> @Model.objOnCallDetails.Email
+            </div>
+            <div class="text-content">
+                <label><strong>Phone: </strong></label> @Model.objOnCallDetails.PhoneNumber
+            </div>
+            <div class="text-content">
+                <label><strong>Fax Number: </strong></label> @Model.objOnCallDetails.oclsPractices.FaxNumber
+            </div>
+            <div class="text-content">
+                <a href="@Model.objOnCallDetails.oclsPractices.URL" target="_blank"><label><strong>URL: </strong></label>@Model.objOnCallDetails.oclsPractices.URL</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="" class="row margin-bottom-20 text-center">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <label><strong>Starts Call </strong></label>
+            </div>
+            <div class="controls input-append date col-md-8" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+
+                <label>@Model.StartsCall</label>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <label><strong>Ends Call </strong></label>
+            </div>
+            <div class="controls input-append date col-md-8" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                <label>@Model.EndsCall</label>
+            </div>
+        </div>
+        <div class="loader display-hide"><img src="~/Assets/img/loader.gif" /></div>
+    </div>
+
+    <div class="row margin-bottom-20 text-center">
+        <div class="col-md-12">
+            
+            @if (@Model.IsInActiveCall)
+            {
+                <div class="col-md-12">
+                    <span class="text-success">User is currently in active call.</span>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-6">
+                    <button id="btn-CallIn" class="btn btn-primary margin-0">
+                        Call In
+                    </button>
+                </div>
+            }
+            
+            <input id="hf-speciality" type="hidden" value="@Model.objOnCallDetails.Speciality" />
+            <input id="hf-oncallperson" type="hidden" value="@Model.objOnCallDetails.FirstName @Model.objOnCallDetails.LastName" />
+            <input id="hf-oncallpersonId" type="hidden" value="@Model.Id" />
+        </div>
+    </div>
+</div>

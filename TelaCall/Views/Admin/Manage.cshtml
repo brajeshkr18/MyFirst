@@ -1,0 +1,482 @@
+﻿@model T.Model.clsManage
+@{
+    ViewBag.Title = "TalaCall- Manage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!--container start-->
+<link href="~/Assets/DTPicker/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="~/Assets/DTPicker/css/bootstrap-datetimepicker.css" rel="stylesheet" media="screen">
+<div class="container">
+    <div class="row topmargin-medium page-scheduler">
+        <div class="col-md-6">
+            <div class="blog-left wow fadeInLeft add-user-form">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="blog-two-info">
+                            <h4>Users</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="blog-content">
+                    <!-- HTML -->
+                    <div class="">
+                        <div>
+                            <div class="table-responsive content-scroll">
+                                <table class="table table-bordered table-striped">
+                                    <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th> Action </th>
+                                            <th nowrap>Full Name</th>
+                                            <th nowrap>Email</th>
+                                            <th nowrap>Phone</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var users in Model.lstUsers)
+                                        {
+                                        <tr>
+                                            <td nowrap>
+                                                <a title="Edit" href="@Url.Action("ManageUsers", "Admin", new { Id = users.id })"> Edit</a>
+                                                |
+                                                <a title="Delete" class="btn-DeleteUsers" href="javascript:;"><input type="hidden" value="@users.id" />Delete</a>
+
+                                            </td>
+
+                                            <td nowrap>
+                                                @(users.FirstName + " " + users.LastName)
+                                            </td>
+                                            @*<td>
+                                            @users.LastName
+                                        </td>*@
+                                            @*<td>
+                                            @users.Role
+                                        </td>
+                                        <td>
+                                            @users.Username
+                                        </td>*@
+                                            <td>
+                                                @users.Email
+                                            </td>
+                                            <td>
+                                                @users.Phone
+
+                                            </td>
+
+
+
+                                        </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div><!-- /example -->
+
+                    </div>
+                </div>
+            </div>
+            <!--blog end-->
+        </div>
+        <div class="col-md-6">
+            <div class="blog-right wow fadeInLeft add-user-form">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="blog-two-info">
+                            <h4>OnCall People</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="blog-content">
+                    <div class="table-responsive content-scroll">
+                        <table class="table table-bordered table-striped">
+                            <colgroup>
+                                <col class="col-xs-1">
+                                <col class="col-xs-7">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th> Action </th>
+                                    <th nowrap>Full Name</th>
+                                    <th nowrap> Phone Number </th>
+                                    <th nowrap>Email Address</th>
+                                    <th nowrap>Call Carrier</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var onCall in Model.lstOnCallPeople)
+                                        {
+                                        <tr>
+                                            <td nowrap>
+                                                <a title="Edit" href="@Url.Action("ManageOnCallPeople", "Admin", new { Id = onCall.id })"> Edit</a>
+                                                |
+                                                <a title="Delete" class="btn-DeleteOnCallPeople" href="javascript:;"><input type="hidden" value="@onCall.id" /> Delete</a>
+
+                                            </td>
+                                            <td nowrap>
+                                                @(onCall.FirstName + " " + onCall.LastName)
+                                            </td>
+                                            <td nowrap>
+                                                @onCall.PhoneNumber
+                                            </td>
+                                            <td>
+                                                @onCall.Email
+                                            </td>
+                                            <td nowrap>
+                                                @onCall.CallCarrier
+
+                                            </td>
+
+                                        </tr>
+                                        }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div><!-- /example -->
+            </div>
+            <!--blog end-->
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row page-scheduler">
+        <div class="col-md-6">
+            <div class="blog-left wow fadeInLeft add-user-form">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="blog-two-info">
+                            <h4>Speciality</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="blog-content">
+                    <div class="table-responsive content-scroll" id="specialitytable">
+                        <table class="table table-bordered table-striped">
+                            <colgroup>
+                                <col class="col-xs-1">
+                                <col class="col-xs-7">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th> Action </th>
+                                    <th>Speciality</th>
+                                    <th> IsActive </th>
+                                    @*<th> Description </th>*@
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var speciality in Model.lstSpeciality)
+                                        {
+                                        <tr>
+                                            <td nowrap>
+                                                <a title="Edit" href="@Url.Action("ManageSpeciality", "Admin", new { Id = speciality.id })"> Edit</a>
+                                                |
+                                                @if (speciality.IsActive)
+                                                    {
+                                                    <a title="Deactivate" href="javascript:;" class="btn-DeactivateSpeciality"><input type="hidden" id="specialityid" value="@speciality.id" name="specialityId" /> Deactivate</a>
+                                                    }
+                                                    else
+                                                    {
+                                                    <a title="Activate" href="javascript:;" class="btn-ActivateSpeciality"><input type="hidden" id="specialityid" value="@speciality.id" name="specialityId" /> Activate</a>
+                                                    }
+                                            </td>
+
+                                            <td>
+                                                @speciality.Speciality
+                                            </td>
+                                            @if (speciality.IsActive)
+                                                {
+                                                <th>Yes</th>
+                                                }
+                                                else
+                                                {
+                                                <th>No</th>
+                                                }
+
+                                        </tr>
+                                        }
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+            <!--blog end-->
+        </div>
+        <div class="col-md-6">
+            <div class="blog-right wow fadeInRight add-user-form">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="blog-two-info">
+                            <h4>Practices</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="blog-content">
+                    <!-- HTML -->
+                            <div class="table-responsive content-scroll">
+                                <table class="table table-bordered table-striped">
+                                    <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th> Action </th>
+                                            <th nowrap>Name</th>
+                                            <th nowrap> Address </th>
+                                            <th nowrap>URL</th>
+                                            <th nowrap> Phone Number </th>
+                                            <th nowrap> Backup Policy </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var Practices in Model.lstPractices)
+                                        {
+                                            <tr>
+                                                <td nowrap>
+                                                    <a title="Edit" href="@Url.Action("ManagePractices", "Admin", new { Id = Practices.id })"> Edit</a>
+                                                    |
+                                                    <a title="Delete" class="btn-DeletePractices" href="javascript:;"><input type="hidden" value="@Practices.id" /> Delete</a>
+
+                                                </td>
+                                                <td nowrap>
+                                                    @Practices.Name
+                                                </td>
+                                                <td nowrap>
+                                                    @Practices.Address
+                                                </td>
+
+
+                                                <td nowrap><a href="@("http://"+Practices.URL)" target="_blank">@Practices.URL</a></td>
+                                               
+                                                @*<td nowrap>
+
+                                @Practices.URL
+                            </td>*@
+
+                                                <td nowrap>
+                                                    @Practices.PhoneNumber</td>
+                                                @if ((Practices.BackupPolicy == "") || (Practices.BackupPolicy == null))
+                                                {
+                                                    <td nowrap>NA</td>
+                                                }
+                                                else
+                                                {
+                                                    <td nowrap><a href="@(Practices.BackupPolicy)" target="_blank">view</a></td>
+                                                }
+                                                
+                                               
+                                            </tr>
+                                            
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                 </div><!-- /example -->
+            </div>
+            <!--blog end-->
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row topmargin-medium page-scheduler">
+        <div class="col-md-6">
+            <div class="blog-left wow fadeInLeft add-user-form">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="blog-two-info">
+                            <h4>Select Date-Time</h4>
+                        </div>
+                    </div>
+                </div>
+                <div id="dt-container" class="blog-content">
+                    <div id="datetimepicker">
+
+                    </div>
+                    <input id="ip-txtdate" class="dt" type="hidden" value="" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="dv-oncalllst" class="blog-right wow fadeInRight">
+                @Html.Partial("~/Views/Partials/Manage/_OnCallListManage.cshtml", Model.oclsEmergency)
+            </div>
+        </div>
+    </div>
+</div>
+<!--container end-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.btn-DeactivateSpeciality').click(function () {
+            var idVal = $(this).find('input').val();
+            if (confirm("Are you sure you want to deactivate this speciality")) {
+                var url = "/Admin/DeleteSpeciality";
+                $.post(url, { id: idVal, IsActive: false }, function (data) {
+                    if (data.Status == "Success") {
+                        alert("Speciality Deactivate successfully ")
+                        location.reload();
+                    }
+                    else if (Result.Status == "Failure") {
+
+                        alert("Oops! something went wrong while deleting speciality. Please try again later.")
+                    }
+                });
+            }
+        })
+        $('.btn-ActivateSpeciality').click(function () {
+            var idVal = $(this).find('input').val();
+
+            if (confirm("Are you sure you want to activate this speciality")) {
+                var url = "/Admin/DeleteSpeciality";
+                $.post(url, { id: idVal, IsActive: true }, function (data) {
+                    if (data.Status == "Success") {
+                        alert("Speciality Activated successfully ")
+                        location.reload();
+                    }
+                    else if (Result.Status == "Failure") {
+
+                        alert("Oops! something went wrong while deleting speciality. Please try again later.")
+                    }
+                });
+            }
+        })
+        $('.btn-DeleteOnCallPeople').click(function () {
+            var idVal = $(this).find('input').val();
+            if (confirm("Are you sure you want to delete this OnCallPeople")) {
+                var Url = "/Admin/DeleteOnCallPeople";
+                var Data = {id: idVal, IsActive: false};
+                DeleteOnCallPerson(Url, Data);
+            }
+        })
+        $('.btn-DeleteUsers').click(function () {
+            var idVal = $(this).find('input').val();
+            if (confirm("Are you sure you want to delete this User")) {
+                var Url = "/Admin/DeleteUsers";
+                $.post(Url, { id: idVal, IsActive: false }, function (Result) {
+                    if (Result.Status == "Success") {
+                        alert("User Delected successfully ")
+                        location.reload();
+                    }
+                    else if (Result.Status == "Failure") {
+
+                        alert("Oops! something went wrong while deleting User. Please try again later.")
+                    }
+                });
+            }
+        })
+        $('.btn-DeletePractices').click(function () {
+            var idVal = $(this).find('input').val();
+            if (confirm("Are you sure you want to delete this Practice")) {
+                var Url = "/Admin/DeletePractices";
+                $.post(Url, { id: idVal, IsActive: false }, function (Result) {
+                    if (Result.Status == "Success") {
+                        alert("Practice Delected successfully ")
+                        location.reload();
+                    }
+                    else if (Result.Status == "Failure") {
+
+                        alert("Oops! something went wrong while deleting Practice. Please try again later.")
+                    }
+                });
+            }
+        })
+
+
+        function DeleteOnCallPerson(URL,DATA){
+            $.post(URL, DATA, function (Result) {
+                if (Result.Status == "Success") {
+                    alert("OnCallPeople Delected successfully ")
+                    location.reload();
+                }
+                else if (Result.Status == "Failure") {
+                    alert("Oops! something went wrong while deleting OnCallPeople. Please try again later.")
+                }
+            });
+        }
+    });
+</script>
+<script type="text/javascript" src="~/Assets/DTPicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="~/Assets/DTPicker/js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#datetimepicker').datetimepicker({
+            language: 'en',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0,
+            onChangeDateTime: function (dp, $input) {
+                $('#datePickValue').text($input.val());
+            }
+        });
+
+        $('#dt-container').on('change', '#ip-txtdate', function () {
+            var StartDate = $('#ip-txtdate').val();
+            FillOnCallList(StartDate);
+        });
+
+        $(document).on('click', '#dv-oncalllst tr:not(:first)', function () {
+            $('#dv-oncalllst').find('tr.row-selected').removeClass('row-selected');
+            $(this).addClass('row-selected')
+            var PersonId = $(this).find('.hf-OnCallPersonId').val();
+
+            if ($('#dv-oncalllst').find('tr.row-selected').length > 0) {
+                if ($('#btn-deleteOnCall').hasClass('disabled')) {
+                    $('#btn-deleteOnCall').removeClass('disabled')
+                }
+            }
+        });
+
+
+        $(document).on('click', '#btn-deleteOnCall', function () {
+            var PersonId = $('#dv-oncalllst').find('tr.row-selected').find('.hf-OnCallPersonId').val();
+            if (confirm("Are you sure you want to remove on call schedule?")) {
+                var Url = "/Admin/RemoveOnCallPerson";
+                var Data = { Id: PersonId };
+                RemoveOnCall(Url, Data);
+            }
+
+        })
+
+      
+        function FillOnCallList(SelectedDate) {
+            var Url = '/Home/GetOnCallListEmergency';
+            $('#dv-oncalllst').html('')
+            $('#dv-oncallpersonDetail').html('')
+            ClearAllFields('#dv-createCallin');
+            $('#loader-oncalllist').removeClass('display-hide').addClass('display')
+            Data = { SelectedDate: SelectedDate, IsManage: true }
+            $.post(Url, Data, function (Result) {
+                $('#dv-oncalllst').html(Result);
+                $('#loader-oncalllist').removeClass('display').addClass('display-hide')
+            });
+        }
+        function RemoveOnCall(URL, DATA) {
+            $.post(URL, DATA, function (Result) {
+                if (Result.Status == "Success") {
+                    alert("OnCallPeople schedule deleted successfully.")
+                    location.reload();
+                }
+                else if (Result.Status == "Failure") {
+                    alert("Oops! something went wrong.")
+                }
+            });
+        }
+        
+       
+    })
+</script>

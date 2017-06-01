@@ -1,0 +1,109 @@
+﻿@model T.Model.clsOnCallPeople
+    <div class="col-md-12">
+        <div class="row margin-bottom-20 padding-top-15">
+            <div class="col-md-12"><h4>Schedule: @Model.Speciality</h4></div>
+        </div>
+        <div class="row margin-bottom-20">
+            <div class="col-md-4 profile-img">
+                @if (string.IsNullOrEmpty(Model.Picture))
+                {
+                    <img class="img-rounded img-responsive" src="~/Assets/img/user.png" alt="" />
+                }
+                else
+                {
+                    <img class="img-rounded img-responsive" src="@Url.Content(Model.Picture)" alt="" />
+                }
+                
+                @if (Model.IsCredentialed == true)
+                {
+                    <p class="user-credentialed">Credentialed</p>
+                }
+                else
+                {
+                    <p class="user-notcredentialed">Not-Credentialed</p>
+                }
+            </div>
+            <div class="col-md-8 profile-details">
+                <div class="text-content">
+                    <h4>@Model.FirstName @Model.LastName</h4>
+                </div>
+                <div class="text-content">
+                    <label><strong>Address: </strong></label> @Model.oclsPractices.Address
+                </div>
+                <div class="text-content">
+                    <label><strong>Email: </strong></label> @Model.Email
+                </div>
+                <div class="text-content">
+                    <label><strong>Phone: </strong></label> @Model.PhoneNumber
+                </div>
+                <div class="text-content">
+                    <label><strong>Fax Number: </strong></label> @Model.oclsPractices.FaxNumber
+                </div>
+                <div class="text-content">
+                    
+                    <a href="@Model.oclsPractices.URL" target="_blank"><label><strong>URL: </strong></label>@Model.oclsPractices.URL</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="" class="row margin-bottom-20 text-center">
+            <div class="col-md-12">
+                
+                <div class="col-md-4"><br />
+                    <label><strong>Call Begins </strong></label>
+                </div>
+                <div class="controls input-append date form_datetime col-md-8"  data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                    <input id="txt-startscalldate" size="16" type="text" value="">
+                    <input id="dt-start" class="dt-start" type="hidden" />
+                   
+                    <span class="add-on"><i class="icon-th"></i></span>
+                    @*<span class="add-on"><i class="icon-remove"></i></span>*@
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-4"><br />
+                    <label><strong>Call Ends </strong></label>
+                </div>
+                <div class="controls input-append date form_datetime col-md-8" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                    <input id="txt-endscalldate" size="16" type="text" value="">
+                    <input id="dt-end" class="dt-end" type="hidden" />
+                    <span class="add-on"><i class="icon-th"></i></span>
+                    @*<span class="add-on"><i class="icon-remove"></i></span>*@
+                </div>
+            </div>
+            <div class="error-datetime"></div>
+            
+            <div class="loader display-hide"><img src="~/Assets/img/loader.gif" /></div>
+        </div>
+
+        <div class="row margin-bottom-20 text-center">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <button id="btn-createcall" class="btn btn-primary margin-0">
+                        Add to schedule
+                    </button>
+                </div>
+                <div class="col-md-6">
+                    <button id="btn-cancel" class="btn btn-primary margin-0">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" value="@Model.id" id="hf-personId" />
+    </div>
+
+<script type="text/javascript">
+    $('.form_datetime').datetimepicker({
+        //language:  'fr',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        minuteStep: 15,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1,
+
+    });
+</script>

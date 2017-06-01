@@ -1,0 +1,163 @@
+﻿@model T.Model.clsActiveCall
+@{
+    string ClassAlert = string.Empty;
+}
+<style>
+    .lbl-small {
+        font-size: 12px !important;
+        display: inline-block;
+        margin: 0 0 0 2px;
+        position: absolute;
+        top: 3px;
+        left: 31px;
+    }
+</style>
+<div class="col-md-12">
+    <div class="row margin-bottom-20 padding-top-15">
+        <div class="col-md-12"><h4>Active Call Details</h4></div>
+    </div>
+    <div class="row margin-bottom-20">
+        <div class="col-md-4 profile-img">
+            @if (string.IsNullOrEmpty(Model.oclsOnCallPeople.Picture))
+            {
+                <img class="img-rounded img-responsive" src="~/Assets/img/user.png" alt="" />
+            }
+            else
+            {
+                <img class="img-rounded img-responsive" src="@Url.Content(Model.oclsOnCallPeople.Picture)" alt="" />
+            }
+
+            @if (Model.oclsOnCallPeople.IsCredentialed == true)
+            {
+                <p class="user-credentialed">Credentialed</p>
+            }
+            else
+            {
+                <p class="user-notcredentialed">Not-Credentialed</p>
+            }
+        </div>
+        <div class="col-md-8 profile-details">
+            <div class="text-content">
+                <h4>@Model.oclsOnCallPeople.Speciality</h4>
+            </div>
+            <div class="text-content">
+                <h4>@Model.oclsOnCallPeople.FirstName @Model.oclsOnCallPeople.LastName</h4>
+            </div>
+            <div class="row text-content">
+                <label class="col-md-6"><strong>Phone: </strong></label> <span class="col-md-6 no-padding-left">@Model.oclsOnCallPeople.PhoneNumber</span>
+            </div>
+            <div class="row text-content">
+                <label class="col-md-6"><strong>Starts Call: </strong></label> <span class="col-md-6 no-padding-left">@Model.oclsOnCall.StartsCall</span>
+            </div>
+            <div class="row text-content">
+                <label class="col-md-6"><strong>Ends Call: </strong></label> <span class="col-md-6 no-padding-left">@Model.oclsOnCall.EndsCall</span>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div id="dt-callDates" class="margin-bottom-20">
+        <div class="row">
+            <div class="col-md-6">
+                <label>Requested By:</label>
+            </div>
+            <div class="col-md-6 dv-reviseshide display">
+                <label>@Model.RequestorName</label>
+            </div>
+            <div class="col-md-6 dv-reviseshow display-hide">
+                <select id="ddl-reviserequestor" style="padding: 6px 6px !important;" class="form-control input-md border-radius ">
+                    <option selected="selected" value=0>Select requesting</option>
+                    @foreach (var index in Model.lstonCallPeople)
+                    {
+                        <option value="@index.id">@index.FirstName @index.LastName</option>
+                    }
+
+                </select>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Call Request Time </label>
+            </div>
+            <div class="col-md-6">
+                <label>@Model.CallReqTime</label>
+            </div>
+        </div>
+        <div class="row padding-top-10">
+            <div class="col-md-6">
+                <label>Elapsed Time</label>
+            </div>
+            <div class="col-md-6">
+                @{
+                    var elapsedTime = (Model.CallReqTime.AddMinutes(Convert.ToInt32(Model.TAT)) - DateTime.Now).TotalMinutes;
+                    ClassAlert = elapsedTime > 0 ? "text-success" : "text-danger";
+
+                }
+                <span class="@ClassAlert font-bold">@String.Format("{0:0.##}", elapsedTime)</span> Min.
+            </div>
+        </div>
+        <div class="row padding-top-10">
+            <div class="col-md-6">
+                <label>EMTALA </label>
+            </div>
+            <div class="col-md-6 dv-reviseshide display">
+                <label>@(Model.EMTALA == true ? "YES" : "NO")</label>
+            </div>
+            <div class="col-md-6 dv-reviseshow display-hide">
+                <div class="col-md-6"><input type="radio" name="EMTALA" class="rbl-revisedemtala" value="1" checked="checked"> <label class="lbl-small"> YES</label></div>
+                <div class="col-md-6"><input type="radio" name="EMTALA" class="rbl-revisedemtala" value="0"><label class="lbl-small"> NO</label></div>
+                
+                <br>
+            </div>
+        </div>
+
+        <div class="row padding-top-10">
+            <div class="col-md-6">
+                <label>Response Time</label>
+            </div>
+            <div class="col-md-6 dv-reviseshide display">
+                <span class="font-bold">@Model.TAT</span> Min.
+            </div>
+            <div class="dv-reviseshow col-md-6 display-hide">
+                <input id="txtrevise-Tat" type="number" />
+            </div>
+        </div>
+        <div class="loader display-hide"><img src="~/Assets/img/loader.gif" /></div>
+    </div>
+
+    <div class="row margin-bottom-20 text-center dv-btnmainform display container-revise">
+        <div class="col-md-12">
+            <button id="btn-revise" class="btn btn-primary margin-0">
+                Revise
+            </button>
+            <button id="btn-EndCallin" class="btn btn-primary margin-0">
+                End
+            </button>
+            <button id="btn-Notes" class="btn btn-primary margin-0">
+                Notes
+            </button>
+            <button id="btn-CallInAgain" class="btn btn-success margin-0">
+                Call Again
+            </button>
+        </div>
+        <input id="hf-activepersonDetailId" type="hidden" value="@Model.Id" />
+        <input id="hf-activepersonSpecility" type="hidden" value="@Model.oclsOnCallPeople.Speciality" />
+        <input id="hf-activepersonName" type="hidden" value="@Model.oclsOnCallPeople.FirstName @Model.oclsOnCallPeople.LastName" />
+    </div>
+    <div class="row margin-bottom-20 text-center dv-btnreviseform display-hide container-revise">
+        @*<div id="dt-callDates" class="row margin-bottom-10 text-center">
+            <div class="error-revisecallin"></div>
+            <div class="loader-revisecallin display-hide"><img src="~/Assets/img/loader.gif" /></div>
+        </div>*@
+        <div class="row">
+            <div class="col-md-12">
+                <button id="btn-ReviseSubmit" class="btn btn-primary margin-0">
+                    Submit
+                </button>
+                <button id="btn-ReviseCancel" class="btn btn-primary margin-0">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

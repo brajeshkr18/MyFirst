@@ -1,0 +1,1191 @@
+
+/****** Object:  Database [TalaCall]    Script Date: 1/4/2017 1:29:28 PM ******/
+CREATE DATABASE [TalaCall]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'TelaCall', FILENAME = N'D:\Microsoft SQL Server\MSSQL11.MSSQLSERVER\MSSQL\DATA\TalaCall_data.mdf' , SIZE = 4096KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+ LOG ON 
+( NAME = N'TelaCall_log', FILENAME = N'D:\Microsoft SQL Server\MSSQL11.MSSQLSERVER\MSSQL\DATA\TalaCall_log.ldf' , SIZE = 1024KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+GO
+ALTER DATABASE [TalaCall] SET COMPATIBILITY_LEVEL = 110
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [TalaCall].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [TalaCall] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [TalaCall] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [TalaCall] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [TalaCall] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [TalaCall] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [TalaCall] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [TalaCall] SET AUTO_CREATE_STATISTICS ON 
+GO
+ALTER DATABASE [TalaCall] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [TalaCall] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [TalaCall] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [TalaCall] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [TalaCall] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [TalaCall] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [TalaCall] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [TalaCall] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [TalaCall] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [TalaCall] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [TalaCall] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [TalaCall] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [TalaCall] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [TalaCall] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [TalaCall] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [TalaCall] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [TalaCall] SET RECOVERY FULL 
+GO
+ALTER DATABASE [TalaCall] SET  MULTI_USER 
+GO
+ALTER DATABASE [TalaCall] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [TalaCall] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [TalaCall] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [TalaCall] SET TARGET_RECOVERY_TIME = 0 SECONDS 
+GO
+USE [TalaCall]
+GO
+/****** Object:  User [valraduser]    Script Date: 1/4/2017 1:29:32 PM ******/
+CREATE USER [valraduser] FOR LOGIN [valraduser] WITH DEFAULT_SCHEMA=[valraduser]
+GO
+/****** Object:  User [ppotok]    Script Date: 1/4/2017 1:29:32 PM ******/
+CREATE USER [ppotok] FOR LOGIN [ppotok] WITH DEFAULT_SCHEMA=[ppotok]
+GO
+/****** Object:  User [paul]    Script Date: 1/4/2017 1:29:33 PM ******/
+CREATE USER [paul] FOR LOGIN [paul] WITH DEFAULT_SCHEMA=[paul]
+GO
+/****** Object:  User [bizbrollydev]    Script Date: 1/4/2017 1:29:33 PM ******/
+CREATE USER [bizbrollydev] WITHOUT LOGIN WITH DEFAULT_SCHEMA=[dbo]
+GO
+ALTER ROLE [db_owner] ADD MEMBER [valraduser]
+GO
+ALTER ROLE [db_owner] ADD MEMBER [ppotok]
+GO
+ALTER ROLE [db_owner] ADD MEMBER [paul]
+GO
+/****** Object:  Schema [paul]    Script Date: 1/4/2017 1:29:36 PM ******/
+CREATE SCHEMA [paul]
+GO
+/****** Object:  Schema [ppotok]    Script Date: 1/4/2017 1:29:36 PM ******/
+CREATE SCHEMA [ppotok]
+GO
+/****** Object:  Schema [valraduser]    Script Date: 1/4/2017 1:29:37 PM ******/
+CREATE SCHEMA [valraduser]
+GO
+/****** Object:  StoredProcedure [dbo].[Web_Practices]    Script Date: 1/4/2017 1:29:37 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+-- =============================================
+-- Author:		<Author,,Brajesh>
+-- Create date: <Create Date,29-03-2016,>
+-- Description:	<Description,,>
+--[Web_Roles] 
+-- =============================================
+CREATE PROCEDURE [dbo].[Web_Practices] 
+@Id BIGINT = 0
+AS
+BEGIN
+	
+	SET NOCOUNT ON;
+	IF(@Id = 0)
+	BEGIN
+	select * from tblPractices p where  p.isactive =1
+	end
+	else
+	BEGIN
+		select * from tblPractices where Id = @Id and isactive = 1
+	END
+END
+
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[Web_Roles]    Script Date: 1/4/2017 1:29:37 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+-- =============================================
+-- Author:		<Author,,Brajesh>
+-- Create date: <Create Date,29-03-2016,>
+-- Description:	<Description,,>
+--[Web_Roles] 
+-- =============================================
+CREATE PROCEDURE [dbo].[Web_Roles] 
+
+AS
+BEGIN
+	
+	SET NOCOUNT ON;
+
+	select * from mtblRoles P
+
+	where P.IsActive=1 
+  
+END
+
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[Web_SaveOnCallPeople]    Script Date: 1/4/2017 1:29:37 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+-- =============================================
+-- Author:		<Author,,Brajesh>
+-- Create date: <Create Date,21-03-2016,>
+-- [Web_SaveOnCallPeople] 189,'','mudgal','Kumar_kshitij','122','45454','brajeshkr18@gmail.com',128,144,1,1,'1','105'
+-- =============================================
+CREATE PROCEDURE [dbo].[Web_SaveOnCallPeople] 
+@id bigint = null,
+@OnCAllPersonID varchar(250),
+@FirstName varchar(250),
+@LastName varchar(250),
+@PhoneNumber decimal,
+@CellNO decimal,
+@EmailAddress varchar(50) ,
+@PracticeId bigint,
+@SpecialityId bigint,
+@IsEmtala bit,
+@IsCredentialed bit,
+@CanRequest bit,
+@CallCarrier varchar(50),
+@UserId varchar(50),
+@Picture varchar(max)
+
+
+
+AS
+BEGIN
+SET NOCOUNT OFF;
+   if exists(select * from tblOnCallPeople usr where usr.id = @id and usr.Isactive = 1 )
+   BEGIN
+   		  update tblOnCallPeople
+		  set
+		  FirstName = @FirstName,
+		  LastName = @LastName,
+		  PhoneNumber = @PhoneNumber,
+		  CellNO=@CellNO,
+		  EmailAddress=@EmailAddress,
+		  PracticeId=@PracticeId,
+		  SpecialityId =@SpecialityId,
+		  IsEmtala = @IsEmtala,
+		  IsCredentialed = @IsCredentialed,
+		  CanRequest=@CanRequest,
+		  CallCarrier=@CallCarrier,
+		  modifiedby = @UserId,
+		  modifiedDate = GetDate(),
+		  CreatedDate=GetDate(),
+		  CreatedBy=@UserId	 ,
+		  FullName= @FirstName+' '+@LastName ,
+		  Picture = @Picture
+		  where id=@id
+		  select 2 as resultoncall
+
+					return
+
+  END
+  IF NOT EXISTS(select * from tblOnCallPeople usr where usr.EmailAddress = @EmailAddress and usr.Isactive = 1)
+	BEGIN
+			insert into tblOnCallPeople (FirstName,LastName,PhoneNumber,CellNO, EmailAddress,PracticeId,SpecialityId,IsEmtala,IsCredentialed, IsActive,CanRequest,CallCarrier, CreatedDate,modifiedDate,CreatedBy,modifiedby,FullName,Picture)
+			values (@FirstName,@LastName,@PhoneNumber ,@CellNO,@EmailAddress,@PracticeId,@SpecialityId,@IsEmtala,@IsCredentialed, 1,@CanRequest,@CallCarrier, GetDate(),GetDate(),@UserId,@UserId,@FirstName+' '+@LastName,@Picture )
+			select 1 as resultoncall
+			return
+	END
+	ELSE
+	BEGIN
+	select 0 as resultoncall
+
+	END
+End
+
+
+
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[Web_SaveSpeciality]    Script Date: 1/4/2017 1:29:37 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[Web_SaveSpeciality] 
+
+@Id BIGINT = NULL,
+@Speciality VARCHAR(150),
+@Description VARCHAR(100)
+,@IsActive BIT
+,@CreatedBy BIGINT
+,@ModifiedBy BIGINT
+
+AS
+BEGIN
+
+SET NOCOUNT OFF;
+	IF EXISTS (select * from tblSpeciality where Id = @Id)
+		BEGIN
+			Update tblSpeciality set
+			Speciality = @Speciality
+			,Description = @Description
+			,IsActive = @IsActive
+			,ModifiedDate = GETDATE()
+			,ModifiedBy = @ModifiedBy
+			where Id = @Id
+			select 2 As SpecialityResult
+			return
+		END
+
+	IF NOT EXISTS(select * from tblSpeciality where Speciality = @Speciality and isactive = 1)
+		BEGIN
+		
+			Insert into tblSpeciality
+			(Speciality,Description,IsActive,CreatedDate,ModifiedDate,CreatedBy,ModifiedBy)
+			Values
+			(@Speciality,@Description,@IsActive,GetDate(),GetDate(),@CreatedBy,@ModifiedBy)
+			
+			select 1  as SpecialityResult
+			return
+		END
+	ELSE
+		BEGIN
+			select 0 SpecialityResult
+			return
+		END
+	
+END
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[Web_SaveUsers]    Script Date: 1/4/2017 1:29:37 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+-- =============================================
+-- Author:		<Author,,Brajesh>
+-- Create date: <Create Date,21-03-2016,>
+-- [dbo].[Web_SaveUsers] 110,'Ketan','Jain','ketan',102,'shubham1','ketan@gmail.com','8985898589',101,1
+-- =============================================
+CREATE PROCEDURE [dbo].[Web_SaveUsers] 
+@id bigint = null,
+@FirstName varchar(250),
+@LastName varchar(250),
+@Password varchar(50),
+@RoleId bigint,
+@UserName varchar(250) ,
+@EmailId varchar(50) ,
+@Phone varchar(50), 
+@UserId bigint,
+@IsActive bit
+
+AS
+BEGIN
+SET NOCOUNT OFF;
+
+			
+			IF EXISTS (select * from tblUsers usr where usr.id = @id and usr.Isactive = 1)
+				BEGIN
+					update tblUsers set
+					 FirstName = @FirstName
+					,MiddleName = ''
+					,LastName = @LastName
+					,RoleId = @RoleId
+					,EmailId = @EmailId
+					,Phone = @Phone
+					,IsActive = @IsActive
+					,modifiedby = @UserId
+					,modifiedDate = GETDATE()
+					where Id = @id and Isactive = 1
+
+					select 2 as UserResult
+
+					return
+				END
+
+			
+
+			IF NOT EXISTS(select * from tblUsers usr where usr.Username = @UserName and usr.Isactive = 1)
+				BEGIN
+					insert into tblUsers (FirstName, MiddleName,LastName,RoleId,UserName, Password,EmailId,Phone, IsActive, modifiedby, modifiedDate,CreatedDate,CreatedBy)
+					values (@FirstName,'',@LastName,@RoleId,@UserName,@Password,@EmailId,@Phone, 1,@UserId , GetDate(),GetDate(),@UserId)
+
+					select 1 as UserResult
+						
+					return
+
+				END
+			ELSE
+				BEGIN
+					
+					select 0 as UserResult
+
+				END
+
+			
+End
+
+
+
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[Web_Speciality]    Script Date: 1/4/2017 1:29:37 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+-- =============================================
+-- Author:		<Author,,Brajesh>
+-- Create date: <Create Date,29-03-2016,>
+-- Description:	<Description,,>
+--[Web_Roles] 
+-- =============================================
+CREATE PROCEDURE [dbo].[Web_Speciality]
+ @Id BIGINT = 0
+AS
+BEGIN
+	
+	SET NOCOUNT ON;
+	IF(@Id = 0)
+	BEGIN
+	select * from tblSpeciality S 
+	end
+	ELSE
+	BEGIN
+		select * from tblSpeciality where Id = @Id ORDER BY Speciality ASC
+	END
+  
+END
+
+
+	
+	
+GO
+/****** Object:  StoredProcedure [dbo].[Web_Users]    Script Date: 1/4/2017 1:29:37 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+-- =============================================
+-- Author:		<Author,,Brajesh>
+-- Create date: <Create Date,29-03-2016,>
+-- Description:	<Description,,>
+--[Web_Roles] 
+-- =============================================
+CREATE PROCEDURE [dbo].[Web_Users]
+ @Id BIGINT = 0
+AS
+BEGIN
+	
+	SET NOCOUNT ON;
+	IF(@Id = 0)
+	BEGIN
+	select * from tblUsers  t inner join mtblRoles m on m.id =t.roleid  where t.isactive =1
+	end
+	ELSE
+	BEGIN
+		select * from tblUsers  t inner join mtblRoles m on m.id =t.roleid  where t.Id = @Id and t.isactive = 1
+	END
+  
+END
+
+
+	
+GO
+/****** Object:  Table [dbo].[mtblRoles]    Script Date: 1/4/2017 1:29:37 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[mtblRoles](
+	[id] [bigint] IDENTITY(101,1) NOT NULL,
+	[Role] [varchar](250) NOT NULL,
+	[RoleDescription] [varchar](500) NULL,
+	[IsActive] [bit] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ModifiedDate] [datetime] NOT NULL,
+	[CreatedBy] [varchar](50) NOT NULL,
+	[ModifiedBy] [varchar](50) NOT NULL,
+ CONSTRAINT [PK__mtblRoles__Id] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[tblActivecalls]    Script Date: 1/4/2017 1:29:37 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[tblActivecalls](
+	[id] [bigint] IDENTITY(101,1) NOT NULL,
+	[OnCAllPersonID] [bigint] NOT NULL,
+	[RequestPersonId] [bigint] NOT NULL,
+	[CallReqTime] [datetime] NOT NULL,
+	[EMATALA] [bit] NOT NULL,
+	[TAT] [varchar](100) NULL,
+	[PatientNumber] [varchar](50) NOT NULL,
+	[RoomNumber] [varchar](50) NOT NULL,
+	[CallEndedTime] [datetime] NULL,
+	[CallEndedBy] [bigint] NULL,
+	[IsActive] [bit] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ModifiedDate] [datetime] NOT NULL,
+	[CreatedBy] [varchar](50) NOT NULL,
+	[ModifiedBy] [varchar](50) NOT NULL,
+	[ReasonToEndCall] [varchar](200) NULL,
+ CONSTRAINT [PK__tblActivecalls__Id] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[tblNotes]    Script Date: 1/4/2017 1:29:37 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[tblNotes](
+	[id] [bigint] IDENTITY(101,1) NOT NULL,
+	[Notes] [varchar](500) NULL,
+	[ActiveCallId] [bigint] NULL,
+	[IsActive] [bit] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ModifiedDate] [datetime] NOT NULL,
+	[CreatedBy] [varchar](50) NOT NULL,
+	[ModifiedBy] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_tblNotes] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[tblOnCall]    Script Date: 1/4/2017 1:29:37 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[tblOnCall](
+	[id] [bigint] IDENTITY(101,1) NOT NULL,
+	[OnCAllPersonID] [bigint] NOT NULL,
+	[Speciality] [bigint] NOT NULL,
+	[StartsCall] [datetime] NOT NULL,
+	[EndsCall] [datetime] NOT NULL,
+	[IsActive] [bit] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ModifiedDate] [datetime] NOT NULL,
+	[CreatedBy] [varchar](50) NOT NULL,
+	[ModifiedBy] [varchar](50) NOT NULL,
+ CONSTRAINT [PK__tblOnCall__Id] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[tblOnCallPeople]    Script Date: 1/4/2017 1:29:37 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[tblOnCallPeople](
+	[id] [bigint] IDENTITY(101,1) NOT NULL,
+	[FirstName] [varchar](100) NULL,
+	[LastName] [varchar](max) NULL,
+	[PhoneNumber] [decimal](18, 0) NULL,
+	[CellNO] [decimal](18, 0) NULL,
+	[EmailAddress] [varchar](100) NULL,
+	[PracticeId] [bigint] NOT NULL,
+	[SpecialityId] [bigint] NOT NULL,
+	[IsCredentialed] [bit] NOT NULL,
+	[IsActive] [bit] NOT NULL,
+	[CanRequest] [bit] NOT NULL,
+	[Picture] [varchar](max) NULL,
+	[CallCarrier] [varchar](50) NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ModifiedDate] [datetime] NOT NULL,
+	[CreatedBy] [varchar](50) NOT NULL,
+	[ModifiedBy] [varchar](50) NOT NULL,
+	[FullName] [varchar](250) NULL,
+	[IsEmtala] [bit] NOT NULL,
+ CONSTRAINT [PK__tblOnCallPeople__Id] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[tblPractices]    Script Date: 1/4/2017 1:29:37 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[tblPractices](
+	[id] [bigint] IDENTITY(101,1) NOT NULL,
+	[Name] [varchar](150) NOT NULL,
+	[Address] [varchar](100) NULL,
+	[URL] [varchar](max) NULL,
+	[PhoneNumber] [decimal](18, 0) NULL,
+	[FaxNumber] [decimal](18, 0) NULL,
+	[IsActive] [bit] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ModifiedDate] [datetime] NOT NULL,
+	[CreatedBy] [varchar](50) NOT NULL,
+	[ModifiedBy] [varchar](50) NOT NULL,
+	[RequiresBackup] [bit] NULL,
+	[BackupPolicy] [varchar](max) NULL,
+ CONSTRAINT [PK__tblPractices__Id] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[tblSpeciality]    Script Date: 1/4/2017 1:29:37 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[tblSpeciality](
+	[id] [bigint] IDENTITY(101,1) NOT NULL,
+	[Speciality] [varchar](50) NOT NULL,
+	[Description] [varchar](100) NULL,
+	[IsActive] [bit] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ModifiedDate] [datetime] NOT NULL,
+	[CreatedBy] [varchar](50) NOT NULL,
+	[ModifiedBy] [varchar](50) NOT NULL,
+ CONSTRAINT [PK__tblSpeciality__Id] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[tblUsers]    Script Date: 1/4/2017 1:29:37 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[tblUsers](
+	[id] [bigint] IDENTITY(101,1) NOT NULL,
+	[FirstName] [varchar](250) NULL,
+	[MiddleName] [varchar](250) NULL,
+	[LastName] [varchar](250) NULL,
+	[RoleId] [bigint] NOT NULL,
+	[Username] [varchar](250) NOT NULL,
+	[Password] [varchar](500) NOT NULL,
+	[EmailId] [varchar](50) NULL,
+	[Phone] [varchar](50) NULL,
+	[IsActive] [bit] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ModifiedDate] [datetime] NOT NULL,
+	[CreatedBy] [varchar](50) NOT NULL,
+	[ModifiedBy] [varchar](50) NOT NULL,
+ CONSTRAINT [PK__tblUsers__Id] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET IDENTITY_INSERT [dbo].[mtblRoles] ON 
+
+GO
+INSERT [dbo].[mtblRoles] ([id], [Role], [RoleDescription], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (101, N'Admin', N'', 1, CAST(0x0000A61700757CCF AS DateTime), CAST(0x0000A61700757CCF AS DateTime), N'-101', N'-101')
+GO
+INSERT [dbo].[mtblRoles] ([id], [Role], [RoleDescription], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (102, N'Schedular', N'Schedular', 1, CAST(0x0000A61F008D5DC0 AS DateTime), CAST(0x0000A61F008D5DC0 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[mtblRoles] ([id], [Role], [RoleDescription], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (104, N'Emergency', N'Emergency', 1, CAST(0x0000A63B00854FE0 AS DateTime), CAST(0x0000A63B00854FE0 AS DateTime), N'', N'')
+GO
+SET IDENTITY_INSERT [dbo].[mtblRoles] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tblActivecalls] ON 
+
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (101, 1, 183, CAST(0x0000A64F00CA73F1 AS DateTime), 1, N'65', N'8', N'6', CAST(0x0000A64F00DB6BE0 AS DateTime), NULL, 1, CAST(0x0000A64F00CA73F1 AS DateTime), CAST(0x0000A64F00CA73F1 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (102, 1, 186, CAST(0x0000A64F00DBAE3C AS DateTime), 1, N'60', N'8', N'8', CAST(0x0000A64F00DBD0E9 AS DateTime), NULL, 1, CAST(0x0000A64F00DBAE3C AS DateTime), CAST(0x0000A64F00DBAE3C AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (103, 1, 185, CAST(0x0000A64F00DBE7B6 AS DateTime), 1, N'60', N'3', N'4', CAST(0x0000A64F00ED9243 AS DateTime), NULL, 1, CAST(0x0000A64F00DBE7B6 AS DateTime), CAST(0x0000A64F00DBE7B6 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (104, 4, 186, CAST(0x0000A64F00E67B4C AS DateTime), 1, N'50', N'5', N'6', CAST(0x0000A64F00E6888C AS DateTime), NULL, 1, CAST(0x0000A64F00E67B4C AS DateTime), CAST(0x0000A64F00E67B4C AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (105, 4, 183, CAST(0x0000A64F014E2122 AS DateTime), 1, N'123', N'123', N'456', CAST(0x0000A64F0150A26C AS DateTime), NULL, 1, CAST(0x0000A64F014E2122 AS DateTime), CAST(0x0000A64F014E2122 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (106, 4, 185, CAST(0x0000A64F0150D8B4 AS DateTime), 1, N'123', N'123', N'123', CAST(0x0000A64F015510A0 AS DateTime), NULL, 1, CAST(0x0000A64F0150DB6F AS DateTime), CAST(0x0000A64F0150DCBA AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (107, 1, 186, CAST(0x0000A64F0154A367 AS DateTime), 1, N'132', N'123', N'123', CAST(0x0000A64F0154FECB AS DateTime), NULL, 1, CAST(0x0000A64F0154A61C AS DateTime), CAST(0x0000A64F0154A6DD AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (108, 3, 185, CAST(0x0000A64F0158E6E5 AS DateTime), 0, N'12', N'123', N'12', CAST(0x0000A65201405622 AS DateTime), NULL, 1, CAST(0x0000A64F0158E6E5 AS DateTime), CAST(0x0000A64F0158E6E5 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (109, 6, 184, CAST(0x0000A65000BF8955 AS DateTime), 1, N'123', N'12', N'12', CAST(0x0000A65000C10940 AS DateTime), NULL, 1, CAST(0x0000A65000BF89C5 AS DateTime), CAST(0x0000A65000BF89EB AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (110, 6, 183, CAST(0x0000A65000C12A85 AS DateTime), 1, N'12', N'123', N'12', CAST(0x0000A650007A65F5 AS DateTime), NULL, 1, CAST(0x0000A65000C12A85 AS DateTime), CAST(0x0000A65000C12A85 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (111, 7, 193, CAST(0x0000A65000D1A21A AS DateTime), 1, N'12', N'123', N'12', CAST(0x0000A65000D34B50 AS DateTime), NULL, 1, CAST(0x0000A65000D1A419 AS DateTime), CAST(0x0000A65000D1A492 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (112, 7, 185, CAST(0x0000A65000D36CEC AS DateTime), 1, N'123', N'123', N'12', CAST(0x0000A650007A85E6 AS DateTime), NULL, 1, CAST(0x0000A65000D36E15 AS DateTime), CAST(0x0000A65000D36E39 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (113, 7, 184, CAST(0x0000A65000DAAB4D AS DateTime), 1, N'12', N'123', N'123', CAST(0x0000A65000DB61B0 AS DateTime), NULL, 1, CAST(0x0000A65000DAABD0 AS DateTime), CAST(0x0000A65000DAABF3 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (114, 7, 184, CAST(0x0000A65000DB7D9C AS DateTime), 1, N'133', N'234', N'2343', CAST(0x0000A65000E03B42 AS DateTime), NULL, 1, CAST(0x0000A65000DBA03C AS DateTime), CAST(0x0000A65000DBBD18 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (115, 7, 186, CAST(0x0000A65000E2BCA1 AS DateTime), 1, N'56', N'123', N'123', CAST(0x0000A65000E6F005 AS DateTime), NULL, 1, CAST(0x0000A65000E2BCA1 AS DateTime), CAST(0x0000A65000E2BCA1 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (116, 7, 183, CAST(0x0000A65000E7165F AS DateTime), 0, N'32', N'123', N'12', CAST(0x0000A65000E90810 AS DateTime), NULL, 1, CAST(0x0000A65000E716D8 AS DateTime), CAST(0x0000A65000E716FC AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (117, 7, 183, CAST(0x0000A65000E92A58 AS DateTime), 0, N'123', N'126', N'236', CAST(0x0000A65000EAA34D AS DateTime), NULL, 1, CAST(0x0000A65000E92A58 AS DateTime), CAST(0x0000A65000E92A58 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (118, 7, 197, CAST(0x0000A65000ECC5C3 AS DateTime), 1, N'123', N'12', N'12', CAST(0x0000A65000F287EB AS DateTime), NULL, 1, CAST(0x0000A65000ECE762 AS DateTime), CAST(0x0000A65000ECE847 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (119, 7, 183, CAST(0x0000A65000F2B715 AS DateTime), 1, N'234', N'12', N'23', CAST(0x0000A65000F6A4AE AS DateTime), NULL, 1, CAST(0x0000A65000F2B896 AS DateTime), CAST(0x0000A65000F2B90D AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (120, 7, 202, CAST(0x0000A65000F6C4DD AS DateTime), 1, N'78', N'45', N'75', CAST(0x0000A650010904D9 AS DateTime), NULL, 1, CAST(0x0000A65000F6C4DD AS DateTime), CAST(0x0000A65000F6C4DD AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (121, 7, 196, CAST(0x0000A65001092C0F AS DateTime), 1, N'1234', N'12', N'12', CAST(0x0000A650010B47FD AS DateTime), NULL, 1, CAST(0x0000A65001092D9C AS DateTime), CAST(0x0000A65001092E46 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (122, 7, 183, CAST(0x0000A650010B6591 AS DateTime), 1, N'123', N'123', N'123', CAST(0x0000A65000B4C39B AS DateTime), NULL, 1, CAST(0x0000A650010B6617 AS DateTime), CAST(0x0000A650010B6646 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (123, 7, 183, CAST(0x0000A65000B71F98 AS DateTime), 1, N'12', N'1', N'1', CAST(0x0000A65000B7C577 AS DateTime), NULL, 1, CAST(0x0000A65000B71F99 AS DateTime), CAST(0x0000A65000B71F99 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (124, 6, 183, CAST(0x0000A65000D04A3D AS DateTime), 1, N'30', N'227227', N'12', CAST(0x0000A655011C55F9 AS DateTime), NULL, 0, CAST(0x0000A65000D04A3E AS DateTime), CAST(0x0000A65000D04A3E AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (125, 11, 185, CAST(0x0000A655011A0328 AS DateTime), 1, N'50', N'7', N'7', CAST(0x0000A655011C60B4 AS DateTime), NULL, 0, CAST(0x0000A655011A0328 AS DateTime), CAST(0x0000A655011A0328 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (126, 11, 183, CAST(0x0000A655011C8128 AS DateTime), 1, N'45', N'asdas', N'sad', CAST(0x0000A65500F0CE67 AS DateTime), NULL, 0, CAST(0x0000A655011C8128 AS DateTime), CAST(0x0000A655011C8128 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (127, 3, 184, CAST(0x0000A655011EA505 AS DateTime), 1, N'45', N'45', N'4', CAST(0x0000A65500F0C464 AS DateTime), NULL, 0, CAST(0x0000A655011EA505 AS DateTime), CAST(0x0000A655011EA505 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (128, 13, 184, CAST(0x0000A65500EF646C AS DateTime), 1, N'123', N'12', N'12', CAST(0x0000A65500F0E580 AS DateTime), NULL, 0, CAST(0x0000A65500EF646C AS DateTime), CAST(0x0000A65500EF646C AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (129, 13, 183, CAST(0x0000A65500F0F742 AS DateTime), 1, N'456', N'123', N'123', CAST(0x0000A65500F121FA AS DateTime), NULL, 0, CAST(0x0000A65500F0F742 AS DateTime), CAST(0x0000A65500F0F742 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (130, 13, 193, CAST(0x0000A65500F386C9 AS DateTime), 1, N'12', N'12', N'12', CAST(0x0000A65500F7C496 AS DateTime), NULL, 0, CAST(0x0000A65500F386C9 AS DateTime), CAST(0x0000A65500F386C9 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (132, 13, 183, CAST(0x0000A65600C52345 AS DateTime), 1, N'12', N'122', N'123', CAST(0x0000A657001E7E3C AS DateTime), NULL, 0, CAST(0x0000A65600C52345 AS DateTime), CAST(0x0000A65600C52345 AS DateTime), N'', N'', N'test')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (133, 12, 183, CAST(0x0000A65600E2E34D AS DateTime), 1, N'12', N'12', N'12', CAST(0x0000A65600E33AB3 AS DateTime), NULL, 0, CAST(0x0000A65600E2E34D AS DateTime), CAST(0x0000A65600E2E34D AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (134, 13, 184, CAST(0x0000A657006B6864 AS DateTime), 1, N'132', N'123', N'123', CAST(0x0000A65700D7E8C1 AS DateTime), NULL, 0, CAST(0x0000A657006B6864 AS DateTime), CAST(0x0000A657006B6864 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (135, 17, 183, CAST(0x0000A65700E5DEBF AS DateTime), 1, N'12', N'12', N'12', CAST(0x0000A65700BA53FF AS DateTime), NULL, 1, CAST(0x0000A65700E5DEC0 AS DateTime), CAST(0x0000A65700E5DEC0 AS DateTime), N'', N'', N'Patient stable : sent to on-call physician office.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (136, 18, 185, CAST(0x0000A65700E65177 AS DateTime), 1, N'12', N'12', N'12', CAST(0x0000A65900F2FC91 AS DateTime), NULL, 1, CAST(0x0000A65700E65177 AS DateTime), CAST(0x0000A65700E65177 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (137, 19, 183, CAST(0x0000A65700E6EEFC AS DateTime), 1, N'12', N'12', N'12', CAST(0x0000A65900F30837 AS DateTime), NULL, 1, CAST(0x0000A65700E6EEFC AS DateTime), CAST(0x0000A65700E6EEFC AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (138, 21, 183, CAST(0x0000A65700E7EADE AS DateTime), 0, N'1', N'12', N'3', CAST(0x0000A65700BA4F1C AS DateTime), NULL, 1, CAST(0x0000A65700E7EADE AS DateTime), CAST(0x0000A65700E7EADE AS DateTime), N'', N'', N'Patient stable : sent to on-call physician office.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (139, 21, 198, CAST(0x0000A65700BAB3C7 AS DateTime), 1, N'1223', N'12', N'12', CAST(0x0000A65700BB2986 AS DateTime), NULL, 1, CAST(0x0000A65700BAB3C7 AS DateTime), CAST(0x0000A65700BAB3C7 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (140, 20, 193, CAST(0x0000A65700BB0433 AS DateTime), 1, N'12', N'2', N'1', CAST(0x0000A65900F32339 AS DateTime), NULL, 1, CAST(0x0000A65700BB0433 AS DateTime), CAST(0x0000A65700BB0433 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (141, 22, 184, CAST(0x0000A65700E9D236 AS DateTime), 1, N'45', N'3666', N'2', CAST(0x0000A65900F316DA AS DateTime), NULL, 1, CAST(0x0000A65700E9D236 AS DateTime), CAST(0x0000A65700E9D236 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (142, 23, 184, CAST(0x0000A65900EFCA4B AS DateTime), 0, N'30', N'63636', N'1', CAST(0x0000A6600076769B AS DateTime), NULL, 1, CAST(0x0000A65900EFCA4B AS DateTime), CAST(0x0000A65900EFCA4B AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (143, 24, 186, CAST(0x0000A65900F0BE78 AS DateTime), 1, N'20', N'12', N'23', CAST(0x0000A66000767D3C AS DateTime), NULL, 1, CAST(0x0000A65900F0BE78 AS DateTime), CAST(0x0000A65900F0BE78 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (144, 21, 185, CAST(0x0000A65A0059844E AS DateTime), 1, N'20', N'45', N'45', CAST(0x0000A65C01456AF0 AS DateTime), NULL, 1, CAST(0x0000A65A0059844E AS DateTime), CAST(0x0000A65A0059844E AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (145, 26, 196, CAST(0x0000A65C00D7247D AS DateTime), 1, N'50', N'8', N'8', CAST(0x0000A6600076823B AS DateTime), NULL, 1, CAST(0x0000A65C00D7247D AS DateTime), CAST(0x0000A65C00D7247D AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (146, 33, 183, CAST(0x0000A65C01457E82 AS DateTime), 1, N'78', N'44', N'78', CAST(0x0000A660007686F5 AS DateTime), NULL, 1, CAST(0x0000A65C01457E82 AS DateTime), CAST(0x0000A65C01457E82 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (147, 43, 195, CAST(0x0000A66000C4FC9E AS DateTime), 1, N'30', N'838383', N'12', CAST(0x0000A6620121CB93 AS DateTime), NULL, 1, CAST(0x0000A66000C4FC9E AS DateTime), CAST(0x0000A66000C4FC9E AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (148, 46, 197, CAST(0x0000A6620121549D AS DateTime), 1, N'45', N'777', N'1', CAST(0x0000A66B0146BA79 AS DateTime), NULL, 1, CAST(0x0000A6620121549D AS DateTime), CAST(0x0000A6620121549D AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (149, 48, 185, CAST(0x0000A6620121C274 AS DateTime), 1, N'30', N'2', N'55', CAST(0x0000A66B0146B1EC AS DateTime), NULL, 1, CAST(0x0000A6620121C274 AS DateTime), CAST(0x0000A6620121C274 AS DateTime), N'', N'', N'Discussed with On-Call, No Call-In needed.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (10147, 17, 193, CAST(0x0000A66D006AB566 AS DateTime), 1, N'200', N'963', N'963', CAST(0x0000A66E00F5E7DA AS DateTime), NULL, 1, CAST(0x0000A66D006AB566 AS DateTime), CAST(0x0000A66D006AB566 AS DateTime), N'', N'', N'On-Call physician arrived.')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (10148, 10051, 186, CAST(0x0000A66E00F5D5BE AS DateTime), 0, N'45', N'66464', N'12', CAST(0x0000A6DA0146C4E1 AS DateTime), NULL, 1, CAST(0x0000A66E00F5D5BE AS DateTime), CAST(0x0000A66E00F5D5BE AS DateTime), N'', N'', N'test')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (20148, 20058, 202, CAST(0x0000A6DA0147A303 AS DateTime), 0, N'30', N'1', N'1', CAST(0x0000A6DA01488968 AS DateTime), NULL, 1, CAST(0x0000A6DA0147A303 AS DateTime), CAST(0x0000A6DA0147A303 AS DateTime), N'', N'', N'test')
+GO
+INSERT [dbo].[tblActivecalls] ([id], [OnCAllPersonID], [RequestPersonId], [CallReqTime], [EMATALA], [TAT], [PatientNumber], [RoomNumber], [CallEndedTime], [CallEndedBy], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [ReasonToEndCall]) VALUES (20149, 20059, 184, CAST(0x0000A6DB00D2A3DB AS DateTime), 1, N'60', N'12', N'1', NULL, NULL, 1, CAST(0x0000A6DB00D2A3DB AS DateTime), CAST(0x0000A6DB00D2A3DB AS DateTime), N'', N'', NULL)
+GO
+SET IDENTITY_INSERT [dbo].[tblActivecalls] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tblNotes] ON 
+
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (101, N'First note Rachit.', 126, 1, CAST(0x0000A655013640BF AS DateTime), CAST(0x0000A655013640BF AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (102, N'Second', 126, 1, CAST(0x0000A65501364DB4 AS DateTime), CAST(0x0000A65501364DB4 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (103, N'First note Rachit.', 126, 1, CAST(0x0000A655013653D6 AS DateTime), CAST(0x0000A655013653D6 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (104, N'First note Rachit.', 126, 1, CAST(0x0000A655013658A3 AS DateTime), CAST(0x0000A655013658A3 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (105, N'First note Rachit.', 126, 1, CAST(0x0000A65501365AFB AS DateTime), CAST(0x0000A65501365AFB AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (106, N'First note Rachit.', 126, 1, CAST(0x0000A65501365CF8 AS DateTime), CAST(0x0000A65501365CF8 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (107, N'First note Rachit.', 126, 1, CAST(0x0000A65501365F06 AS DateTime), CAST(0x0000A65501365F06 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (108, N'First note Rachit.', 126, 1, CAST(0x0000A6550136615E AS DateTime), CAST(0x0000A6550136615E AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (109, N'First note sugandha.', 127, 1, CAST(0x0000A655013672E7 AS DateTime), CAST(0x0000A655013672E7 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (110, N'123', 127, 1, CAST(0x0000A65500EE80CA AS DateTime), CAST(0x0000A65500EE80CA AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (111, N'sadada', 127, 1, CAST(0x0000A65500EE88E5 AS DateTime), CAST(0x0000A65500EE88E5 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (112, N'test notes', 131, 1, CAST(0x0000A65500F82B7B AS DateTime), CAST(0x0000A65500F82B7B AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (113, N'test2', 131, 1, CAST(0x0000A65500F83243 AS DateTime), CAST(0x0000A65500F83243 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (114, N'1`231212121', 131, 1, CAST(0x0000A65500F84586 AS DateTime), CAST(0x0000A65500F84586 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (115, N'123jl;', 134, 1, CAST(0x0000A657006B9EAC AS DateTime), CAST(0x0000A657006B9EAC AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (116, N'566', 134, 1, CAST(0x0000A657006BAA0B AS DateTime), CAST(0x0000A657006BAA0B AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (117, N'78743143', 140, 1, CAST(0x0000A65700BC7985 AS DateTime), CAST(0x0000A65700BC7985 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (118, N'63', 140, 1, CAST(0x0000A65700BC80AF AS DateTime), CAST(0x0000A65700BC80AF AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (119, N'Hello..', 137, 1, CAST(0x0000A659006D844E AS DateTime), CAST(0x0000A659006D844E AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (120, N'Hi this is a note..', 137, 1, CAST(0x0000A659006D8DFB AS DateTime), CAST(0x0000A659006D8DFB AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (121, N'	Hello..', 137, 1, CAST(0x0000A659006D973F AS DateTime), CAST(0x0000A659006D973F AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (122, N'where are you?', 142, 1, CAST(0x0000A65900F2CE4A AS DateTime), CAST(0x0000A65900F2CE4A AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (123, N'spoke to doc will be here in 25 mins', 149, 1, CAST(0x0000A6620121FDCC AS DateTime), CAST(0x0000A6620121FDCC AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblNotes] ([id], [Notes], [ActiveCallId], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (124, N'called again', 149, 1, CAST(0x0000A6620122306D AS DateTime), CAST(0x0000A6620122306D AS DateTime), N'101', N'101')
+GO
+SET IDENTITY_INSERT [dbo].[tblNotes] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tblOnCall] ON 
+
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (1, 202, 177, CAST(0x0000A64F00000000 AS DateTime), CAST(0x0000A65000000000 AS DateTime), 0, CAST(0x0000A64F011828CF AS DateTime), CAST(0x0000A64F011828CF AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (2, 202, 177, CAST(0x0000A65000C5C100 AS DateTime), CAST(0x0000A650017B0740 AS DateTime), 1, CAST(0x0000A64F01188297 AS DateTime), CAST(0x0000A64F01188297 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (3, 195, 154, CAST(0x0000A64F00000000 AS DateTime), CAST(0x0000A65000000000 AS DateTime), 1, CAST(0x0000A64F00CA4381 AS DateTime), CAST(0x0000A64F00CA4381 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (4, 183, 141, CAST(0x0000A64F00000000 AS DateTime), CAST(0x0000A65000000000 AS DateTime), 1, CAST(0x0000A64F00CA4DAA AS DateTime), CAST(0x0000A64F00CA4DAA AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (5, 184, 142, CAST(0x0000A64F00000000 AS DateTime), CAST(0x0000A65000000000 AS DateTime), 0, CAST(0x0000A64F00DF9B44 AS DateTime), CAST(0x0000A64F00DF9B44 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (6, 195, 154, CAST(0x0000A65000000000 AS DateTime), CAST(0x0000A65100000000 AS DateTime), 0, CAST(0x0000A650003D914D AS DateTime), CAST(0x0000A650003D914D AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (7, 197, 155, CAST(0x0000A65000000000 AS DateTime), CAST(0x0000A65100000000 AS DateTime), 0, CAST(0x0000A65000D15F7A AS DateTime), CAST(0x0000A65000D15F7A AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (8, 183, 141, CAST(0x0000A6500128A180 AS DateTime), CAST(0x0000A6510128A180 AS DateTime), 0, CAST(0x0000A65000CF61F4 AS DateTime), CAST(0x0000A65000CF61F4 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (9, 195, 154, CAST(0x0000A65100000000 AS DateTime), CAST(0x0000A65200000000 AS DateTime), 0, CAST(0x0000A65000D00BB7 AS DateTime), CAST(0x0000A65000D00BB7 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (10, 195, 154, CAST(0x0000A65200000000 AS DateTime), CAST(0x0000A65300000000 AS DateTime), 0, CAST(0x0000A65200B3980F AS DateTime), CAST(0x0000A65200B3980F AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (11, 184, 142, CAST(0x0000A65500000000 AS DateTime), CAST(0x0000A65600000000 AS DateTime), 0, CAST(0x0000A65500B97E73 AS DateTime), CAST(0x0000A65500B97E73 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (12, 183, 141, CAST(0x0000A65400000000 AS DateTime), CAST(0x0000A65500000000 AS DateTime), 0, CAST(0x0000A65500B98E2D AS DateTime), CAST(0x0000A65500B98E2D AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (13, 197, 155, CAST(0x0000A65500000000 AS DateTime), CAST(0x0000A65600000000 AS DateTime), 0, CAST(0x0000A65500EF2E43 AS DateTime), CAST(0x0000A65500EF2E43 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (14, 195, 154, CAST(0x0000A65500000000 AS DateTime), CAST(0x0000A65600000000 AS DateTime), 0, CAST(0x0000A65500F79A3C AS DateTime), CAST(0x0000A65500F79A3C AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (15, 184, 142, CAST(0x0000A65700000000 AS DateTime), CAST(0x0000A65800000000 AS DateTime), 0, CAST(0x0000A6570065DD16 AS DateTime), CAST(0x0000A6570065DD16 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (16, 197, 155, CAST(0x0000A65600000000 AS DateTime), CAST(0x0000A65700000000 AS DateTime), 0, CAST(0x0000A65700D76E8E AS DateTime), CAST(0x0000A65700D76E8E AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (17, 197, 155, CAST(0x0000A65500000000 AS DateTime), CAST(0x0000A65600000000 AS DateTime), 1, CAST(0x0000A65700E5C1C3 AS DateTime), CAST(0x0000A65700E5C1C3 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (18, 183, 141, CAST(0x0000A65600000000 AS DateTime), CAST(0x0000A65700000000 AS DateTime), 1, CAST(0x0000A65700E63264 AS DateTime), CAST(0x0000A65700E63264 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (19, 183, 141, CAST(0x0000A65B00000000 AS DateTime), CAST(0x0000A65C00000000 AS DateTime), 1, CAST(0x0000A65700E6B661 AS DateTime), CAST(0x0000A65700E6B661 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (20, 197, 155, CAST(0x0000A65700000000 AS DateTime), CAST(0x0000A65700E6FCD0 AS DateTime), 1, CAST(0x0000A65700E7407B AS DateTime), CAST(0x0000A65700E7407B AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (21, 197, 155, CAST(0x0000A65800000000 AS DateTime), CAST(0x0000A66600FF6EA0 AS DateTime), 0, CAST(0x0000A65700E790E5 AS DateTime), CAST(0x0000A65700E790E5 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (22, 200, 157, CAST(0x0000A6570128A180 AS DateTime), CAST(0x0000A6580128A180 AS DateTime), 1, CAST(0x0000A65700E985C5 AS DateTime), CAST(0x0000A65700E985C5 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (23, 200, 157, CAST(0x0000A65900000000 AS DateTime), CAST(0x0000A65A00000000 AS DateTime), 0, CAST(0x0000A65900EF5663 AS DateTime), CAST(0x0000A65900EF5663 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (24, 199, 157, CAST(0x0000A65900E6B680 AS DateTime), CAST(0x0000A65A00000000 AS DateTime), 1, CAST(0x0000A65900F08D41 AS DateTime), CAST(0x0000A65900F08D41 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (25, 200, 157, CAST(0x0000A65900F31290 AS DateTime), CAST(0x0000A65A017B0740 AS DateTime), 1, CAST(0x0000A65900F15883 AS DateTime), CAST(0x0000A65900F15883 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (26, 200, 157, CAST(0x0000A65C00F31290 AS DateTime), CAST(0x0000A65D017B0740 AS DateTime), 1, CAST(0x0000A65C00D6AF3F AS DateTime), CAST(0x0000A65C00D6AF3F AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (27, 197, 155, CAST(0x0000A659002D5190 AS DateTime), CAST(0x0000A65A017B0740 AS DateTime), 0, CAST(0x0000A65C01340A5C AS DateTime), CAST(0x0000A65C01340A5C AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (28, 197, 155, CAST(0x0000A65900F31290 AS DateTime), CAST(0x0000A65A017B0740 AS DateTime), 0, CAST(0x0000A65C0134B0F8 AS DateTime), CAST(0x0000A65C0134B0F8 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (29, 197, 155, CAST(0x0000A659002D5190 AS DateTime), CAST(0x0000A65A017B0740 AS DateTime), 0, CAST(0x0000A65C013674C4 AS DateTime), CAST(0x0000A65C01367553 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (30, 197, 155, CAST(0x0000A659002D5190 AS DateTime), CAST(0x0000A65A017B0740 AS DateTime), 0, CAST(0x0000A65C01370ADB AS DateTime), CAST(0x0000A65C01370B46 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (31, 197, 155, CAST(0x0000A659002D5190 AS DateTime), CAST(0x0000A65A017B0740 AS DateTime), 0, CAST(0x0000A65C01374B17 AS DateTime), CAST(0x0000A65C01374B17 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (32, 197, 155, CAST(0x0000A65900000000 AS DateTime), CAST(0x0000A65A00000000 AS DateTime), 0, CAST(0x0000A65C01378376 AS DateTime), CAST(0x0000A65C01378376 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (33, 197, 155, CAST(0x0000A659002D5190 AS DateTime), CAST(0x0000A65F017B0740 AS DateTime), 0, CAST(0x0000A65C013B3B0D AS DateTime), CAST(0x0000A65C013B3B0D AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (34, 197, 155, CAST(0x0000A65900000000 AS DateTime), CAST(0x0000A65A00000000 AS DateTime), 1, CAST(0x0000A65C0145B217 AS DateTime), CAST(0x0000A65C0145B217 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (35, 183, 141, CAST(0x0000A65D014DB5B0 AS DateTime), CAST(0x0000A65D016EAB30 AS DateTime), 1, CAST(0x0000A65D011CCFE6 AS DateTime), CAST(0x0000A65D011CCFE6 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (36, 184, 142, CAST(0x0000A65C00251430 AS DateTime), CAST(0x0000A65E013D3AF0 AS DateTime), 1, CAST(0x0000A65D013FBAD1 AS DateTime), CAST(0x0000A65D013FBAD1 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (37, 195, 154, CAST(0x0000A65C00000000 AS DateTime), CAST(0x0000A65D016EAB30 AS DateTime), 1, CAST(0x0000A65D015EA1D6 AS DateTime), CAST(0x0000A65D015EA1D6 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (38, 197, 155, CAST(0x0000A65D015A11C0 AS DateTime), CAST(0x0000A6600087F4B0 AS DateTime), 0, CAST(0x0000A65D013FEB2E AS DateTime), CAST(0x0000A65D013FEB2E AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (39, 199, 157, CAST(0x0000A65E015A11C0 AS DateTime), CAST(0x0000A65F015A11C0 AS DateTime), 1, CAST(0x0000A65F00046721 AS DateTime), CAST(0x0000A65F00046721 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (40, 200, 157, CAST(0x0000A65F00C5C100 AS DateTime), CAST(0x0000A66000C5C100 AS DateTime), 1, CAST(0x0000A65F00A7AB8F AS DateTime), CAST(0x0000A65F00A7AB8F AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (41, 197, 155, CAST(0x0000A660004E4710 AS DateTime), CAST(0x0000A66200000000 AS DateTime), 0, CAST(0x0000A660003DED42 AS DateTime), CAST(0x0000A660003DED42 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (42, 197, 155, CAST(0x0000A66100735B40 AS DateTime), CAST(0x0000A66200000000 AS DateTime), 1, CAST(0x0000A660003E5DCD AS DateTime), CAST(0x0000A660003E5DCD AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (43, 199, 157, CAST(0x0000A66000B54640 AS DateTime), CAST(0x0000A66100000000 AS DateTime), 1, CAST(0x0000A6600076B1D2 AS DateTime), CAST(0x0000A6600076B1D2 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (44, 199, 157, CAST(0x0000A66200C5C100 AS DateTime), CAST(0x0000A66300000000 AS DateTime), 1, CAST(0x0000A662011F9109 AS DateTime), CAST(0x0000A662011F9109 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (45, 184, 142, CAST(0x0000A66200C9DFB0 AS DateTime), CAST(0x0000A6630128A180 AS DateTime), 1, CAST(0x0000A66201207A8F AS DateTime), CAST(0x0000A66201207A8F AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (46, 195, 154, CAST(0x0000A66200000000 AS DateTime), CAST(0x0000A66300000000 AS DateTime), 1, CAST(0x0000A66201209152 AS DateTime), CAST(0x0000A66201209152 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (47, 185, 143, CAST(0x0000A66200000000 AS DateTime), CAST(0x0000A66300000000 AS DateTime), 1, CAST(0x0000A6620120A958 AS DateTime), CAST(0x0000A6620120A958 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (48, 183, 141, CAST(0x0000A66200000000 AS DateTime), CAST(0x0000A66300000000 AS DateTime), 1, CAST(0x0000A6620120C5B4 AS DateTime), CAST(0x0000A6620120C5B4 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (49, 196, 155, CAST(0x0000A6620130DEE0 AS DateTime), CAST(0x0000A66300000000 AS DateTime), 1, CAST(0x0000A6620123E797 AS DateTime), CAST(0x0000A6620123E797 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (50, 197, 155, CAST(0x0000A6620134FD90 AS DateTime), CAST(0x0000A66201499700 AS DateTime), 1, CAST(0x0000A66201248A54 AS DateTime), CAST(0x0000A66201248A54 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (10040, 199, 157, CAST(0x0000A66B00F73140 AS DateTime), CAST(0x0000A66C00F73140 AS DateTime), 1, CAST(0x0000A66B01466AC0 AS DateTime), CAST(0x0000A66B01466AC0 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (10041, 200, 157, CAST(0x0000A66B015A11C0 AS DateTime), CAST(0x0000A66B016A8C80 AS DateTime), 1, CAST(0x0000A66B014691A4 AS DateTime), CAST(0x0000A66B014691A4 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (10042, 200, 157, CAST(0x0000A66B0176E890 AS DateTime), CAST(0x0000A66B017B0740 AS DateTime), 1, CAST(0x0000A66B0163688B AS DateTime), CAST(0x0000A66B0163688B AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (10043, 200, 157, CAST(0x0000A66C009C8E20 AS DateTime), CAST(0x0000A66C00A4CB80 AS DateTime), 1, CAST(0x0000A66C0089ACDE AS DateTime), CAST(0x0000A66C0089ACDE AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (10044, 201, 157, CAST(0x0000A66C00F73140 AS DateTime), CAST(0x0000A66D00000000 AS DateTime), 1, CAST(0x0000A66C00A28E44 AS DateTime), CAST(0x0000A66C00A28E44 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (10045, 199, 157, CAST(0x0000A66D00C5C100 AS DateTime), CAST(0x0000A66E00000000 AS DateTime), 1, CAST(0x0000A66D00C87E2E AS DateTime), CAST(0x0000A66D00C87E2E AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (10046, 200, 157, CAST(0x0000A66D00E297D0 AS DateTime), CAST(0x0000A66D00E6B680 AS DateTime), 1, CAST(0x0000A66D00C8BBAE AS DateTime), CAST(0x0000A66D00C8BBAE AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (10047, 185, 143, CAST(0x0000A66D00F73140 AS DateTime), CAST(0x0000A66E00000000 AS DateTime), 1, CAST(0x0000A66D00E4F1D7 AS DateTime), CAST(0x0000A66D00E4F1D7 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (10048, 184, 142, CAST(0x0000A66D0155F310 AS DateTime), CAST(0x0000A66D01666DD0 AS DateTime), 0, CAST(0x0000A66D01433185 AS DateTime), CAST(0x0000A66D01433185 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (10049, 195, 154, CAST(0x0000A66D01666DD0 AS DateTime), CAST(0x0000A66D016A8C80 AS DateTime), 1, CAST(0x0000A66D01553481 AS DateTime), CAST(0x0000A66D01553481 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (10050, 183, 141, CAST(0x0000A66E00000000 AS DateTime), CAST(0x0000A66F00000000 AS DateTime), 0, CAST(0x0000A66E0099CDD3 AS DateTime), CAST(0x0000A66E0099CDD3 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (10051, 199, 157, CAST(0x0000A66E00C5C100 AS DateTime), CAST(0x0000A66F00000000 AS DateTime), 1, CAST(0x0000A66E00B84581 AS DateTime), CAST(0x0000A66E00B84581 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (10052, 200, 157, CAST(0x0000A66E00CDFE60 AS DateTime), CAST(0x0000A66E00D63BC0 AS DateTime), 1, CAST(0x0000A66E00B865B1 AS DateTime), CAST(0x0000A66E00B865B1 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (20049, 199, 157, CAST(0x0000A67800C5C100 AS DateTime), CAST(0x0000A67900000000 AS DateTime), 1, CAST(0x0000A678014DBA1A AS DateTime), CAST(0x0000A678014DBA1A AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (20050, 184, 142, CAST(0x0000A67800000000 AS DateTime), CAST(0x0000A67801624F20 AS DateTime), 1, CAST(0x0000A678014E2C60 AS DateTime), CAST(0x0000A678014E2C60 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (20051, 184, 142, CAST(0x0000A67801666DD0 AS DateTime), CAST(0x0000A67900000000 AS DateTime), 1, CAST(0x0000A67801527AED AS DateTime), CAST(0x0000A67801527AED AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (20052, 183, 141, CAST(0x0000A678015A11C0 AS DateTime), CAST(0x0000A67801666DD0 AS DateTime), 1, CAST(0x0000A6780154D406 AS DateTime), CAST(0x0000A6780154D406 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (20053, 193, 141, CAST(0x0000A67801666DD0 AS DateTime), CAST(0x0000A678016EAB30 AS DateTime), 1, CAST(0x0000A6780155283B AS DateTime), CAST(0x0000A6780155283B AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (20054, 204, 142, CAST(0x0000A678016A8C80 AS DateTime), CAST(0x0000A6780172C9E0 AS DateTime), 1, CAST(0x0000A67801579A2D AS DateTime), CAST(0x0000A67801579A2D AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (20055, 183, 141, CAST(0x0000A6CA00000000 AS DateTime), CAST(0x0000A6CB00000000 AS DateTime), 1, CAST(0x0000A6CA00DD746B AS DateTime), CAST(0x0000A6CA00DD746B AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (20056, 183, 141, CAST(0x0000A6DA015A11C0 AS DateTime), CAST(0x0000A6DA018344A0 AS DateTime), 1, CAST(0x0000A6DA01467E67 AS DateTime), CAST(0x0000A6DA01467E67 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (20057, 195, 154, CAST(0x0000A6DA00C5C100 AS DateTime), CAST(0x0000A6DA016A8C80 AS DateTime), 1, CAST(0x0000A6DA0146FD74 AS DateTime), CAST(0x0000A6DA0146FD74 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (20058, 196, 155, CAST(0x0000A6DA00000000 AS DateTime), CAST(0x0000A6DA017B0740 AS DateTime), 0, CAST(0x0000A6DA0147607A AS DateTime), CAST(0x0000A6DA0147607A AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblOnCall] ([id], [OnCAllPersonID], [Speciality], [StartsCall], [EndsCall], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (20059, 199, 157, CAST(0x0000A6DB00C5C100 AS DateTime), CAST(0x0000A6DC00000000 AS DateTime), 1, CAST(0x0000A6DB00D26C3F AS DateTime), CAST(0x0000A6DB00D26C3F AS DateTime), N'101', N'101')
+GO
+SET IDENTITY_INSERT [dbo].[tblOnCall] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tblOnCallPeople] ON 
+
+GO
+INSERT [dbo].[tblOnCallPeople] ([id], [FirstName], [LastName], [PhoneNumber], [CellNO], [EmailAddress], [PracticeId], [SpecialityId], [IsCredentialed], [IsActive], [CanRequest], [Picture], [CallCarrier], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [FullName], [IsEmtala]) VALUES (183, N'Shubham', N'Jain', CAST(8285724934 AS Decimal(18, 0)), CAST(2962257462 AS Decimal(18, 0)), N'shubham.jain@bizbrolly.com', 133, 141, 1, 1, 1, N'http://www.talacall.com/Assets/img/OnCallusers/Admin_201611262421.jpg', N'8285724934@messaging.sprintpcs.com', CAST(0x0000A6CA00DCEFCD AS DateTime), CAST(0x0000A6CA00DCEFCD AS DateTime), N'101', N'101', N'Shubham Jain', 1)
+GO
+INSERT [dbo].[tblOnCallPeople] ([id], [FirstName], [LastName], [PhoneNumber], [CellNO], [EmailAddress], [PracticeId], [SpecialityId], [IsCredentialed], [IsActive], [CanRequest], [Picture], [CallCarrier], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [FullName], [IsEmtala]) VALUES (184, N'Rachit', N'Gupta', CAST(9999999999 AS Decimal(18, 0)), CAST(9999 AS Decimal(18, 0)), N'rachit.gupta@bizbrolly.com', 0, 142, 1, 1, 1, N'http://bizbrollydev.cloudapp.net:8888/Assets/img/OnCallusers/01_201607273916.jpg', N'111@txt.att.net', CAST(0x0000A650003C3B69 AS DateTime), CAST(0x0000A650003C3B69 AS DateTime), N'101', N'101', N'Rachit Gupta', 0)
+GO
+INSERT [dbo].[tblOnCallPeople] ([id], [FirstName], [LastName], [PhoneNumber], [CellNO], [EmailAddress], [PracticeId], [SpecialityId], [IsCredentialed], [IsActive], [CanRequest], [Picture], [CallCarrier], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [FullName], [IsEmtala]) VALUES (185, N'Gaurav', N'Gupta', CAST(9999999999 AS Decimal(18, 0)), CAST(7676 AS Decimal(18, 0)), N'gaurav.gupta@bizbrolly.com', 0, 143, 1, 1, 1, N'http://bizbrollydev.cloudapp.net:8888/Assets/img/OnCallusers/Jellyfish_201607070536.jpg', N'454545@vtext.com', CAST(0x0000A63C00B6D35C AS DateTime), CAST(0x0000A63C00B6D35C AS DateTime), N'101', N'101', N'Gaurav Gupta', 0)
+GO
+INSERT [dbo].[tblOnCallPeople] ([id], [FirstName], [LastName], [PhoneNumber], [CellNO], [EmailAddress], [PracticeId], [SpecialityId], [IsCredentialed], [IsActive], [CanRequest], [Picture], [CallCarrier], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [FullName], [IsEmtala]) VALUES (186, N'Akash', N'Srivastava', CAST(6363536363 AS Decimal(18, 0)), CAST(2323 AS Decimal(18, 0)), N'akash.srivastava@bizbrolly.com', 129, 144, 1, 1, 1, N'~/Assets/img/person_2.png<div style="display:none">erectiepillen kopen <a href="http://viagrapillenkruidvat.com">viagra pillen kruidvat</a> erectiepillen waar te koop</div>', N'343434@txt.att.net', CAST(0x0000A633011903F1 AS DateTime), CAST(0x0000A633011903F1 AS DateTime), N'101', N'101', N'Akash Srivastava', 0)
+GO
+INSERT [dbo].[tblOnCallPeople] ([id], [FirstName], [LastName], [PhoneNumber], [CellNO], [EmailAddress], [PracticeId], [SpecialityId], [IsCredentialed], [IsActive], [CanRequest], [Picture], [CallCarrier], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [FullName], [IsEmtala]) VALUES (193, N'brajesh kumar', N'Kumar_kshitij', CAST(9632587452 AS Decimal(18, 0)), CAST(45454 AS Decimal(18, 0)), N'brajeshkr18@gmail.com', 129, 141, 1, 1, 1, N'<div style="display:none">erectiepillen kopen <a href="http://viagrapillenkruidvat.com">viagra pillen kruidvat</a> erectiepillen waar te koop</div>', N' @txt.att.net', CAST(0x0000A63301196E73 AS DateTime), CAST(0x0000A63301196E73 AS DateTime), N'101', N'101', N'brajesh kumar Kumar_kshitij', 0)
+GO
+INSERT [dbo].[tblOnCallPeople] ([id], [FirstName], [LastName], [PhoneNumber], [CellNO], [EmailAddress], [PracticeId], [SpecialityId], [IsCredentialed], [IsActive], [CanRequest], [Picture], [CallCarrier], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [FullName], [IsEmtala]) VALUES (194, N'mudgal', N'Kumar_kshitij', CAST(9638582654 AS Decimal(18, 0)), CAST(45454 AS Decimal(18, 0)), N'brajehkr18@gmail.com', 130, 141, 0, 1, 0, N'', N'@vtext.com', CAST(0x0000A633009F7962 AS DateTime), CAST(0x0000A633009F7962 AS DateTime), N'101', N'101', N'mudgal Kumar_kshitij', 0)
+GO
+INSERT [dbo].[tblOnCallPeople] ([id], [FirstName], [LastName], [PhoneNumber], [CellNO], [EmailAddress], [PracticeId], [SpecialityId], [IsCredentialed], [IsActive], [CanRequest], [Picture], [CallCarrier], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [FullName], [IsEmtala]) VALUES (195, N'Sugandha', N'Pahwa', CAST(9898989898 AS Decimal(18, 0)), CAST(83748374 AS Decimal(18, 0)), N'sugandha.pahwa@bizbrolly.com', 130, 154, 1, 1, 1, N'http://bizbrollydev.cloudapp.net:8888/Assets/img/OnCallusers/14_201607273822.png', N'454545@messaging.sprintpcs.com', CAST(0x0000A650003BFC77 AS DateTime), CAST(0x0000A650003BFC77 AS DateTime), N'101', N'101', N'Sugandha Pahwa', 0)
+GO
+INSERT [dbo].[tblOnCallPeople] ([id], [FirstName], [LastName], [PhoneNumber], [CellNO], [EmailAddress], [PracticeId], [SpecialityId], [IsCredentialed], [IsActive], [CanRequest], [Picture], [CallCarrier], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [FullName], [IsEmtala]) VALUES (196, N'Karan', N'Khandelwal', CAST(7676767676 AS Decimal(18, 0)), CAST(6868686 AS Decimal(18, 0)), N'karan.khandelwaal@bizbrolly.com', 130, 155, 1, 1, 1, N'http://bizbrollydev.cloudapp.net:8888/Assets/img/OnCallusers/Admin2_201607133244.jpg', N'090909090@vtext.com', CAST(0x0000A65500DA0266 AS DateTime), CAST(0x0000A65500DA0266 AS DateTime), N'101', N'101', N'Karan Khandelwal', 1)
+GO
+INSERT [dbo].[tblOnCallPeople] ([id], [FirstName], [LastName], [PhoneNumber], [CellNO], [EmailAddress], [PracticeId], [SpecialityId], [IsCredentialed], [IsActive], [CanRequest], [Picture], [CallCarrier], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [FullName], [IsEmtala]) VALUES (197, N'Raju', N'Srivastava', CAST(4598459845 AS Decimal(18, 0)), CAST(343434 AS Decimal(18, 0)), N'brajesh.kumar@bizbrolly.com', 130, 155, 1, 1, 1, NULL, N'090090900@txt.att.net', CAST(0x0000A65000B44FD5 AS DateTime), CAST(0x0000A65000B44FD5 AS DateTime), N'101', N'101', N'Raju Srivastava', 0)
+GO
+INSERT [dbo].[tblOnCallPeople] ([id], [FirstName], [LastName], [PhoneNumber], [CellNO], [EmailAddress], [PracticeId], [SpecialityId], [IsCredentialed], [IsActive], [CanRequest], [Picture], [CallCarrier], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [FullName], [IsEmtala]) VALUES (198, N'A', N'B<div style="display:none">erectiepillen kopen <a href="http://viagrapillenkruidvat.com">viagra pillen kruidvat</a> erectiepillen waar te koop</div>', CAST(9878787879 AS Decimal(18, 0)), CAST(9898 AS Decimal(18, 0)), N'a@b.com', 130, 143, 1, 0, 1, N'http://localhost:50871/Assets/img/OnCallusers/logo_201607072622.png<div style="display:none">erectiepillen kopen <a href="http://viagrapillenkruidvat.com">viagra pillen kruidvat</a> erectiepillen waar te koop</div>', N'9999@txt.att.net', CAST(0x0000A63C00A3D0F0 AS DateTime), CAST(0x0000A63C00A3D0F0 AS DateTime), N'101', N'101', N'A B', 0)
+GO
+INSERT [dbo].[tblOnCallPeople] ([id], [FirstName], [LastName], [PhoneNumber], [CellNO], [EmailAddress], [PracticeId], [SpecialityId], [IsCredentialed], [IsActive], [CanRequest], [Picture], [CallCarrier], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [FullName], [IsEmtala]) VALUES (199, N'Paul', N'Potok', CAST(7179325200 AS Decimal(18, 0)), CAST(7179913308 AS Decimal(18, 0)), N'pspotok@verizon.net', 131, 157, 1, 1, 0, N'http://bizbrollydev.cloudapp.net:8888/Assets/img/OnCallusers/PP_201607105714.JPG', N'7179913308@vtext.com', CAST(0x0000A63F0169CD04 AS DateTime), CAST(0x0000A63F0169CD04 AS DateTime), N'101', N'101', N'Paul Potok', 0)
+GO
+INSERT [dbo].[tblOnCallPeople] ([id], [FirstName], [LastName], [PhoneNumber], [CellNO], [EmailAddress], [PracticeId], [SpecialityId], [IsCredentialed], [IsActive], [CanRequest], [Picture], [CallCarrier], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [FullName], [IsEmtala]) VALUES (200, N'Douglas', N'Martin', CAST(7179325200 AS Decimal(18, 0)), CAST(7174227560 AS Decimal(18, 0)), N'dmartingrad@gmail.com', 131, 157, 1, 1, 0, N'http://bizbrollydev.cloudapp.net:8888/Assets/img/OnCallusers/DM_201607105552.JPG', N'7174227560@txt.att.net', CAST(0x0000A65900EF8A2A AS DateTime), CAST(0x0000A65900EF8A2A AS DateTime), N'101', N'101', N'Douglas Martin', 0)
+GO
+INSERT [dbo].[tblOnCallPeople] ([id], [FirstName], [LastName], [PhoneNumber], [CellNO], [EmailAddress], [PracticeId], [SpecialityId], [IsCredentialed], [IsActive], [CanRequest], [Picture], [CallCarrier], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [FullName], [IsEmtala]) VALUES (201, N'Paul ', N'Licata', CAST(7179325200 AS Decimal(18, 0)), CAST(7179913308 AS Decimal(18, 0)), N'plicata@qita.com', 131, 157, 1, 1, 0, N'http://bizbrollydev.cloudapp.net:8888/Assets/img/OnCallusers/JJ_201607105159.JPG', N'7179913308@vtext.com', CAST(0x0000A65100F25B69 AS DateTime), CAST(0x0000A65100F25B69 AS DateTime), N'101', N'101', N'Paul  Licata', 1)
+GO
+INSERT [dbo].[tblOnCallPeople] ([id], [FirstName], [LastName], [PhoneNumber], [CellNO], [EmailAddress], [PracticeId], [SpecialityId], [IsCredentialed], [IsActive], [CanRequest], [Picture], [CallCarrier], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [FullName], [IsEmtala]) VALUES (202, N'Pooja', N'Khandelwal', CAST(8788747858 AS Decimal(18, 0)), CAST(125487 AS Decimal(18, 0)), N'pooja@bizbrolly.com', 133, 177, 1, 1, 1, NULL, N'898589858@txt.att.net', CAST(0x0000A65100C5DF00 AS DateTime), CAST(0x0000A65100C5DF00 AS DateTime), N'101', N'101', N'Pooja Khandelwal', 1)
+GO
+INSERT [dbo].[tblOnCallPeople] ([id], [FirstName], [LastName], [PhoneNumber], [CellNO], [EmailAddress], [PracticeId], [SpecialityId], [IsCredentialed], [IsActive], [CanRequest], [Picture], [CallCarrier], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [FullName], [IsEmtala]) VALUES (203, N'qw', N'qw', CAST(1234567898 AS Decimal(18, 0)), CAST(123 AS Decimal(18, 0)), N'test@gmail.com', 129, 157, 1, 1, 1, N'http://talacall.com/Assets/img/OnCallusers/ext (2)_201608113755.jpg', NULL, CAST(0x0000A65F003BE176 AS DateTime), CAST(0x0000A65F003BE176 AS DateTime), N'101', N'101', N'qw qw', 1)
+GO
+INSERT [dbo].[tblOnCallPeople] ([id], [FirstName], [LastName], [PhoneNumber], [CellNO], [EmailAddress], [PracticeId], [SpecialityId], [IsCredentialed], [IsActive], [CanRequest], [Picture], [CallCarrier], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [FullName], [IsEmtala]) VALUES (204, N'Brian', N'Reid', NULL, CAST(7179913308 AS Decimal(18, 0)), N'pspotok@comcast.net', 129, 142, 1, 1, 0, N'http://www.talacall.com/Assets/img/OnCallusers/b_reid_201609052710.JPG', N'7179913308@vtext.com', CAST(0x0000A67801524710 AS DateTime), CAST(0x0000A67801524710 AS DateTime), N'101', N'101', N'Brian Reid', 0)
+GO
+SET IDENTITY_INSERT [dbo].[tblOnCallPeople] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tblPractices] ON 
+
+GO
+INSERT [dbo].[tblPractices] ([id], [Name], [Address], [URL], [PhoneNumber], [FaxNumber], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [RequiresBackup], [BackupPolicy]) VALUES (128, N'Deen Dayal Hospital', N'2/38, Khandu colony Banswara', N'www.google.com', CAST(343434 AS Decimal(18, 0)), CAST(343434 AS Decimal(18, 0)), 0, CAST(0x0000A63B00C448BD AS DateTime), CAST(0x0000A63B00C448BD AS DateTime), N'101', N'101', 0, NULL)
+GO
+INSERT [dbo].[tblPractices] ([id], [Name], [Address], [URL], [PhoneNumber], [FaxNumber], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [RequiresBackup], [BackupPolicy]) VALUES (129, N'Deen Dayal Hospital', N'2/38, Khandu colony Banswara', N'http://www.deendayal.com', CAST(1234 AS Decimal(18, 0)), CAST(343434 AS Decimal(18, 0)), 1, CAST(0x0000A651012D851B AS DateTime), CAST(0x0000A651012D851B AS DateTime), N'101', N'101', 0, NULL)
+GO
+INSERT [dbo].[tblPractices] ([id], [Name], [Address], [URL], [PhoneNumber], [FaxNumber], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [RequiresBackup], [BackupPolicy]) VALUES (130, N'Fortis Hospital', N'Noida sec 63 ', N'http://www.Fortis.com', CAST(12364125 AS Decimal(18, 0)), CAST(78965412 AS Decimal(18, 0)), 1, CAST(0x0000A65200F67143 AS DateTime), CAST(0x0000A65200F67143 AS DateTime), N'101', N'101', 1, N'http://localhost:50871/Assets/img/OnCallusers/scriptt - Copy_201607295641.pdf')
+GO
+INSERT [dbo].[tblPractices] ([id], [Name], [Address], [URL], [PhoneNumber], [FaxNumber], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [RequiresBackup], [BackupPolicy]) VALUES (131, N'Quantum Imaging', N'629-D Lowther Road, Lewisberry PA', N'http://www.qita.com', CAST(7179325200 AS Decimal(18, 0)), CAST(7179323195 AS Decimal(18, 0)), 1, CAST(0x0000A6780155765C AS DateTime), CAST(0x0000A6780155765C AS DateTime), N'101', N'101', 0, NULL)
+GO
+INSERT [dbo].[tblPractices] ([id], [Name], [Address], [URL], [PhoneNumber], [FaxNumber], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [RequiresBackup], [BackupPolicy]) VALUES (132, N'test', N'test', N'www.gmail.com', CAST(963258965 AS Decimal(18, 0)), CAST(963258745 AS Decimal(18, 0)), 0, CAST(0x0000A642014DA17B AS DateTime), CAST(0x0000A642014DA17B AS DateTime), N'101', N'101', 0, NULL)
+GO
+INSERT [dbo].[tblPractices] ([id], [Name], [Address], [URL], [PhoneNumber], [FaxNumber], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [RequiresBackup], [BackupPolicy]) VALUES (133, N'Google', N'Unitech Signature Tower-II, Tower-B, Sector-15, Part-II, Village Silokhera, Gurgaon, Haryana 122001', N'http://www.gaana.com/', CAST(23 AS Decimal(18, 0)), CAST(232323 AS Decimal(18, 0)), 1, CAST(0x0000A65200DAF342 AS DateTime), CAST(0x0000A65200DAF342 AS DateTime), N'101', N'101', 0, N'http://localhost:50871/Assets/img/OnCallusers/scriptt - Copy_201607285544.pdf')
+GO
+INSERT [dbo].[tblPractices] ([id], [Name], [Address], [URL], [PhoneNumber], [FaxNumber], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [RequiresBackup], [BackupPolicy]) VALUES (134, N'new', N'123', N'http://123', CAST(123 AS Decimal(18, 0)), CAST(123 AS Decimal(18, 0)), 1, CAST(0x0000A65500EDE849 AS DateTime), CAST(0x0000A65500EDE849 AS DateTime), N'101', N'101', 1, N'http://bizbrollydev.cloudapp.net:8888/Assets/img/OnCallusers/scriptt - Copy_201608012610.pdf')
+GO
+INSERT [dbo].[tblPractices] ([id], [Name], [Address], [URL], [PhoneNumber], [FaxNumber], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [RequiresBackup], [BackupPolicy]) VALUES (135, N'[\]', N'123', N'http://122', CAST(122 AS Decimal(18, 0)), CAST(122 AS Decimal(18, 0)), 0, CAST(0x0000A65500ED9FEF AS DateTime), CAST(0x0000A65500ED9FEF AS DateTime), N'101', N'101', 1, N'http://bizbrollydev.cloudapp.net:8888/Assets/img/OnCallusers/scriptt - Copy_201608012505.pdf')
+GO
+INSERT [dbo].[tblPractices] ([id], [Name], [Address], [URL], [PhoneNumber], [FaxNumber], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [RequiresBackup], [BackupPolicy]) VALUES (136, N'test', N'test', N'http://www.google.com', CAST(3698523658 AS Decimal(18, 0)), CAST(3698523658 AS Decimal(18, 0)), 0, CAST(0x0000A65F003820FC AS DateTime), CAST(0x0000A65F003820FC AS DateTime), N'101', N'101', 1, N'http://talacall.com/Assets/img/OnCallusers/thrt_201608112420.pdf')
+GO
+INSERT [dbo].[tblPractices] ([id], [Name], [Address], [URL], [PhoneNumber], [FaxNumber], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy], [RequiresBackup], [BackupPolicy]) VALUES (137, N'test', N'test', N'http://www.gmail.com', CAST(6541236541 AS Decimal(18, 0)), CAST(6541236541 AS Decimal(18, 0)), 1, CAST(0x0000A65F0038CEE4 AS DateTime), CAST(0x0000A65F0038CEE4 AS DateTime), N'101', N'101', 1, N'http://talacall.com/Assets/img/OnCallusers/thrt_201608112648.pdf')
+GO
+SET IDENTITY_INSERT [dbo].[tblPractices] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tblSpeciality] ON 
+
+GO
+INSERT [dbo].[tblSpeciality] ([id], [Speciality], [Description], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (141, N'Cardiology', N'CardioLogists', 1, CAST(0x0000A6310088DED0 AS DateTime), CAST(0x0000A64F003EDA47 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblSpeciality] ([id], [Speciality], [Description], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (142, N'General practitioners', N'General practitioners', 1, CAST(0x0000A6310089082A AS DateTime), CAST(0x0000A64A00A7924D AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblSpeciality] ([id], [Speciality], [Description], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (143, N'Oncology', N'Hematologists', 1, CAST(0x0000A6310089287E AS DateTime), CAST(0x0000A64F003EF2CE AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblSpeciality] ([id], [Speciality], [Description], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (144, N'Leprologists', N'Leprologists', 0, CAST(0x0000A63100893B92 AS DateTime), CAST(0x0000A64A00892FB2 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblSpeciality] ([id], [Speciality], [Description], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (154, N'OB/GYN', N'Obstetricians', 1, CAST(0x0000A63100930EA0 AS DateTime), CAST(0x0000A64F003F1038 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblSpeciality] ([id], [Speciality], [Description], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (155, N'Urology', N'Urologists', 1, CAST(0x0000A63100932261 AS DateTime), CAST(0x0000A64F003EBE3A AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblSpeciality] ([id], [Speciality], [Description], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (156, N'Neurology', N'neurologist', 1, CAST(0x0000A63100932261 AS DateTime), CAST(0x0000A64F003E9FD6 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblSpeciality] ([id], [Speciality], [Description], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (157, N'Radiology', N'Radiology', 1, CAST(0x0000A63F0167EAE8 AS DateTime), CAST(0x0000A63F0167EAE8 AS DateTime), N'101', N'101')
+GO
+INSERT [dbo].[tblSpeciality] ([id], [Speciality], [Description], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (177, N'?', NULL, 0, CAST(0x0000A64F004ACC2A AS DateTime), CAST(0x0000A64F004ACC2A AS DateTime), N'101', N'101')
+GO
+SET IDENTITY_INSERT [dbo].[tblSpeciality] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tblUsers] ON 
+
+GO
+INSERT [dbo].[tblUsers] ([id], [FirstName], [MiddleName], [LastName], [RoleId], [Username], [Password], [EmailId], [Phone], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (103, N'Paul', N'', N'Potok  ', 101, N'paul', N'paul@123', N'paul@gmail.com', N'8585858585', 1, CAST(0x0000A6170076D6E1 AS DateTime), CAST(0x0000A64A007CF893 AS DateTime), N'-101', N'0')
+GO
+INSERT [dbo].[tblUsers] ([id], [FirstName], [MiddleName], [LastName], [RoleId], [Username], [Password], [EmailId], [Phone], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (114, N'Shubham', N'', N'Jain', 102, N'shubham1192', N'shubham', N'shubham.jain@bizbrolly.com', N'8285724934', 1, CAST(0x0000A63000C209BB AS DateTime), CAST(0x0000A63000C209BB AS DateTime), N'0', N'0')
+GO
+INSERT [dbo].[tblUsers] ([id], [FirstName], [MiddleName], [LastName], [RoleId], [Username], [Password], [EmailId], [Phone], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (115, N'Brajesh', N'', N'Kumar ', 101, N'Brajesh', N'kumar', N'brajesh.kumar@bizbrolly.com', N'9633256543', 1, CAST(0x0000A63000C209BB AS DateTime), CAST(0x0000A63300ADC027 AS DateTime), N'0', N'0')
+GO
+INSERT [dbo].[tblUsers] ([id], [FirstName], [MiddleName], [LastName], [RoleId], [Username], [Password], [EmailId], [Phone], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (116, N'Hasnains', N'', N'Mohds  ', 102, N'hasnain', N'123456', N'mohd.hasnain@bizbrolly.com', N'8787878787', 1, CAST(0x0000A63B0085C37E AS DateTime), CAST(0x0000A63B0128D94B AS DateTime), N'0', N'0')
+GO
+INSERT [dbo].[tblUsers] ([id], [FirstName], [MiddleName], [LastName], [RoleId], [Username], [Password], [EmailId], [Phone], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (117, N'Ketan', N'', N'Jain', 104, N'ketan123', N'ketan@123', N'ketan@bizbrolly.com', N'8787878798', 1, CAST(0x0000A63B0129BBE0 AS DateTime), CAST(0x0000A63B012A1ED3 AS DateTime), N'0', N'0')
+GO
+INSERT [dbo].[tblUsers] ([id], [FirstName], [MiddleName], [LastName], [RoleId], [Username], [Password], [EmailId], [Phone], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (118, N'new', N'', N'test', 101, N'test', N'123', N'test@123.com', N'9874563251', 1, CAST(0x0000A6420086E4C2 AS DateTime), CAST(0x0000A6420086E4C2 AS DateTime), N'0', N'0')
+GO
+INSERT [dbo].[tblUsers] ([id], [FirstName], [MiddleName], [LastName], [RoleId], [Username], [Password], [EmailId], [Phone], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (119, N'Scheduler', N'', N'Scheduler', 102, N'Scheduler', N'test1!', N'pspotok@verizon.net', N'7179913308', 1, CAST(0x0000A678013054F6 AS DateTime), CAST(0x0000A678013054F6 AS DateTime), N'0', N'0')
+GO
+INSERT [dbo].[tblUsers] ([id], [FirstName], [MiddleName], [LastName], [RoleId], [Username], [Password], [EmailId], [Phone], [IsActive], [CreatedDate], [ModifiedDate], [CreatedBy], [ModifiedBy]) VALUES (120, N'Emergency', N'', N'Emergency', 104, N'Emergency', N'test1!', N'pspotok@verizon.net', N'7179913308', 1, CAST(0x0000A67801309035 AS DateTime), CAST(0x0000A67801309035 AS DateTime), N'0', N'0')
+GO
+SET IDENTITY_INSERT [dbo].[tblUsers] OFF
+GO
+ALTER TABLE [dbo].[mtblRoles] ADD  CONSTRAINT [DF__mtblRoles__isactive]  DEFAULT ((1)) FOR [IsActive]
+GO
+ALTER TABLE [dbo].[mtblRoles] ADD  CONSTRAINT [DF__mtblRoles__CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+ALTER TABLE [dbo].[mtblRoles] ADD  CONSTRAINT [DF__mtblRoles__ModifiedDate]  DEFAULT (getdate()) FOR [ModifiedDate]
+GO
+ALTER TABLE [dbo].[tblActivecalls] ADD  CONSTRAINT [DF__tblActive__CallR__35BCFE0A]  DEFAULT (getdate()) FOR [CallReqTime]
+GO
+ALTER TABLE [dbo].[tblActivecalls] ADD  CONSTRAINT [DF__tblActivecalls__isactive]  DEFAULT ((1)) FOR [IsActive]
+GO
+ALTER TABLE [dbo].[tblActivecalls] ADD  CONSTRAINT [DF__tblActivecalls__CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+ALTER TABLE [dbo].[tblActivecalls] ADD  CONSTRAINT [DF__tblActivecalls__ModifiedDate]  DEFAULT (getdate()) FOR [ModifiedDate]
+GO
+ALTER TABLE [dbo].[tblOnCall] ADD  DEFAULT (getdate()) FOR [StartsCall]
+GO
+ALTER TABLE [dbo].[tblOnCall] ADD  CONSTRAINT [DF__tblOnCall__isactive]  DEFAULT ((1)) FOR [IsActive]
+GO
+ALTER TABLE [dbo].[tblOnCall] ADD  CONSTRAINT [DF__tblOnCall__CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+ALTER TABLE [dbo].[tblOnCall] ADD  CONSTRAINT [DF__tblOnCall__ModifiedDate]  DEFAULT (getdate()) FOR [ModifiedDate]
+GO
+ALTER TABLE [dbo].[tblOnCallPeople] ADD  CONSTRAINT [DF__tblOnCallPeople__isactive]  DEFAULT ((1)) FOR [IsActive]
+GO
+ALTER TABLE [dbo].[tblOnCallPeople] ADD  CONSTRAINT [DF__tblOnCall__Pictu__68487DD7]  DEFAULT ('') FOR [Picture]
+GO
+ALTER TABLE [dbo].[tblOnCallPeople] ADD  CONSTRAINT [DF__tblOnCallPeople__CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+ALTER TABLE [dbo].[tblOnCallPeople] ADD  CONSTRAINT [DF__tblOnCallPeople__ModifiedDate]  DEFAULT (getdate()) FOR [ModifiedDate]
+GO
+ALTER TABLE [dbo].[tblOnCallPeople] ADD  CONSTRAINT [DF_tblOnCallPeople_IsActive1]  DEFAULT ((1)) FOR [IsEmtala]
+GO
+ALTER TABLE [dbo].[tblPractices] ADD  CONSTRAINT [DF__tblPractices__isactive]  DEFAULT ((1)) FOR [IsActive]
+GO
+ALTER TABLE [dbo].[tblPractices] ADD  CONSTRAINT [DF__tblPractices__CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+ALTER TABLE [dbo].[tblPractices] ADD  CONSTRAINT [DF__tblPractices__ModifiedDate]  DEFAULT (getdate()) FOR [ModifiedDate]
+GO
+ALTER TABLE [dbo].[tblSpeciality] ADD  CONSTRAINT [DF__tblSpeciality__isactive]  DEFAULT ((1)) FOR [IsActive]
+GO
+ALTER TABLE [dbo].[tblSpeciality] ADD  CONSTRAINT [DF__tblSpeciality__CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+ALTER TABLE [dbo].[tblSpeciality] ADD  CONSTRAINT [DF__tblSpeciality__ModifiedDate]  DEFAULT (getdate()) FOR [ModifiedDate]
+GO
+ALTER TABLE [dbo].[tblUsers] ADD  CONSTRAINT [DF__tblUsers__isactive]  DEFAULT ((1)) FOR [IsActive]
+GO
+ALTER TABLE [dbo].[tblUsers] ADD  CONSTRAINT [DF__tblUsers__CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+ALTER TABLE [dbo].[tblUsers] ADD  CONSTRAINT [DF__tblUsers__ModifiedDate]  DEFAULT (getdate()) FOR [ModifiedDate]
+GO
+ALTER TABLE [dbo].[tblActivecalls]  WITH CHECK ADD  CONSTRAINT [FK__tblActive__OnCAl__34C8D9D1] FOREIGN KEY([OnCAllPersonID])
+REFERENCES [dbo].[tblOnCall] ([id])
+GO
+ALTER TABLE [dbo].[tblActivecalls] CHECK CONSTRAINT [FK__tblActive__OnCAl__34C8D9D1]
+GO
+ALTER TABLE [dbo].[tblOnCall]  WITH CHECK ADD  CONSTRAINT [FK__tblOnCall__OnCAl__3B75D760] FOREIGN KEY([OnCAllPersonID])
+REFERENCES [dbo].[tblOnCallPeople] ([id])
+GO
+ALTER TABLE [dbo].[tblOnCall] CHECK CONSTRAINT [FK__tblOnCall__OnCAl__3B75D760]
+GO
+ALTER TABLE [dbo].[tblOnCall]  WITH CHECK ADD FOREIGN KEY([Speciality])
+REFERENCES [dbo].[tblSpeciality] ([id])
+GO
+ALTER TABLE [dbo].[tblOnCallPeople]  WITH CHECK ADD  CONSTRAINT [FK__tblOnCall__Speci__2F10007B] FOREIGN KEY([SpecialityId])
+REFERENCES [dbo].[tblSpeciality] ([id])
+GO
+ALTER TABLE [dbo].[tblOnCallPeople] CHECK CONSTRAINT [FK__tblOnCall__Speci__2F10007B]
+GO
+ALTER TABLE [dbo].[tblOnCallPeople]  WITH CHECK ADD  CONSTRAINT [FK__tblOnCall__Speci__5DCAEF64] FOREIGN KEY([SpecialityId])
+REFERENCES [dbo].[tblSpeciality] ([id])
+GO
+ALTER TABLE [dbo].[tblOnCallPeople] CHECK CONSTRAINT [FK__tblOnCall__Speci__5DCAEF64]
+GO
+ALTER TABLE [dbo].[tblUsers]  WITH CHECK ADD  CONSTRAINT [FK__tblUsers__RoleId__182C9B23] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[mtblRoles] ([id])
+GO
+ALTER TABLE [dbo].[tblUsers] CHECK CONSTRAINT [FK__tblUsers__RoleId__182C9B23]
+GO
+USE [master]
+GO
+ALTER DATABASE [TalaCall] SET  READ_WRITE 
+GO
+
+--AddToCart
+--https://www.asp.net/mvc/overview/older-versions/mvc-music-store/mvc-music-store-part-8
+
+--https://www.youtube.com/watch?v=sbZRtrKj3Ds
+--https://www.youtube.com/watch?v=NP4Gea1j7Ig&list=PLpbcUe4chE7-5t2mlamz6yB0qzAfO5Yln
+--https://www.youtube.com/watch?v=sbFl47NM5fo

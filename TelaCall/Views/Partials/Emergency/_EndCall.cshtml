@@ -1,0 +1,88 @@
+﻿<div class="col-md-12">
+    <div class="row padding-top-15">
+        <div class="col-md-12"><h4>End Call-In</h4></div>
+    </div>
+    <div class="row margin-bottom-20">
+        <div class="bs-example">
+            <div role="form">
+                <div class="row margin-bottom-20">
+                    <div class="col-md-4">
+                        <label><strong>Specility:</strong> </label>
+                    </div>
+                    <div class="col-md-8 profile-details">
+                        <label id="lbl-endspecility">Cardeologist</label>
+                    </div>
+                </div>
+                <div class="row margin-bottom-20">
+                    <div class="col-md-4">
+                        <label><strong>On Call:</strong> </label>
+                        
+                    </div>
+                    <div class="col-md-8 profile-details">
+                        <label id="lbl-endoncall">Shubham Jain</label>
+                    </div>
+                </div>
+                <h4>Reason to end</h4>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="rblendreason" class="rbl-endcallreason" value="On-Call physician arrived." checked="checked">
+                        On-Call physician arrived.
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="rblendreason" value="Discussed with On-Call, No Call-In needed." class="rbl-endcallreason">
+                        Discussed with On-Call, No Call-In needed.
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="rblendreason" value="On call physician refused." class="rbl-endcallreason">
+                        On call physician refused.
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="rblendreason" value="Patient stable : sent to on-call physician office." class="rbl-endcallreason">
+                        Patient stable : sent to on-call physician office.
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="rblendreason" value="Other" class="rbl-endcallreason rbl-other">
+                        Other
+                    </label>
+                </div>
+                <textarea id="txtendcall-other" class="form-control display-hide" rows="3"></textarea>
+                @*<div id="dt-callDates" class="row margin-bottom-20 text-center">
+                    <div class="error-endformcallin"></div>
+                    <div class="loader-endcallinSubmit display-hide"><img src="~/Assets/img/loader.gif" /></div>
+                </div>*@
+                <div class="row container-endcallbtns">
+                    <div class="col-md-6"><button id="btn-endcallinsubmit" type="button" class="btn btn-primary margin-0">End Call-In</button></div>
+                    <div class="col-md-6"><button id="btn-endcallinCancel" type="button" class="btn btn-primary margin-0">Cancel</button></div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.rbl-endcallreason').change(function () {
+            if ($(this).hasClass('rbl-other')) {
+                $('#txtendcall-other').removeClass('display-hide').addClass('display')
+            } else {
+                $('#txtendcall-other').removeClass('display').addClass('display-hide')
+            }
+        })
+        $('.rbl-endcallinsubmit').change(function () {
+            if ($(this).hasClass('rbl-other')) {
+                $('#txtendcall-other').removeClass('display-hide').addClass('display')
+            } else {
+                $('#txtendcall-other').removeClass('display').addClass('display-hide')
+            }
+        })
+    })
+</script>

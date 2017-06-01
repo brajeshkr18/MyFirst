@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>NewtonsoftJsonExt</id>
+    <version>1.0.0</version>
+    <title>NewtonsoftJsonExt</title>
+    <authors>ZhangYH</authors>
+    <owners>ZhangYH</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Json.NET is a popular high-performance JSON framework for .NET. NewtonsoftJsonExt is Extension for Json.NET</description>
+    <summary />
+    <tags>json jsonextension</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="8.0.3" />
+    </dependencies>
+  </metadata>
+</package>

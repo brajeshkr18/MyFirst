@@ -1,0 +1,69 @@
+﻿@model T.Model.clsScheduler
+@{
+    int counter = 0;
+}
+@*<div class="row margin-bottom-20 padding-top-15">
+    <div class="col-md-12"><h4>On Call List</h4></div>
+</div>*@
+<div class="row margin-bottom-10 padding-top-10 ">
+    <div class="col-md-12">
+        <div class="blog-two-info">
+            <h4>On Call List</h4>
+        </div>
+    </div>
+</div>
+@if (Model.lstOnCall.Count > 0)
+{
+  @*<div class="bs-example mar-b-30">*@
+    <div class="blog-content">
+    <div class="table-responsive content-scroll">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Speciality</th>
+                    <th>On Call</th>
+                    <th>Starts Call</th>
+                </tr>
+            </thead>
+            <tbody class="table-selectable">
+
+
+                @foreach (var Oncall in Model.lstOnCall)
+                {
+                    <tr>
+                        <td>@(counter + 1)</td>
+
+                        <td>@Oncall.objOnCallDetails.Speciality</td>
+
+                        <td>
+                            @Oncall.objOnCallDetails.FirstName @Oncall.objOnCallDetails.LastName
+
+                        </td>
+                        <td>
+                            @Oncall.StartsCall
+
+                        </td>
+                        <td>
+                            <input class="hf-OnCallPersonId" type="hidden" value="@Oncall.Id" />
+                        </td>
+                    </tr>
+                                counter++;
+                }
+            </tbody>
+        </table>
+    </div>
+    <!-- /.table-responsive -->
+    </div>
+
+}
+else
+{
+        
+            <div id="target-persondetail" class="">
+                <div class="placeholder-loading" style="margin:auto;">
+                    No on call people found for selected date.
+                </div>
+            </div>
+        
+}

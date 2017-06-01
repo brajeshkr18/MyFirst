@@ -1,0 +1,486 @@
+﻿@model T.Model.EmergencyModel
+@{
+    ViewBag.Title = "Emergency";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int counter = 0;
+}
+<link href="~/Assets/DTPicker/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="~/Assets/DTPicker/css/bootstrap-datetimepicker.css" rel="stylesheet" media="screen">
+
+
+<!--container start-->
+<div class="container">
+    <div class="row  topmargin-medium page-scheduler">
+        <div class="col-md-4">
+            <div class="blog-left wow fadeInLeft">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="blog-two-info">
+                            <h4>Select Date</h4>
+                        </div>
+                    </div>
+                </div>
+                <div id="dt-container" class="blog-content">
+                    <div id="datetimepicker">
+
+                    </div>
+                    <input id="ip-txtdate" class="dt" type="hidden" value="" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div id="dv-oncalllst" class="blog-right wow fadeInRight">
+                @Html.Partial("~/Views/Partials/Emergency/_OnCallListEmergency.cshtml", Model)
+            </div>
+            <div id="loader-oncalllist" class="placeholder-loading loader-personDetails display-hide" style="margin:auto;">
+                <img src="~/Assets/img/loader.gif" /><br />
+                Loading...
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div id="dv-oncallpersonDetail" class="blog-right profile-box wow fadeInRight">
+            </div>
+            <div id="loader-oncallpersonDetails" class="placeholder-loading loader-personDetails display-hide" style="margin:auto;">
+                <img src="~/Assets/img/loader.gif" /><br />
+                Loading...
+            </div>
+        </div>
+        <!--blog end-->
+    </div>
+    <div class="row page-scheduler">
+        <div class="col-md-4">
+            <div id="dv-Activecalllst" class="blog-right wow fadeInRight">
+                @Html.Partial("~/Views/Partials/Emergency/_ActiveCallList.cshtml", Model)
+            </div>
+            <div id="loader-ActiveCallList" class="placeholder-loading loader-personDetails display-hide" style="margin:auto;">
+                <img src="~/Assets/img/loader.gif" /><br />
+                Loading...
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div id="dv-ActiveCallDetails" class="blog-right">
+            </div>
+            <div id="loader-ActiveCallDetails" class="placeholder-loading loader-personDetails display-hide" style="margin:auto;">
+                <img src="~/Assets/img/loader.gif" /><br />
+                Loading...
+            </div>
+        </div>
+        <div class="col-md-4 blog-right">
+            <div id="dv-createCallin" class="display-hide">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="blog-two-info">
+                            <h4>Create Call-In</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row padding-top-15">
+                        <div class="col-md-5">Specility:</div> <label id="lbl-speciality" class="col-md-7"></label>
+                    </div>
+                    <div class="row padding-top-15">
+                        <div class="col-md-5">On Call:</div> <label id="lbl-person" class="col-md-7"></label>
+                    </div>
+                    <div class="row padding-top-15">
+                        <div class="col-md-5 profile-img">
+                            Patient Number
+                        </div>
+                        <div class="col-md-7 profile-img">
+                            <input id="txt-patientnumber" type="text" placeholder="Patient Number" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 profile-img">
+                            Room Number
+                        </div>
+                        <div class="col-md-7 profile-img">
+                            <input id="txt-roomNumber" type="text" placeholder="Room Number" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5 profile-img">
+                            Requesting
+                        </div>
+                        <div class="col-md-7 profile-img">
+                            <select id="ddl-requestor" class="form-control input-md border-radius ">
+                                <option selected="selected" value=0>Select requesting</option>
+                                @foreach (var index in Model.lstRequestingPeople)
+                                {
+                                    <option value="@index.id">@index.FirstName @index.LastName</option>
+                                }
+                                
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5 profile-img">
+                            EMTALA
+                        </div>
+                        <div class="col-md-7 profile-img">
+                            <input type="radio" name="EMTALA" class="rbl-emtala" value="1" checked="checked"> YES
+                            <input type="radio" name="EMTALA" class="rbl-emtala" value="0">NO<br>
+                        </div>
+                    </div>
+                    <div class="row padding-top-15">
+                        <div class="col-md-5 profile-img">
+                            Response Time
+                        </div>
+                        <div class="col-md-7 profile-img">
+                            <input id="txt-responsetime" type="text" placeholder="Time In Minutes">
+                        </div>
+                    </div>
+
+                    <div id="" class="row padding-top-15 text-center">
+                        <div class="error-callin"></div>
+                        <div class="loader-callin display-hide"><img src="~/Assets/img/loader.gif" /></div>
+                    </div>
+
+                    <div class="row padding-top-15 margin-bottom-20 text-center">
+                        <div class="col-md-12">
+                            <button id="btn-notify" class="btn btn-primary margin-0">
+                                Notify
+                            </button>
+                            <button id="btn-cancel" class="btn btn-primary margin-0">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                    <input type="hidden" value="" id="hf-personId" />
+                </div>
+            </div>
+            <div id="dv-EndCallin" class="display-hide">
+                @Html.Partial("~/Views/Partials/Emergency/_EndCall.cshtml")
+            </div>
+            <div id="dv-Notes" class="display-hide">
+                @*$(this).html(Result);*@
+            </div>
+        </div>
+        <!--blog end-->
+    </div>
+</div>
+<!--container end-->
+<script type="text/javascript" src="~/Assets/DTPicker/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="~/Assets/DTPicker/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="~/Assets/DTPicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="~/Assets/DTPicker/js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#datetimepicker').datetimepicker({
+            language: 'en',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0,
+            onChangeDateTime: function (dp, $input) {
+                $('#datePickValue').text($input.val());
+            }
+        });
+
+        $('#dt-container').on('change', '#ip-txtdate', function () {
+            var StartDate = $('#ip-txtdate').val();
+            FillOnCallList(StartDate);
+        });
+        $(document).on('click', '#dv-oncalllst tr:not(:first)', function () {
+            $('#dv-oncalllst').find('tr.row-selected').removeClass('row-selected');
+            $(this).addClass('row-selected')
+            var PersonId = $(this).find('.hf-OnCallPersonId').val();
+            GetonCallPersonDetails(PersonId);
+        })
+
+        $('#dv-oncallpersonDetail').on('click', '#btn-CallIn', function () {
+            $('#dv-createCallin').removeClass('display-hide').addClass('display');
+            $('#dv-EndCallin').removeClass('display').addClass('display-hide');
+            $('#dv-Notes').removeClass('display').addClass('display-hide');
+        })
+
+        $('#btn-notify').click(function () {
+            var OnCallPersonId = $('#hf-oncallpersonId').val();
+            var PatientNumber = $('#txt-patientnumber').val();
+            var RoomNo = $('#txt-roomNumber').val();
+            var RequestorId = $('#ddl-requestor').val();
+            var EMTALA = $(".rbl-emtala:checked").val();
+            var ResponseTime = $("#txt-responsetime").val();
+            var URL = '/Home/CreateCallIn';
+            var Data = { OnCallPersonId: OnCallPersonId, RequestorId: RequestorId, EMTALA: EMTALA == 1 ? true : false, PatientNumber: PatientNumber, RoomNumber: RoomNo, TAT: ResponseTime };
+            if (OnCallPersonId == '') {
+                
+                $('.error-callin').html('<span class="text-danger">Please select person.</span>');
+            } else if (PatientNumber == '') {
+                
+                $('.error-callin').html('<span class="text-danger">Please enter patient number.</span>');
+            }
+            else if (RoomNo == '') {
+                $('.error-callin').html('<span class="text-danger">Please enter room number.</span>');
+            }
+            else if (RequestorId == '0') {
+                $('.error-callin').html('<span class="text-danger">Please select a requestor.</span>');
+            }
+            else if (ResponseTime == '') {
+                $('.error-callin').html('<span class="text-danger">Please enter response time.</span>');
+            }
+            else if (isNaN(ResponseTime)) {
+                $('.error-callin').html('<span class="text-danger">Please enter numbers only in response time.</span>');
+            } else {
+                if (confirm('Are you sure you want to create call in.')) {
+                    CreateCallIn(URL, Data);
+                }
+            }
+            
+
+        });
+        $('#btn-cancel').click(function () {
+            $('#dv-createCallin').removeClass('display').addClass('display-hide')
+        })
+
+        $(document).on('click', '#dv-Activecalllst tr:not(:first)', function () {
+            $('#dv-Activecalllst').find('tr.row-selected').removeClass('row-selected');
+            $(this).addClass('row-selected')
+            var ActiveCallId = $(this).find('.hf-ActivePersonId').val();
+            var Url = '/Home/GetActiveCallDetails';
+            var Data = { ActiceCallId: ActiveCallId };
+            $('#dv-createCallin').removeClass('display').addClass('display-hide');
+            $('#dv-EndCallin').removeClass('display').addClass('display-hide');
+            GetActiveCallDetails(Url, Data);
+        })
+        $(document).on('click', '#btn-revise', function () {
+            OnReviseButtonClick();
+        });
+        $(document).on('click', '#btn-ReviseCancel', function () {
+            OnReviseCancelClick();
+        })
+        $(document).on('click', '#btn-ReviseSubmit', function () {
+
+            var ActivePersonId = $('#hf-activepersonDetailId').val()
+            var RequestedById = $('#ddl-reviserequestor').val()
+            var EMTALA = $(".rbl-revisedemtala:checked").val();
+            var ResponseTime = $('#txtrevise-Tat').val()
+            var URL = '/Home/UpdateCallIn'
+            var Data = { Id: ActivePersonId, RequestorId: RequestedById, EMTALA: EMTALA == 1 ? true : false, TAT: ResponseTime }
+            if (ActivePersonId == '') {
+                alert('Active person is not selected yet.')
+            }
+            else if (isNaN(ResponseTime)) {
+                $('.error-revisecallin').html('<span class="text-danger">Please enter numbers only in response time.</span>');
+            } else {
+                OnReviseSubmit(URL, Data)
+            }
+
+            
+        });
+        $(document).on('click', '#btn-EndCallin', function () {
+           
+            var Specility = $('#hf-activepersonSpecility').val();
+            var OnCallName = $('#hf-activepersonName').val();
+            $('#lbl-endspecility').html(Specility);
+            $('#lbl-endoncall').html(OnCallName);
+            $('#dv-createCallin').removeClass('display').addClass('display-hide');
+            $('#dv-EndCallin').removeClass('display-hide').addClass('display');
+            $('#dv-Notes').removeClass('display').addClass('display-hide');
+
+        });
+        $(document).on('click', '#btn-endcallinCancel', function () {
+            $('#dv-createCallin').removeClass('display').addClass('display-hide');
+            $('#dv-EndCallin').removeClass('display').addClass('display-hide');
+        });
+        $(document).on('click', '#btn-endcallinsubmit', function () {
+            var ActivePersonId = $('#hf-activepersonDetailId').val();
+            var Reason = $('.rbl-endcallreason:checked').val()
+            if (Reason == 'Other') {
+                Reason = $('#txtendcall-other').val()
+            }
+            var URL = '/Home/EndCall'
+            var Data = { ActivaCallId: ActivePersonId, Reason: Reason }
+            OnEndCall(URL, Data)
+        });
+
+        $(document).on('click', '#btn-Notes', function () {
+            
+            $('#dv-createCallin').removeClass('display').addClass('display-hide');
+            $('#dv-EndCallin').removeClass('display').addClass('display-hide');
+            $('#dv-Notes').removeClass('display-hide').addClass('display');
+            var ActiceCallId = $('#dv-Activecalllst').find('tr.row-selected').find('.hf-ActivePersonId').val();
+           
+            var URL = '/Home/GetActiveCallNotes'
+            var Data = { ActiceCallId: ActiceCallId }
+            $.post(URL, Data, function (Result) { 
+                $('#dv-Notes').html(Result);
+               });
+
+        });
+        $(document).on('click', '#btn-addnotessubmit', function () {
+            var ActivePersonId = $('#dv-Activecalllst').find('tr.row-selected').find('.hf-ActivePersonId').val();
+            var haserror = false;
+            var Notes = $('#txtnotes').val();
+            if (Notes == '')
+            {
+                $('.error-notes').html('<span class="text-danger">Please enter note.</span>');
+                haserror = true;
+            }
+            else if (ActivePersonId == '') {
+                $('.error-notes').html('<span class="text-danger">Something went wrong</span>');
+                haserror = true;
+            }
+            if (haserror == false) {
+            var URL = '/Home/AddNotes'
+            var Data = { ActivaCallId: ActivePersonId, Notes: Notes }
+            $.post(URL, Data, function (Result) {
+
+                if (Result.Status == "Success") {
+                    $('.error-notes').html('<span class="text-success">Note added successfully </span>');
+                    $('#txtnotes').val('');
+                    $('#btn-Notes').trigger('click')
+                } else if (Result.Status == "Failure") {
+                    $('.error-notes').html('<span class="text-danger">Something went wrong while processing your request</span>');
+                } else {
+
+                }
+
+            });
+        }
+        });
+        $(document).on('click', '#btn-endCancel', function () {
+            $('#dv-createCallin').removeClass('display').addClass('display-hide');
+            $('#dv-EndCallin').removeClass('display').addClass('display-hide');
+            $('#dv-Notes').removeClass('display').addClass('display-hide');
+        });
+       
+       
+       
+        function FillOnCallList(SelectedDate) {
+            var Url = '/Home/GetOnCallListEmergency';
+            $('#dv-oncalllst').html('')
+            $('#dv-oncallpersonDetail').html('')
+            ClearAllFields('#dv-createCallin');
+            $('#loader-oncalllist').removeClass('display-hide').addClass('display')
+            Data = { SelectedDate: SelectedDate }
+            $.post(Url, Data, function (Result) {
+                $('#dv-oncalllst').html(Result);
+                $('#loader-oncalllist').removeClass('display').addClass('display-hide')
+            });
+        }
+        function GetonCallPersonDetails(PersonId) {
+            var Url = '/Home/GetOnCallDetailsEmergency';
+            Data = { PeopleId: PersonId }
+            $('#dv-oncallpersonDetail').html('')
+            $('#dv-createCallin').removeClass('display').addClass('display-hide')
+            $('#loader-oncallpersonDetails').removeClass('display-hide').addClass('display')
+            $.post(Url, Data, function (Result) {
+                $('#dv-oncallpersonDetail').html(Result);
+                $('#loader-oncallpersonDetails').removeClass('display').addClass('display-hide')
+                $('#lbl-speciality').html($('#hf-speciality').val());
+                $('#lbl-person').html($('#hf-oncallperson').val());
+
+                
+            });
+        }
+        function CreateCallIn(URL, Data) {
+            $('.loader-callin').removeClass('display-hide').addClass('display')
+            $('.error-callin').html('')
+            $.post(URL, Data, function (Result) {
+                if (Result.Status == "Success") {
+                    $('.error-callin').html('<span class="text-success">' + Result.Message + '</span>');
+                    ClearAllFields('#dv-createCallin');
+                    var selectedval = $('#dv-Activecalllst').find('tr.row-selected').find('.hf-ActivePersonId').val();
+                    if (selectedval) {
+                        GetActiveCallList(selectedval)
+                        
+                    } else {
+                        GetActiveCallList(0)
+                    }
+                    $('#btn-cancel').trigger('click')
+                } else if (Result.Status == "Failure") {
+                    $('.error-callin').html('<span class="text-danger">' + Result.Message + '</span>');
+                }
+                else if (Result.Status == "Failure") {
+                    $('.error-callin').html('<span class="text-danger">' + Result.Message + '</span>');
+                }
+                $('.loader-callin').removeClass('display').addClass('display-hide')
+            });
+        }
+        function GetActiveCallList(selectedId) {
+            $('#dv-Activecalllst').html('');
+            var Url = '/Home/GetActiveCalls/' + selectedId;
+            $('#loader-ActiveCallList').removeClass('display-hide').addClass('display');
+            $.get(Url, function (Result) {
+                $('#dv-Activecalllst').html(Result);
+                $('#loader-ActiveCallList').removeClass('display').addClass('display-hide');
+                $('#dv-Notes').removeClass('display').addClass('display-hide');
+            });
+        }
+        function GetActiveCallDetails(URL, Data) {
+            $('#dv-ActiveCallDetails').html('');
+            $('#loader-ActiveCallDetails').removeClass('display-hide').addClass('display')
+            $.post(URL, Data, function (Result) {
+                GetActiveCallList(Data.ActiceCallId);
+                $('#dv-ActiveCallDetails').html(Result);
+                $('#loader-ActiveCallDetails').removeClass('display').addClass('display-hide')
+            });
+        }
+
+        function OnReviseButtonClick() {
+            $('#dv-ActiveCallDetails').find('.dv-reviseshow').removeClass('display-hide').addClass('display')
+            $('#dv-ActiveCallDetails').find('.dv-reviseshide').removeClass('display').addClass('display-hide')
+            $('#dv-ActiveCallDetails').find('.dv-btnmainform').removeClass('display').addClass('display-hide')
+            $('#dv-ActiveCallDetails').find('.dv-btnreviseform').removeClass('display-hide').addClass('display')
+        }
+        function OnReviseCancelClick() {
+            $('#dv-ActiveCallDetails').find('.dv-reviseshow').removeClass('display').addClass('display-hide')
+            $('#dv-ActiveCallDetails').find('.dv-reviseshide').removeClass('display-hide').addClass('display')
+            $('#dv-ActiveCallDetails').find('.dv-btnmainform').removeClass('display-hide').addClass('display')
+            $('#dv-ActiveCallDetails').find('.dv-btnreviseform').removeClass('display').addClass('display-hide')
+        }
+        function OnReviseSubmit(URL, DATA) {
+            $('.container-revise').find('button').addClass('disabled')
+            $.post(URL, DATA, function (Result) {
+                if (Result.Status == "Success") {
+                    GetActiveCallDetails('/Home/GetActiveCallDetails', { ActiceCallId: DATA.Id });
+                } else if (Result.Status == "Failure") {
+                    $('.error-revisecallin').html('<span class="text-danger">' + Result.Message + '</span>');
+                }
+                $('.container-revise').find('button').removeClass('disabled')
+            });
+        }
+        function OnEndCall(URL, DATA) {
+            $('.loader-endcallinSubmit').removeClass('display-hide').addClass('display')
+            $('.container-endcallbtns').find('button').addClass('disabled')
+            $.post(URL, DATA, function (Result) {
+                if (Result.Status == "Success") {
+                    $('.error-endformcallin').html('<span class="text-success">' + Result.Message + '</span>');
+                    GetActiveCallList(0)
+                    $('#dv-ActiveCallDetails').html('')
+
+                    setTimeout(function () {
+                        $('#dv-EndCallin').removeClass('display').addClass('display-hide')
+                    },2000)
+
+                } else if (Result.Status == "Failure") {
+                    $('.error-endformcallin').html('<span class="text-danger">' + Result.Message + '</span>');
+                }
+                $('.loader-endcallinSubmit').removeClass('display').addClass('display-hide')
+                $('.container-endcallbtns').find('button').removeClass('disabled')
+            });
+        }
+
+        $(document).on('click', '#btn-CallInAgain', function () {
+            var ActiceCallId = $('#dv-Activecalllst').find('tr.row-selected').find('.hf-ActivePersonId').val();
+            //var PeopleId = $('#hf-oncallpersonId').val();
+            var Url = '/Home/CallInAgain'; 
+            Data = { ActiceCallId: ActiceCallId };
+            $.post(Url, Data, function (Result) {
+                if (Result.Status == "Success") {
+                    alert('A remainder to emergency user has been send successfully again.')
+                            } else if (Result.Status == "Failure") {
+                                alert('Selected Person already is in call.')
+                            }
+            });
+          
+        });
+
+        
+    })
+</script>

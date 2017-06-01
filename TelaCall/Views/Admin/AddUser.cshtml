@@ -1,0 +1,278 @@
+﻿@model T.Model.clsUser
+@{
+    ViewBag.Title = "User";
+    var Disabled = Model.id != 0 ? "disabled" : "";
+    int count = 0;
+}
+<div class="container">
+    <div class="row topmargin-medium">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="blog-left wow fadeInLeft add-user-form">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="blog-two-info">
+                            @if (@Model.id != 0)
+                            {
+                                <h4>Edit User</h4>
+                            }
+                            else
+                            {
+                                <h4>Add User</h4>
+                            }
+                            @*<h4>Add User</h4>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="Error alert-Message alert-danger display-hide margin-bottom-0 margin-top-20">
+                        <button class="close topx" data-close="alert">x</button>
+                        <span id="spnErrorMessage" class="spnErrorMessage"><strong>Error:</strong></span>
+                    </div>
+                    <div class="success alert-Message alert-success display-hide margin-bottom-0 margin-top-20">
+                        <button class="close topx" data-close="alert">x</button>
+                        <span id="spnsuccessMessage" class="spnsuccessMessage"><strong>Error:</strong></span>
+                    </div>
+                </div>
+                <div id="dvuserdetails" class="row">
+                    <div class="col-md-6">
+                        <div class="blog-content">
+                            <!-- HTML -->
+                            <div class="bs-example">
+                                <div role="form">
+                                    <div class="form-group">
+                                        <label for="name">  First Name</label>
+                                        <input type="text" placeholder="Enter first name" id="firstnametxt" value="@Model.FirstName" class="form-control input-md focusedInput">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">  Last Name </label>
+                                        <input type="text" class="form-control input-md focusedInput" id="lastnametxt" value="@Model.LastName " placeholder="Enter last name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">Email</label>
+                                        <input type="text" class="form-control input-md focusedInput" placeholder=" Enter email*" id="emailtxt" value="@Model.Email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">Phone</label>
+                                        <input type="text" class="form-control input-md focusedInput" placeholder="XXX-XXX-XXXX" id="phonetxt" value="@Model.Phone">
+                                    </div>
+                                </div>
+                            </div><!-- /example -->
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="blog-content">
+                            <!-- HTML -->
+                            <div class="bs-example">
+                                <div role="form">
+                                    <div class="form-group">
+                                        <label for="name">User Name</label>
+                                        <input type="text" class="form-control input-md focusedInput" @Disabled value="@Model.Username" id="usernametxt" placeholder="Enter user name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">User Type</label>
+
+                                        <select id="ddlRoles" class="form-control">
+                                            @if (Model.RoleId == 0)
+                                            {
+                                                <option selected="selected" value="0">Select Role</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="0">Select Role</option>
+                                            }
+
+                                            @foreach (var role in Model.lstRoles)
+                                            {
+                                                if (role.RoleId == Model.RoleId)
+                                                {
+                                                    <option selected="selected" value="@role.RoleId">@role.Role</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@role.RoleId">@role.Role</option>
+                                                }
+                                            }
+
+                                        </select>
+                                    </div>
+                                    @if (Model.id == 0)
+                                    {
+                                        <div class="form-group">
+                                            <label for="name">Password</label>
+                                            <input type="password" class="form-control input-md focusedInput" id="passwordtxt" value="@Model.password" placeholder="Enter password">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name">Confirm Password</label>
+                                            <input type="password" class="form-control input-md focusedInput" placeholder=" Re-enter password*" value="@Model.password" id="passwordconfirmtxt">
+                                        </div>
+                                    }
+                                </div>
+                            </div><!-- /example -->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 pull-right loader display-hide">
+                        <span style="line-height: 20px;"><img src="~/Assets/img/loader.gif" style="margin-bottom:6px" /></span>
+                    </div>
+                </div>
+                <div class="col-md-3 pull-right">
+                    <button id="btn-save" type="submit" class="btn btn-lg btn-submit btn-block">Submit</button>
+                </div>
+                <div class="col-md-3 pull-right">
+                    <a type="submit" id="cancel " class="btn btn-lg btn-submit btn-block" href="@Url.Action("Manage", "Admin")">Cancel</a>
+                </div>
+            </div>
+        </div>
+
+        <!--blog end-->
+    </div>
+
+    <input type="hidden" id="hfUserId" value="@Model.id" />
+</div>
+
+
+
+<script src="~/assets/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        function alertFunc() {
+            $('.Error').removeClass('display').addClass('display-hide')
+            $('.success').removeClass('display').addClass('display-hide')
+        }
+        $("#btn-save").click(function () {
+            var hasError = false;
+            var id = parseInt($('#hfUserId').val());
+            var firstname = $("#firstnametxt").val();
+            var lastname = $("#lastnametxt").val();
+            var username = $("#usernametxt").val();
+            var email = $("#emailtxt").val();
+            var phone = $("#phonetxt").val();
+            var password = $("#passwordtxt").val();
+            var confirmpassword = $("#passwordconfirmtxt").val();
+            var role = $("#ddlRoles").val();
+            var Button = $(this)
+            $(Button).addClass('disabled')
+            $('.loader').removeClass('display-hide').addClass('display')
+            $('.success').removeClass('display').addClass('display-hide')
+            if (firstname == "") {
+                $('.Error').removeClass('display-hide').addClass('display')
+                $('.spnErrorMessage').html('<strong>Error: </strong>Please enter first name.')
+                $('.loader').removeClass('display').addClass('display-hide')
+                $(Button).removeClass('disabled')
+                hasError = true;
+
+            } else if (lastname == "") {
+                $('.Error').removeClass('display-hide').addClass('display')
+                $('.spnErrorMessage').html('<strong>Error: </strong>Please enter last name.')
+                $('.loader').removeClass('display').addClass('display-hide')
+                $(Button).removeClass('disabled')
+                hasError = true;
+            }
+            else if (email == "") {
+                $('.Error').removeClass('display-hide').addClass('display')
+                $('.spnErrorMessage').html('<strong>Error: </strong>Please enter email address.')
+                $('.loader').removeClass('display').addClass('display-hide')
+                $(Button).removeClass('disabled')
+                hasError = true;
+            }
+            else if (!ValidateEmail(email)) {
+
+                $('.Error').removeClass('display-hide').addClass('display')
+                $('.spnErrorMessage').html('<strong>Error: </strong>Please enter valid email address.')
+                $('.loader').removeClass('display').addClass('display-hide')
+                $(Button).removeClass('disabled')
+                hasError = true;
+            }
+            else if (phone == "") {
+                $('.Error').removeClass('display-hide').addClass('display')
+                $('.spnErrorMessage').html('<strong>Error: </strong>Please enter phone.')
+                $('.loader').removeClass('display').addClass('display-hide')
+                $(Button).removeClass('disabled')
+                hasError = true;
+            }
+            else if (!ValidatePhone(phone)) {
+                $('.Error').removeClass('display-hide').addClass('display')
+                $('.spnErrorMessage').html('<strong>Error: </strong>Please enter valid phone number.')
+                $('.loader').removeClass('display').addClass('display-hide')
+                $(Button).removeClass('disabled')
+                hasError = true;
+            }
+            else if (username == "") {
+                $('.Error').removeClass('display-hide').addClass('display')
+                $('.spnErrorMessage').html('<strong>Error: </strong>Please enter user name.')
+                $('.loader').removeClass('display').addClass('display-hide')
+                $(Button).removeClass('disabled')
+                hasError = true;
+            }
+            else if (role == "0") {
+                $('.Error').removeClass('display-hide').addClass('display')
+                $('.spnErrorMessage').html('<strong>Error: </strong>Please select user type.')
+                $('.loader').removeClass('display').addClass('display-hide')
+                $(Button).removeClass('disabled')
+                hasError = true;
+            }
+            else if (password == "") {
+                $('.Error').removeClass('display-hide').addClass('display')
+                $('.spnErrorMessage').html('<strong>Error: </strong>Please enter password.')
+                $('.loader').removeClass('display').addClass('display-hide')
+                $(Button).removeClass('disabled')
+                hasError = true;
+            }
+            else if (confirmpassword == "") {
+                $('.Error').removeClass('display-hide').addClass('display')
+                $('.spnErrorMessage').html('<strong>Error: </strong>Please enter confirm password.')
+                $('.loader').removeClass('display').addClass('display-hide')
+                $(Button).removeClass('disabled')
+                hasError = true;
+            }
+            else if (password != confirmpassword) {
+                $('.Error').removeClass('display-hide').addClass('display')
+                $('.spnErrorMessage').html('<strong>Error: </strong>Password and confirm password does not match.')
+                $('.loader').removeClass('display').addClass('display-hide')
+                $(Button).removeClass('disabled')
+                hasError = true;
+            }
+            if (hasError == false) {
+                $('.Error').removeClass('display').addClass('display-hide')
+                var url = "/Admin/AddUser";
+
+                $.post(url, { id: id, FirstName: firstname, LastName: lastname, RoleId: role, UserName: username, Email: email, Phone: phone, password: password, IsActive: true }, function (Result) {
+
+                    if (Result.Status == "Success") {
+
+                        $('.success').removeClass('display-hide').addClass('display')
+                        $('.loader').removeClass('display').addClass('display-hide')
+                        $('.spnsuccessMessage').html(Result.Message)
+                        $(Button).removeClass('disabled')
+                        setTimeout(alertFunc, 3000);
+                        if (id == 0) {
+                            ClearAllFields('#dvuserdetails');
+                        }
+                    } else if (Result.Status == "Failure") {
+
+                        $('.Error').removeClass('display-hide').addClass('display')
+                        $('.spnErrorMessage').html(Result.Message)
+                        $('.loader').removeClass('display').addClass('display-hide')
+                        $(Button).removeClass('disabled')
+                        setTimeout(alertFunc, 3000);
+                    } else {
+
+                        $('.Error').removeClass('display-hide').addClass('display')
+                        $('.spnErrorMessage').html('<strong>Error: </strong>Oops! Something went wrong while processing your request. Please try again')
+                        $('.loader').removeClass('display').addClass('display-hide')
+                        $(Button).removeClass('disabled')
+                        setTimeout(alertFunc, 3000);
+                    }
+
+                    //$(Button).removeClass('disabled')
+
+                });
+            }
+        });
+    });
+    $(document).ready(function () {
+        $("#Slider").css("display", "none");
+       
+    });
+</script>

@@ -1,0 +1,954 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TelaCallModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="mtblRoles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="RoleDescription" Type="varchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblActivecalls">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OnCAllPersonID" Type="bigint" Nullable="false" />
+          <Property Name="RequestPersonId" Type="bigint" Nullable="false" />
+          <Property Name="CallReqTime" Type="datetime" Nullable="false" />
+          <Property Name="EMATALA" Type="bit" Nullable="false" />
+          <Property Name="TAT" Type="varchar" MaxLength="100" />
+          <Property Name="PatientNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoomNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CallEndedTime" Type="datetime" />
+          <Property Name="CallEndedBy" Type="bigint" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ReasonToEndCall" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="tblNotes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Notes" Type="varchar" MaxLength="500" />
+          <Property Name="ActiveCallId" Type="bigint" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblOnCall">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OnCAllPersonID" Type="bigint" Nullable="false" />
+          <Property Name="Speciality" Type="bigint" Nullable="false" />
+          <Property Name="StartsCall" Type="datetime" Nullable="false" />
+          <Property Name="EndsCall" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblOnCallPeople">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="100" />
+          <Property Name="LastName" Type="varchar(max)" />
+          <Property Name="PhoneNumber" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CellNO" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="100" />
+          <Property Name="PracticeId" Type="bigint" Nullable="false" />
+          <Property Name="SpecialityId" Type="bigint" Nullable="false" />
+          <Property Name="IsCredentialed" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CanRequest" Type="bit" Nullable="false" />
+          <Property Name="Picture" Type="varchar(max)" />
+          <Property Name="CallCarrier" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FullName" Type="varchar" MaxLength="250" />
+          <Property Name="IsEmtala" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblPractices">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="100" />
+          <Property Name="URL" Type="varchar(max)" />
+          <Property Name="PhoneNumber" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="FaxNumber" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RequiresBackup" Type="bit" />
+          <Property Name="BackupPolicy" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="tblSpeciality">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Speciality" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblUsers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="250" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="250" />
+          <Property Name="LastName" Type="varchar" MaxLength="250" />
+          <Property Name="RoleId" Type="bigint" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="EmailId" Type="varchar" MaxLength="50" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__tblActive__OnCAl__34C8D9D1">
+          <End Role="tblOnCall" Type="Self.tblOnCall" Multiplicity="1" />
+          <End Role="tblActivecalls" Type="Self.tblActivecalls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOnCall">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblActivecalls">
+              <PropertyRef Name="OnCAllPersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblOnCall__OnCAl__3B75D760">
+          <End Role="tblOnCallPeople" Type="Self.tblOnCallPeople" Multiplicity="1" />
+          <End Role="tblOnCall" Type="Self.tblOnCall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOnCallPeople">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblOnCall">
+              <PropertyRef Name="OnCAllPersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblOnCall__Speci__2F10007B">
+          <End Role="tblSpeciality" Type="Self.tblSpeciality" Multiplicity="1" />
+          <End Role="tblOnCallPeople" Type="Self.tblOnCallPeople" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSpeciality">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblOnCallPeople">
+              <PropertyRef Name="SpecialityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblOnCall__Speci__3E52440B">
+          <End Role="tblSpeciality" Type="Self.tblSpeciality" Multiplicity="1" />
+          <End Role="tblOnCall" Type="Self.tblOnCall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSpeciality">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblOnCall">
+              <PropertyRef Name="Speciality" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblOnCall__Speci__5070F446">
+          <End Role="tblSpeciality" Type="Self.tblSpeciality" Multiplicity="1" />
+          <End Role="tblOnCall" Type="Self.tblOnCall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSpeciality">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblOnCall">
+              <PropertyRef Name="Speciality" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblOnCall__Speci__5DCAEF64">
+          <End Role="tblSpeciality" Type="Self.tblSpeciality" Multiplicity="1" />
+          <End Role="tblOnCallPeople" Type="Self.tblOnCallPeople" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSpeciality">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblOnCallPeople">
+              <PropertyRef Name="SpecialityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblUsers__RoleId__182C9B23">
+          <End Role="mtblRoles" Type="Self.mtblRoles" Multiplicity="1" />
+          <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mtblRoles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblUsers">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="Web_Practices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="Web_Roles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Web_SaveOnCallPeople" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="bigint" Mode="In" />
+          <Parameter Name="OnCAllPersonID" Type="varchar" Mode="In" />
+          <Parameter Name="FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="LastName" Type="varchar" Mode="In" />
+          <Parameter Name="PhoneNumber" Type="decimal" Mode="In" />
+          <Parameter Name="CellNO" Type="decimal" Mode="In" />
+          <Parameter Name="EmailAddress" Type="varchar" Mode="In" />
+          <Parameter Name="PracticeId" Type="bigint" Mode="In" />
+          <Parameter Name="SpecialityId" Type="bigint" Mode="In" />
+          <Parameter Name="IsEmtala" Type="bit" Mode="In" />
+          <Parameter Name="IsCredentialed" Type="bit" Mode="In" />
+          <Parameter Name="CanRequest" Type="bit" Mode="In" />
+          <Parameter Name="CallCarrier" Type="varchar" Mode="In" />
+          <Parameter Name="UserId" Type="varchar" Mode="In" />
+          <Parameter Name="Picture" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="Web_SaveSpeciality" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="bigint" Mode="In" />
+          <Parameter Name="Speciality" Type="varchar" Mode="In" />
+          <Parameter Name="Description" Type="varchar" Mode="In" />
+          <Parameter Name="IsActive" Type="bit" Mode="In" />
+          <Parameter Name="CreatedBy" Type="bigint" Mode="In" />
+          <Parameter Name="ModifiedBy" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="Web_SaveUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="bigint" Mode="In" />
+          <Parameter Name="FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="LastName" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+          <Parameter Name="RoleId" Type="bigint" Mode="In" />
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="EmailId" Type="varchar" Mode="In" />
+          <Parameter Name="Phone" Type="varchar" Mode="In" />
+          <Parameter Name="UserId" Type="bigint" Mode="In" />
+          <Parameter Name="IsActive" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="Web_Speciality" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="Web_Users" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="bigint" Mode="In" />
+        </Function>
+        <EntityContainer Name="TelaCallModelStoreContainer">
+          <EntitySet Name="mtblRoles" EntityType="Self.mtblRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblActivecalls" EntityType="Self.tblActivecalls" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblNotes" EntityType="Self.tblNotes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblOnCall" EntityType="Self.tblOnCall" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblOnCallPeople" EntityType="Self.tblOnCallPeople" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPractices" EntityType="Self.tblPractices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSpeciality" EntityType="Self.tblSpeciality" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__tblActive__OnCAl__34C8D9D1" Association="Self.FK__tblActive__OnCAl__34C8D9D1">
+            <End Role="tblOnCall" EntitySet="tblOnCall" />
+            <End Role="tblActivecalls" EntitySet="tblActivecalls" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblOnCall__OnCAl__3B75D760" Association="Self.FK__tblOnCall__OnCAl__3B75D760">
+            <End Role="tblOnCallPeople" EntitySet="tblOnCallPeople" />
+            <End Role="tblOnCall" EntitySet="tblOnCall" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblOnCall__Speci__2F10007B" Association="Self.FK__tblOnCall__Speci__2F10007B">
+            <End Role="tblSpeciality" EntitySet="tblSpeciality" />
+            <End Role="tblOnCallPeople" EntitySet="tblOnCallPeople" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblOnCall__Speci__3E52440B" Association="Self.FK__tblOnCall__Speci__3E52440B">
+            <End Role="tblSpeciality" EntitySet="tblSpeciality" />
+            <End Role="tblOnCall" EntitySet="tblOnCall" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblOnCall__Speci__5070F446" Association="Self.FK__tblOnCall__Speci__5070F446">
+            <End Role="tblSpeciality" EntitySet="tblSpeciality" />
+            <End Role="tblOnCall" EntitySet="tblOnCall" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblOnCall__Speci__5DCAEF64" Association="Self.FK__tblOnCall__Speci__5DCAEF64">
+            <End Role="tblSpeciality" EntitySet="tblSpeciality" />
+            <End Role="tblOnCallPeople" EntitySet="tblOnCallPeople" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblUsers__RoleId__182C9B23" Association="Self.FK__tblUsers__RoleId__182C9B23">
+            <End Role="mtblRoles" EntitySet="mtblRoles" />
+            <End Role="tblUsers" EntitySet="tblUsers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TelaCallModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="mtblRole">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RoleDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tblUsers" Relationship="Self.FK__tblUsers__RoleId__182C9B23" FromRole="mtblRoles" ToRole="tblUsers" />
+        </EntityType>
+        <EntityType Name="tblActivecall">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OnCAllPersonID" Type="Int64" Nullable="false" />
+          <Property Name="RequestPersonId" Type="Int64" Nullable="false" />
+          <Property Name="CallReqTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EMATALA" Type="Boolean" Nullable="false" />
+          <Property Name="TAT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PatientNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RoomNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CallEndedTime" Type="DateTime" Precision="3" />
+          <Property Name="CallEndedBy" Type="Int64" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ReasonToEndCall" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblOnCall" Relationship="Self.FK__tblActive__OnCAl__34C8D9D1" FromRole="tblActivecalls" ToRole="tblOnCall" />
+        </EntityType>
+        <EntityType Name="tblNote">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ActiveCallId" Type="Int64" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblOnCall">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OnCAllPersonID" Type="Int64" Nullable="false" />
+          <Property Name="Speciality" Type="Int64" Nullable="false" />
+          <Property Name="StartsCall" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndsCall" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tblActivecalls" Relationship="Self.FK__tblActive__OnCAl__34C8D9D1" FromRole="tblOnCall" ToRole="tblActivecalls" />
+          <NavigationProperty Name="tblOnCallPeople" Relationship="Self.FK__tblOnCall__OnCAl__3B75D760" FromRole="tblOnCall" ToRole="tblOnCallPeople" />
+          <NavigationProperty Name="tblSpeciality" Relationship="Self.FK__tblOnCall__Speci__6477ECF3" FromRole="tblOnCall" ToRole="tblSpeciality" />
+        </EntityType>
+        <EntityType Name="tblOnCallPeople">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CellNO" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="EmailAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PracticeId" Type="Int64" Nullable="false" />
+          <Property Name="SpecialityId" Type="Int64" Nullable="false" />
+          <Property Name="IsCredentialed" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CanRequest" Type="Boolean" Nullable="false" />
+          <Property Name="Picture" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CallCarrier" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsEmtala" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tblOnCalls" Relationship="Self.FK__tblOnCall__OnCAl__3B75D760" FromRole="tblOnCallPeople" ToRole="tblOnCall" />
+          <NavigationProperty Name="tblSpeciality" Relationship="Self.FK__tblOnCall__Speci__2F10007B" FromRole="tblOnCallPeople" ToRole="tblSpeciality" />
+          <NavigationProperty Name="tblSpeciality1" Relationship="Self.FK__tblOnCall__Speci__5DCAEF64" FromRole="tblOnCallPeople" ToRole="tblSpeciality" />
+        </EntityType>
+        <EntityType Name="tblPractice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="FaxNumber" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RequiresBackup" Type="Boolean" />
+          <Property Name="BackupPolicy" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tblSpeciality">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Speciality" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tblOnCalls" Relationship="Self.FK__tblOnCall__Speci__6477ECF3" FromRole="tblSpeciality" ToRole="tblOnCall" />
+          <NavigationProperty Name="tblOnCallPeoples" Relationship="Self.FK__tblOnCall__Speci__2F10007B" FromRole="tblSpeciality" ToRole="tblOnCallPeople" />
+          <NavigationProperty Name="tblOnCallPeoples1" Relationship="Self.FK__tblOnCall__Speci__5DCAEF64" FromRole="tblSpeciality" ToRole="tblOnCallPeople" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="RoleId" Type="Int64" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="mtblRole" Relationship="Self.FK__tblUsers__RoleId__182C9B23" FromRole="tblUsers" ToRole="mtblRoles" />
+        </EntityType>
+        <Association Name="FK__tblUsers__RoleId__182C9B23">
+          <End Role="mtblRoles" Type="Self.mtblRole" Multiplicity="1" />
+          <End Role="tblUsers" Type="Self.tblUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mtblRoles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblUsers">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblActive__OnCAl__34C8D9D1">
+          <End Role="tblOnCall" Type="Self.tblOnCall" Multiplicity="1" />
+          <End Role="tblActivecalls" Type="Self.tblActivecall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOnCall">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblActivecalls">
+              <PropertyRef Name="OnCAllPersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblOnCall__OnCAl__3B75D760">
+          <End Role="tblOnCallPeople" Type="Self.tblOnCallPeople" Multiplicity="1" />
+          <End Role="tblOnCall" Type="Self.tblOnCall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOnCallPeople">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblOnCall">
+              <PropertyRef Name="OnCAllPersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblOnCall__Speci__6477ECF3">
+          <End Role="tblSpeciality" Type="Self.tblSpeciality" Multiplicity="1" />
+          <End Role="tblOnCall" Type="Self.tblOnCall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSpeciality">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblOnCall">
+              <PropertyRef Name="Speciality" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblOnCall__Speci__2F10007B">
+          <End Role="tblSpeciality" Type="Self.tblSpeciality" Multiplicity="1" />
+          <End Role="tblOnCallPeople" Type="Self.tblOnCallPeople" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSpeciality">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblOnCallPeople">
+              <PropertyRef Name="SpecialityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblOnCall__Speci__5DCAEF64">
+          <End Role="tblSpeciality" Type="Self.tblSpeciality" Multiplicity="1" />
+          <End Role="tblOnCallPeople" Type="Self.tblOnCallPeople" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSpeciality">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblOnCallPeople">
+              <PropertyRef Name="SpecialityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TelaCallEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="mtblRoles" EntityType="Self.mtblRole" />
+          <EntitySet Name="tblActivecalls" EntityType="Self.tblActivecall" />
+          <EntitySet Name="tblNotes" EntityType="Self.tblNote" />
+          <EntitySet Name="tblOnCalls" EntityType="Self.tblOnCall" />
+          <EntitySet Name="tblOnCallPeoples" EntityType="Self.tblOnCallPeople" />
+          <EntitySet Name="tblPractices" EntityType="Self.tblPractice" />
+          <EntitySet Name="tblSpecialities" EntityType="Self.tblSpeciality" />
+          <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
+          <AssociationSet Name="FK__tblUsers__RoleId__182C9B23" Association="Self.FK__tblUsers__RoleId__182C9B23">
+            <End Role="mtblRoles" EntitySet="mtblRoles" />
+            <End Role="tblUsers" EntitySet="tblUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblActive__OnCAl__34C8D9D1" Association="Self.FK__tblActive__OnCAl__34C8D9D1">
+            <End Role="tblOnCall" EntitySet="tblOnCalls" />
+            <End Role="tblActivecalls" EntitySet="tblActivecalls" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblOnCall__OnCAl__3B75D760" Association="Self.FK__tblOnCall__OnCAl__3B75D760">
+            <End Role="tblOnCallPeople" EntitySet="tblOnCallPeoples" />
+            <End Role="tblOnCall" EntitySet="tblOnCalls" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblOnCall__Speci__6477ECF3" Association="Self.FK__tblOnCall__Speci__6477ECF3">
+            <End Role="tblSpeciality" EntitySet="tblSpecialities" />
+            <End Role="tblOnCall" EntitySet="tblOnCalls" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblOnCall__Speci__2F10007B" Association="Self.FK__tblOnCall__Speci__2F10007B">
+            <End Role="tblSpeciality" EntitySet="tblSpecialities" />
+            <End Role="tblOnCallPeople" EntitySet="tblOnCallPeoples" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblOnCall__Speci__5DCAEF64" Association="Self.FK__tblOnCall__Speci__5DCAEF64">
+            <End Role="tblSpeciality" EntitySet="tblSpecialities" />
+            <End Role="tblOnCallPeople" EntitySet="tblOnCallPeoples" />
+          </AssociationSet>
+          <FunctionImport Name="Web_Practices" ReturnType="Collection(TelaCallModel.Web_Practices_Result)">
+          <Parameter Name="Id" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="Web_Roles" ReturnType="Collection(TelaCallModel.Web_Roles_Result)" />
+          <FunctionImport Name="Web_SaveOnCallPeople" ReturnType="Collection(Int32)">
+            <Parameter Name="id" Mode="In" Type="Int64" />
+            <Parameter Name="OnCAllPersonID" Mode="In" Type="String" />
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="PhoneNumber" Mode="In" Type="Decimal" />
+            <Parameter Name="CellNO" Mode="In" Type="Decimal" />
+            <Parameter Name="EmailAddress" Mode="In" Type="String" />
+            <Parameter Name="PracticeId" Mode="In" Type="Int64" />
+            <Parameter Name="SpecialityId" Mode="In" Type="Int64" />
+            <Parameter Name="IsEmtala" Mode="In" Type="Boolean" />
+            <Parameter Name="IsCredentialed" Mode="In" Type="Boolean" />
+            <Parameter Name="CanRequest" Mode="In" Type="Boolean" />
+            <Parameter Name="CallCarrier" Mode="In" Type="String" />
+            <Parameter Name="UserId" Mode="In" Type="String" />
+            <Parameter Name="Picture" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Web_SaveSpeciality" ReturnType="Collection(Int32)">
+            <Parameter Name="Id" Mode="In" Type="Int64" />
+            <Parameter Name="Speciality" Mode="In" Type="String" />
+            <Parameter Name="Description" Mode="In" Type="String" />
+            <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+            <Parameter Name="CreatedBy" Mode="In" Type="Int64" />
+            <Parameter Name="ModifiedBy" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="Web_SaveUsers" ReturnType="Collection(Int32)">
+            <Parameter Name="id" Mode="In" Type="Int64" />
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="RoleId" Mode="In" Type="Int64" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="EmailId" Mode="In" Type="String" />
+            <Parameter Name="Phone" Mode="In" Type="String" />
+            <Parameter Name="UserId" Mode="In" Type="Int64" />
+            <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="Web_Speciality" ReturnType="Collection(TelaCallModel.Web_Speciality_Result)">
+          <Parameter Name="Id" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="Web_Users" ReturnType="Collection(TelaCallModel.Web_Users_Result)">
+          <Parameter Name="Id" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="Usp_getRoleByUserID" ReturnType="Collection(String)">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Usp_GetRoles" ReturnType="Collection(TelaCallModel.Usp_GetRoles_Result)" />
+          <FunctionImport Name="Web_GetUsers" ReturnType="Collection(TelaCallModel.Web_GetUsers_Result)">
+            <Parameter Name="Id" Mode="In" Type="Int64" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="Web_Practices_Result">
+          <Property Type="Int64" Name="id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="URL" Nullable="true" />
+          <Property Type="Decimal" Name="PhoneNumber" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="FaxNumber" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="ModifiedDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="RequiresBackup" Nullable="true" />
+          <Property Type="String" Name="BackupPolicy" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Web_Roles_Result">
+          <Property Type="Int64" Name="id" Nullable="false" />
+          <Property Type="String" Name="Role" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="RoleDescription" Nullable="true" MaxLength="500" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="ModifiedDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="Web_Speciality_Result">
+          <Property Type="Int64" Name="id" Nullable="false" />
+          <Property Type="String" Name="Speciality" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="ModifiedDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="Web_Users_Result">
+          <Property Type="Int64" Name="id" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="MiddleName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="RoleId" Nullable="false" />
+          <Property Type="String" Name="Username" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="EmailId" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="ModifiedDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" />
+          <Property Type="Int64" Name="id1" Nullable="false" />
+          <Property Type="String" Name="Role" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="RoleDescription" Nullable="true" MaxLength="500" />
+          <Property Type="Boolean" Name="IsActive1" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedDate1" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="ModifiedDate1" Nullable="false" Precision="23" />
+          <Property Type="String" Name="CreatedBy1" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ModifiedBy1" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="Usp_GetRoles_Result">
+          <Property Type="Int32" Name="RoleId" Nullable="false" />
+          <Property Type="String" Name="RoleName" Nullable="false" MaxLength="256" />
+        </ComplexType>
+        <ComplexType Name="Web_GetUsers_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="MiddleName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="RoleId" Nullable="false" />
+          <Property Type="String" Name="Username" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="EmailId" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Role" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="RoleDescription" Nullable="true" MaxLength="500" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TelaCallModelStoreContainer" CdmEntityContainer="TelaCallEntities">
+          <EntitySetMapping Name="mtblRoles">
+            <EntityTypeMapping TypeName="TelaCallModel.mtblRole">
+              <MappingFragment StoreEntitySet="mtblRoles">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblActivecalls">
+            <EntityTypeMapping TypeName="TelaCallModel.tblActivecall">
+              <MappingFragment StoreEntitySet="tblActivecalls">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="OnCAllPersonID" ColumnName="OnCAllPersonID" />
+                <ScalarProperty Name="RequestPersonId" ColumnName="RequestPersonId" />
+                <ScalarProperty Name="CallReqTime" ColumnName="CallReqTime" />
+                <ScalarProperty Name="EMATALA" ColumnName="EMATALA" />
+                <ScalarProperty Name="TAT" ColumnName="TAT" />
+                <ScalarProperty Name="PatientNumber" ColumnName="PatientNumber" />
+                <ScalarProperty Name="RoomNumber" ColumnName="RoomNumber" />
+                <ScalarProperty Name="CallEndedTime" ColumnName="CallEndedTime" />
+                <ScalarProperty Name="CallEndedBy" ColumnName="CallEndedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ReasonToEndCall" ColumnName="ReasonToEndCall" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblNotes">
+            <EntityTypeMapping TypeName="TelaCallModel.tblNote">
+              <MappingFragment StoreEntitySet="tblNotes">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="ActiveCallId" ColumnName="ActiveCallId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOnCalls">
+            <EntityTypeMapping TypeName="TelaCallModel.tblOnCall">
+              <MappingFragment StoreEntitySet="tblOnCall">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="OnCAllPersonID" ColumnName="OnCAllPersonID" />
+                <ScalarProperty Name="Speciality" ColumnName="Speciality" />
+                <ScalarProperty Name="StartsCall" ColumnName="StartsCall" />
+                <ScalarProperty Name="EndsCall" ColumnName="EndsCall" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOnCallPeoples">
+            <EntityTypeMapping TypeName="TelaCallModel.tblOnCallPeople">
+              <MappingFragment StoreEntitySet="tblOnCallPeople">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="CellNO" ColumnName="CellNO" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="PracticeId" ColumnName="PracticeId" />
+                <ScalarProperty Name="SpecialityId" ColumnName="SpecialityId" />
+                <ScalarProperty Name="IsCredentialed" ColumnName="IsCredentialed" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CanRequest" ColumnName="CanRequest" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="CallCarrier" ColumnName="CallCarrier" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="IsEmtala" ColumnName="IsEmtala" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPractices">
+            <EntityTypeMapping TypeName="TelaCallModel.tblPractice">
+              <MappingFragment StoreEntitySet="tblPractices">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="FaxNumber" ColumnName="FaxNumber" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="RequiresBackup" ColumnName="RequiresBackup" />
+                <ScalarProperty Name="BackupPolicy" ColumnName="BackupPolicy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSpecialities">
+            <EntityTypeMapping TypeName="TelaCallModel.tblSpeciality">
+              <MappingFragment StoreEntitySet="tblSpeciality">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Speciality" ColumnName="Speciality" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsers">
+            <EntityTypeMapping TypeName="TelaCallModel.tblUser">
+              <MappingFragment StoreEntitySet="tblUsers">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Web_Practices" FunctionName="TelaCallModel.Store.Web_Practices">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TelaCallModel.Web_Practices_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="FaxNumber" ColumnName="FaxNumber" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="RequiresBackup" ColumnName="RequiresBackup" />
+                <ScalarProperty Name="BackupPolicy" ColumnName="BackupPolicy" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Web_Roles" FunctionName="TelaCallModel.Store.Web_Roles">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TelaCallModel.Web_Roles_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Web_SaveOnCallPeople" FunctionName="TelaCallModel.Store.Web_SaveOnCallPeople" />
+          <FunctionImportMapping FunctionImportName="Web_SaveSpeciality" FunctionName="TelaCallModel.Store.Web_SaveSpeciality" />
+          <FunctionImportMapping FunctionImportName="Web_SaveUsers" FunctionName="TelaCallModel.Store.Web_SaveUsers" />
+          <FunctionImportMapping FunctionImportName="Web_Speciality" FunctionName="TelaCallModel.Store.Web_Speciality">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TelaCallModel.Web_Speciality_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Speciality" ColumnName="Speciality" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Web_Users" FunctionName="TelaCallModel.Store.Web_Users">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TelaCallModel.Web_Users_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="id1" ColumnName="id1" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
+                <ScalarProperty Name="IsActive1" ColumnName="IsActive1" />
+                <ScalarProperty Name="CreatedDate1" ColumnName="CreatedDate1" />
+                <ScalarProperty Name="ModifiedDate1" ColumnName="ModifiedDate1" />
+                <ScalarProperty Name="CreatedBy1" ColumnName="CreatedBy1" />
+                <ScalarProperty Name="ModifiedBy1" ColumnName="ModifiedBy1" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
